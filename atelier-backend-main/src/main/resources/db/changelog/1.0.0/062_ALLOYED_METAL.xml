@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ALLOYED_METAL_CREATE" author="${author}">
+        <createTable tableName="alloyed_metal">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_alloyed_metal_name"/>
+            </column>
+            <column name="remaining_weight" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_cost" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metal_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metal_purity_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_alloyed_metal__metal"
+                                 baseTableName="alloyed_metal" baseColumnNames="metal_id"
+                                 referencedTableName="metal" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_alloyed_metal__metal_purity"
+                                 baseTableName="alloyed_metal" baseColumnNames="metal_purity_id"
+                                 referencedTableName="metal_purity" referencedColumnNames="id"/>
+
+        <createIndex tableName="alloyed_metal" indexName="idx_alloyed_metal_metal_id">
+            <column name="metal_id"/>
+        </createIndex>
+        <createIndex tableName="alloyed_metal" indexName="idx_alloyed_metal_metal_purity_id">
+            <column name="metal_purity_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

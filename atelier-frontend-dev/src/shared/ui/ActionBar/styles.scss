@@ -1,0 +1,24 @@
+.dashboard-action-bar {
+  margin: 20px 0;
+
+  .title {
+    margin: 0;
+  }
+
+  &.primary {
+    .title {
+      color: var(--ant-color-primary);
+    }
+  }
+
+  &.default {
+    .title {
+      color: var(--ant-table-header-color);
+    }
+  }
+
+  .description {
+    font-size: 14px;
+    color: var(--ant-color-text-description);
+  }
+}

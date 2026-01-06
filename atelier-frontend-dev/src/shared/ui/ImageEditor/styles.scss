@@ -1,0 +1,49 @@
+.tui-image-editor-container{
+  &__loading {
+    .loading-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+    }
+
+    .tui-image-editor {
+      display: none;
+    }
+  }
+}
+
+.tui-image-editor {
+  border: 1px solid var(--ant-color-primary-bg-hover);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.tui-image-editor-header-logo {
+  display: none;
+}
+.tui-image-editor-header-buttons {
+  display: none;
+}
+.tui-image-editor-container  {
+  .tui-image-editor-controls {
+    background-color: #fff;
+  }
+}
+.tui-image-editor-container .tui-image-editor-help-menu > .tui-image-editor-item {
+  &.tie-btn-zoomIn, &.tie-btn-zoomOut, &.tie-btn-hand {
+    display: none;
+  }
+
+  .tui-image-editor-icpartition {
+    display: none;
+  }
+}
+
+.tui-image-editor-submenu {
+  background-color: #ffffff;
+}
+
+.modal.fade .modal-dialog {
+  transform: none !important;
+}

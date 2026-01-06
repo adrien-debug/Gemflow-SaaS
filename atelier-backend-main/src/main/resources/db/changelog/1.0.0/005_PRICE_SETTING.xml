@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_PRICE_SETTING_CREATE" author="${author}">
+        <createTable tableName="price_setting">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="update_date" type="date">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="gold_24_price" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gold_18_price" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="platinum_price" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="platinum_950_price" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="silver_price" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="silver_950_price" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dirham_conversion_rate" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="euro_conversion_rate" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pound_conversion_rate" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gold_usd_rate" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gold_dirham_rate" type="numeric(6, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002_PRICE_SETTING_CHANGE" author="${author}">
+        <dropColumn tableName="price_setting">
+            <column name="gold_24_price"/>
+        </dropColumn>
+        <dropColumn tableName="price_setting">
+            <column name="gold_18_price"/>
+        </dropColumn>
+        <dropColumn tableName="price_setting">
+            <column name="platinum_price"/>
+        </dropColumn>
+        <dropColumn tableName="price_setting">
+            <column name="platinum_950_price"/>
+        </dropColumn>
+        <dropColumn tableName="price_setting">
+            <column name="silver_price"/>
+        </dropColumn>
+        <dropColumn tableName="price_setting">
+            <column name="silver_950_price"/>
+        </dropColumn>
+        <dropColumn tableName="price_setting">
+            <column name="gold_usd_rate"/>
+        </dropColumn>
+        <dropColumn tableName="price_setting">
+            <column name="gold_dirham_rate"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="003_PRICE_SETTING_CHANGE" author="${author}">
+        <modifyDataType tableName="price_setting" columnName="dirham_conversion_rate" newDataType="numeric(7, 3)"/>
+        <modifyDataType tableName="price_setting" columnName="euro_conversion_rate" newDataType="numeric(7, 3)"/>
+        <modifyDataType tableName="price_setting" columnName="pound_conversion_rate" newDataType="numeric(7, 3)"/>
+    </changeSet>
+</databaseChangeLog>

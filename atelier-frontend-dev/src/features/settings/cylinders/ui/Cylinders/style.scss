@@ -1,0 +1,41 @@
+.cylinders-widget {
+  .cylinders-form {
+    margin-top: 20px;
+
+    .cylinders-content-wrap {
+      max-width: 350px;
+      margin-bottom: 24px;
+
+      .ant-form-item {
+        width: 100%;
+        margin: 0;
+      }
+    }
+
+    .ant-form-item-label {
+      width: 32px;
+      text-align: left;
+    }
+
+    .cylinders-input {
+      max-width: 288px;
+      width: 100%;
+    }
+
+    .add-button {
+      max-width: 320px;
+      margin-bottom: 24px;
+      width: 100%;
+    }
+
+    .remove-icon {
+      color: var(--ant-color-error);
+      align-self: start;
+      margin-top: 9.75px;
+    }
+  }
+
+  .empty-state-container {
+    margin-top: 20px;
+  }
+}

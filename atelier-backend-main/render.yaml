@@ -1,0 +1,59 @@
+services:
+  - type: web
+    name: atelier-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    region: frankfurt
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: APP_NAME
+        value: atelier-backend
+      - key: APP_ACTIVE_PROFILE
+        value: prod
+      - key: APP_SHOW_SQL
+        value: false
+      - key: APP_SWAGGER_ENABLE
+        value: false
+      # Database will be provided by Render PostgreSQL service
+      - key: APP_DATABASE_URL
+        fromDatabase:
+          name: atelier-db
+          property: connectionString
+      - key: APP_DATABASE_USERNAME
+        fromDatabase:
+          name: atelier-db
+          property: user
+      - key: APP_DATABASE_PASSWORD
+        fromDatabase:
+          name: atelier-db
+          property: password
+      # Add your other environment variables here
+      - key: APP_JWT_ISSUER_URI
+        sync: false
+      - key: APP_KEYCLOAK_URL
+        sync: false
+      - key: APP_KEYCLOAK_REALM
+        sync: false
+      - key: APP_KEYCLOAK_ORGANIZATION
+        sync: false
+      - key: APP_KEYCLOAK_CLIENT_ID
+        sync: false
+      - key: APP_KEYCLOAK_CLIENT_SECRET
+        sync: false
+      - key: APP_EMAIL_ENABLE
+        value: true
+      - key: APP_CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: APP_FRONTEND_URL
+        sync: false
+      - key: APP_FILE_SOURCE
+        value: s3
+
+databases:
+  - name: atelier-db
+    plan: starter
+    databaseName: atelier_db
+    user: atelier_user
+

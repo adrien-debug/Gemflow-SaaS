@@ -1,0 +1,43 @@
+.auth-form {
+  flex: 1;
+  padding: 0 16px;
+
+  .logo-container {
+    margin-bottom: 16px;
+  }
+
+  .title {
+    margin: 0 0 24px 0;
+    text-align: center;
+  }
+
+  .text {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  h2 {
+    margin-top: 0;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .sub-header {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 24px;
+    margin-top: 4px;
+  }
+
+  .form-item-height-default {
+    &.ant-form-item .ant-form-item-control-input {
+      min-height: 24px;
+    }
+  }
+}

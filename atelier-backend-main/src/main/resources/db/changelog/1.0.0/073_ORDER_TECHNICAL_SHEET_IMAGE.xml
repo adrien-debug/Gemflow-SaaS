@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_TECHNICAL_SHEET_IMAGE_CREATE" author="${author}">
+        <createTable tableName="order_technical_sheet_image">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="size_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_technical_sheet_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atelier_file_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_order_tech_sheet_image__tech_sheet"
+                                 baseTableName="order_technical_sheet_image" baseColumnNames="order_technical_sheet_id"
+                                 referencedTableName="order_technical_sheet" referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint constraintName="fk_order_tech_sheet_image__atelier_file"
+                                 baseTableName="order_technical_sheet_image" baseColumnNames="atelier_file_id"
+                                 referencedTableName="atelier_file" referencedColumnNames="id"/>
+
+        <createIndex tableName="order_technical_sheet_image" indexName="idx_order_tech_sheet_image_tech_sheet_id">
+            <column name="order_technical_sheet_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

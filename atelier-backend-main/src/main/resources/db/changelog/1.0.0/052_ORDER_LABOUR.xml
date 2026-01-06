@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_LABOUR_CREATE" author="${author}">
+
+        <addColumn tableName="atelier_order">
+            <column name="labour_hourly_rate" type="numeric(6, 2)"/>
+        </addColumn>
+        <update tableName="atelier_order">
+            <column name="labour_hourly_rate" value="23"/>
+        </update>
+        <addNotNullConstraint tableName="atelier_order" columnName="labour_hourly_rate"/>
+
+        <createTable tableName="order_labour">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="task_type" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="spent_minutes" type="smallint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tracking_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_order_labour__atelier_order_id"
+                                 baseTableName="order_labour" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_labour__user_id"
+                                 baseTableName="order_labour" baseColumnNames="user_id"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="002_ORDER_LABOUR_UPDATE" author="${author}">
+        <dropForeignKeyConstraint baseTableName="order_labour" constraintName="fk_order_labour__atelier_order_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_labour__atelier_order_id"
+                                 baseTableName="order_labour" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="003_ORDER_LABOUR_UPDATE" author="${author}">
+        <dropForeignKeyConstraint baseTableName="order_labour" constraintName="fk_order_labour__atelier_order_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_labour__atelier_order_id"
+                                 baseTableName="order_labour" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="004_ORDER_LABOUR_UPDATE" author="${author}">
+        <modifyDataType tableName="order_labour" columnName="spent_minutes" newDataType="integer"/>
+        <renameColumn tableName="order_labour" oldColumnName="spent_minutes" newColumnName="spent_seconds"/>
+    </changeSet>
+</databaseChangeLog>

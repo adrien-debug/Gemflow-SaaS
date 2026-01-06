@@ -1,0 +1,14 @@
+.price-details-filters {
+  .ant-segmented-item {
+    width: 80px;
+  }
+  .ant-input-prefix {
+    color: lightgray !important;
+  }
+  .ant-form-item-label > label::after {
+    content: ''; 
+  }
+  .inner-price {
+    text-align: right;
+  }
+}

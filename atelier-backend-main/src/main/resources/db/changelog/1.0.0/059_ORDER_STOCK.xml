@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_STOCK_CREATE" author="${author}">
+        <createTable tableName="order_stock">
+            <column name="order_id" type="bigint" autoIncrement="false">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="status" type="varchar(24)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sale_date" type="date"/>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="labour_total_cost" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="labour_total_minutes" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gemstones_total_cost" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gemstones_total_weight" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gemstones_total_weight_grams" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="diamonds_total_quantity" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="diamonds_total_weight" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="diamonds_total_weight_grams" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="diamonds_total_cost" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="diamonds_total_markup_cost" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql dbms="${dbms}">
+            ALTER TABLE order_stock
+                ADD total_cost numeric GENERATED ALWAYS AS (labour_total_cost + gemstones_total_cost
+                    + diamonds_total_markup_cost) STORED;
+        </sql>
+
+        <addForeignKeyConstraint constraintName="fk_order_stock__order"
+                                 baseTableName="order_stock" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_stock__location"
+                                 baseTableName="order_stock" baseColumnNames="location_id"
+                                 referencedTableName="location" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="002_ORDER_STOCK_CREATE" author="${author}">
+        <dropForeignKeyConstraint baseTableName="order_stock" constraintName="fk_order_stock__order"/>
+        <dropColumn tableName="order_stock" columnName="order_id"/>
+        <addColumn tableName="order_stock">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addColumn tableName="atelier_order">
+            <column name="order_stock_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_order__order_stock"
+                                 baseTableName="atelier_order" baseColumnNames="order_stock_id"
+                                 referencedTableName="order_stock" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="003_ORDER_STOCK_CREATE" author="${author}">
+        <modifyDataType tableName="order_stock" columnName="diamonds_total_quantity" newDataType="int"/>
+    </changeSet>
+
+    <changeSet id="004_ORDER_STOCK_CREATE" author="${author}">
+        <addColumn tableName="order_stock">
+            <column name="return_date" type="date"/>
+            <column name="issue_date" type="date"/>
+            <column name="issue_client_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="005_ORDER_STOCK_CREATE" author="${author}">
+        <addForeignKeyConstraint constraintName="fk_order_stock__client"
+                                 baseTableName="order_stock" baseColumnNames="issue_client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="006_ORDER_STOCK_CREATE" author="${author}">
+        <dropColumn tableName="order_stock" columnName="total_cost"/>
+        <sql dbms="${dbms}">
+            ALTER TABLE order_stock
+                ADD total_cost numeric GENERATED ALWAYS AS (labour_total_cost + gemstones_total_cost
+                    + diamonds_total_cost) STORED;
+        </sql>
+    </changeSet>
+
+    <changeSet id="007_ORDER_STOCK_CREATE" author="${author}">
+        <addColumn tableName="order_stock">
+            <column name="metals_total_cost" type="numeric"/>
+            <column name="metals_total_weight_in" type="numeric"/>
+            <column name="metals_total_weight_out" type="numeric"/>
+        </addColumn>
+        <update tableName="order_stock">
+            <column name="metals_total_cost" value="0"/>
+            <column name="metals_total_weight_in" value="0"/>
+            <column name="metals_total_weight_out" value="0"/>
+        </update>
+        <addNotNullConstraint tableName="order_stock" columnName="metals_total_cost"/>
+        <addNotNullConstraint tableName="order_stock" columnName="metals_total_weight_in"/>
+        <addNotNullConstraint tableName="order_stock" columnName="metals_total_weight_out"/>
+    </changeSet>
+</databaseChangeLog>

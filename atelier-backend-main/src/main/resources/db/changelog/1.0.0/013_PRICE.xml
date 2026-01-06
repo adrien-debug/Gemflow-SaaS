@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_PRICE_CREATE" author="${author}">
+        <createTable tableName="price">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <delete tableName="price_metal"/>
+        <delete tableName="price_setting"/>
+        <addColumn tableName="price_metal">
+            <column name="price_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_price_price_metal"
+                                 baseColumnNames="price_id"
+                                 baseTableName="price_metal"
+                                 referencedColumnNames="id"
+                                 referencedTableName="price"
+                                 onDelete="CASCADE"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+
+    <changeSet id="002_PRICE_METAL_UNIQUE_CONSTRAINT" author="${author}">
+        <addUniqueConstraint tableName="price_metal" columnNames="price_id, price_setting_id"/>
+    </changeSet>
+
+    <changeSet id="003_PRICE_CHANGE" author="${author}">
+        <delete tableName="price"/>
+        <dropColumn tableName="price" columnName="name"/>
+        <addColumn tableName="price">
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <renameTable oldTableName="price" newTableName="price_metal_name"/>
+
+        <renameColumn tableName="price_metal" oldColumnName="price_id" newColumnName="price_metal_name_id"/>
+
+        <delete tableName="metal_caratage"/>
+        <renameColumn tableName="metal_caratage" oldColumnName="price_metal_id" newColumnName="price_metal_name_id"/>
+        <dropForeignKeyConstraint baseTableName="metal_caratage" constraintName="fk_price_metal_metal_caratage"/>
+        <addForeignKeyConstraint constraintName="fk_metal_caratage__price_metal_name_id"
+                                 baseColumnNames="price_metal_name_id"
+                                 baseTableName="metal_caratage"
+                                 referencedColumnNames="id"
+                                 referencedTableName="price_metal_name"
+                                 onDelete="SET NULL"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,21 @@
+.board-empty-state {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+
+  .circle-button {
+    width: 60px;
+    height: 60px;
+  }
+
+  .title {
+    margin: 0;
+  }
+
+  .subtitle {
+    color: var(--ant-color-text-secondary);
+  }
+}

@@ -1,0 +1,16 @@
+.label-value-card-wrapper {
+  border: 1px solid var(--ant-color-primary-bg-hover);
+  border-radius: 12px;
+
+   .label-value-card {
+     border: none;
+   }
+
+  .label-value-card-separator {
+    align-self: stretch;
+    width: 1px;
+    margin: 12px 0;
+    background-color: var(--ant-color-primary-bg-hover);
+  }
+
+}

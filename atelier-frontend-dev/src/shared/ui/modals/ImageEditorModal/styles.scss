@@ -1,0 +1,22 @@
+.image-editor-modal {
+  .ant-modal-content {
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .ant-modal-header {
+      flex: 0 0 auto;
+    }
+
+    .ant-modal-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+    }
+
+    .ant-modal-footer {
+      flex: 0 0 auto;
+    }
+  }
+}

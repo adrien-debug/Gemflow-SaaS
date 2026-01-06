@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ATELIER_FILE_CREATE" author="${author}">
+        <createTable tableName="atelier_file">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="file_name" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="path" type="varchar(512)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content_type" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002_ATELIER_FILE_UPDATE" author="${author}">
+        <renameColumn tableName="atelier_file" oldColumnName="file_name" newColumnName="internal_file_name"/>
+        <modifyDataType tableName="atelier_file" columnName="internal_file_name" newDataType="varchar(156)"/>
+        <addColumn tableName="atelier_file">
+            <column name="file_name" type="varchar(128)"/>
+            <column name="download_url" type="varchar(750)"/>
+            <column name="download_url_expired_at" type="timestamp"/>
+        </addColumn>
+        <update tableName="atelier_file">
+            <column name="file_name" valueComputed="internal_file_name"/>
+        </update>
+        <addNotNullConstraint tableName="atelier_file" columnName="file_name"/>
+    </changeSet>
+
+    <changeSet id="003_ATELIER_FILE_UPDATE" author="${author}">
+        <addColumn tableName="atelier_file">
+            <column name="created_at" type="timestamp"/>
+        </addColumn>
+        <update tableName="atelier_file">
+            <column name="created_at" valueComputed="current_timestamp"/>
+        </update>
+        <addNotNullConstraint tableName="atelier_file" columnName="created_at"/>
+    </changeSet>
+
+    <changeSet id="004_ATELIER_FILE_UPDATE" author="${author}">
+        <update tableName="atelier_file">
+            <column name="source" value="S3"/>
+            <where>source = '0'</where>
+        </update>
+        <update tableName="atelier_file">
+            <column name="source" value="LOCAL"/>
+            <where>source = '1'</where>
+        </update>
+    </changeSet>
+</databaseChangeLog>

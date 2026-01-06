@@ -1,0 +1,14 @@
+FROM maven:3-amazoncorretto-21-alpine AS build
+COPY . /home/app
+WORKDIR /home/app
+COPY . .
+RUN --mount=type=cache,target=/root/.m2,rw mvn clean package
+
+
+FROM amazoncorretto:21-alpine-jdk
+COPY --from=build /home/app/target/atelier-0.0.1-SNAPSHOT.jar /usr/local/lib/atelier-0.0.1.jar
+EXPOSE 8080
+EXPOSE 5005
+ENV JAVA_TOOL_OPTIONS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+ENTRYPOINT ["java","-jar","/usr/local/lib/atelier-0.0.1.jar"]
+

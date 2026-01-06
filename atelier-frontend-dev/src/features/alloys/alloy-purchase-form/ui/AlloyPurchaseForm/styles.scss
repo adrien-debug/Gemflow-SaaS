@@ -1,0 +1,9 @@
+.add-alloy-purchase-form {
+  .ant-input-number, .ant-picker, .ant-input-number-affix-wrapper, .ant-upload {
+    width: 100%;
+  }
+
+  .ant-btn {
+    --ant-border-radius-lg: 8px;
+  }
+}

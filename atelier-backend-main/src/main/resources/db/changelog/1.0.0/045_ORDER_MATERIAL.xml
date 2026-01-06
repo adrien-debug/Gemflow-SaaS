@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_MATERIAL_CREATE" author="${author}">
+        <dropTable tableName="order_metal"/>
+        <createTable tableName="order_material">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="material_metal_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="claw_metal_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hallmark_logo_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_order_material__order"
+                                 baseTableName="order_material" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_material__metal"
+                                 baseTableName="order_material" baseColumnNames="material_metal_id"
+                                 referencedTableName="metal" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_material_claw__metal"
+                                 baseTableName="order_material" baseColumnNames="claw_metal_id"
+                                 referencedTableName="metal" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_material__hallmark_logo"
+                                 baseTableName="order_material" baseColumnNames="hallmark_logo_id"
+                                 referencedTableName="hallmark_logo" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

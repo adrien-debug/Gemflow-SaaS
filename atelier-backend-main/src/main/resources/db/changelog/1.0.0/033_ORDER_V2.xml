@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_V2_CREATE" author="${author}">
+        <renameTable oldTableName="project" newTableName="atelier_order"/>
+        <dropForeignKeyConstraint baseTableName="atelier_order" constraintName="project__client_id"/>
+        <addForeignKeyConstraint constraintName="fk_order__client"
+                                 baseTableName="atelier_order" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="atelier_order" constraintName="project__item_category_id"/>
+        <addForeignKeyConstraint constraintName="fk_order__item_category"
+                                 baseTableName="atelier_order" baseColumnNames="item_category_id"
+                                 referencedTableName="item_category" referencedColumnNames="id"/>
+
+        <renameTable oldTableName="project_image" newTableName="order_image"/>
+        <dropForeignKeyConstraint baseTableName="order_image" constraintName="project_image__atelier_file_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_image__atelier_file"
+                                 baseTableName="order_image" baseColumnNames="atelier_file_id"
+                                 referencedTableName="atelier_file" referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="order_image" constraintName="project_image__project_id"/>
+        <renameColumn tableName="order_image" oldColumnName="project_id" newColumnName="order_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_image__atelier_order"
+                                 baseTableName="order_image" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="order_task" constraintName="fk_order_task__project"/>
+        <renameColumn tableName="order_task" oldColumnName="project_id" newColumnName="order_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task__atelier_order"
+                                 baseTableName="order_task" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+
+        <sql dbms="${dbms}">
+            alter table atelier_order
+                rename constraint project_pkey to atelier_order_pkey;
+
+            alter table order_image
+                rename constraint project_image_pkey to order_image_pkey;
+        </sql>
+    </changeSet>
+
+    <changeSet id="002_ORDER_V2_UPDATE" author="${author}">
+        <renameColumn tableName="atelier_order" oldColumnName="stones" newColumnName="stones_note"/>
+        <dropColumn tableName="atelier_order" columnName="cad_project_details"/>
+        <addColumn tableName="atelier_order">
+            <column name="due_date" type="date"/>
+            <column name="size" type="integer"/>
+            <column name="envelope_text" type="varchar(1500)"/>
+            <column name="segment_id" type="bigint"/>
+            <column name="hallmark_logo_id" type="bigint"/>
+        </addColumn>
+
+        <update tableName="atelier_order">
+            <column name="due_date" valueComputed="current_date"/>
+        </update>
+        <addNotNullConstraint tableName="atelier_order" columnName="due_date"/>
+
+        <addForeignKeyConstraint constraintName="fk_order__segment"
+                                 baseTableName="atelier_order" baseColumnNames="segment_id"
+                                 referencedTableName="segment" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order__hallmark_logo"
+                                 baseTableName="atelier_order" baseColumnNames="hallmark_logo_id"
+                                 referencedTableName="hallmark_logo" referencedColumnNames="id"/>
+
+        <createTable tableName="order_metal">
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metal_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_order_metal__order"
+                                 baseTableName="order_metal" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_metal__metal"
+                                 baseTableName="order_metal" baseColumnNames="metal_id"
+                                 referencedTableName="metal" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="uk_order_metal_unique"
+                             tableName="order_metal"
+                             columnNames="order_id, metal_id"/>
+
+        <createTable tableName="order_stone">
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stone_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_order_stone__order"
+                                 baseTableName="order_stone" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_stone__stone"
+                                 baseTableName="order_stone" baseColumnNames="stone_id"
+                                 referencedTableName="stone" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="uk_order_stone_unique"
+                             tableName="order_stone"
+                             columnNames="order_id, stone_id"/>
+    </changeSet>
+
+    <changeSet id="003_ORDER_V2_UPDATE" author="${author}">
+        <modifyDataType tableName="atelier_order" columnName="status" newDataType="varchar(24)"/>
+    </changeSet>
+</databaseChangeLog>

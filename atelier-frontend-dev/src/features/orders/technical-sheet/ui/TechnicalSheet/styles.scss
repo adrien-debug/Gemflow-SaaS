@@ -1,0 +1,49 @@
+.technical-sheet-card {
+  width: 578px;
+  height: calc(578px * 1.4142);
+  border-radius: 12px;
+  border: 1px solid var(--ant-color-primary-bg-hover);
+
+  .image-container img {
+    object-fit: contain;
+  }
+
+  .page-number {
+    font-weight: 400;
+  }
+
+  @media print {
+    width: 80%;
+    transform: scale(1.25);
+    transform-origin: top left;
+    border: none;
+    break-before: page;
+  }
+
+  .labeled-tag .children {
+    @media print {
+      font-weight: 400 !important;
+    }
+  }
+
+  table > thead > tr > th {
+    @media print {
+      font-size: 12px !important;
+      padding: 10px 0 !important;
+    }
+  }
+
+  table > tbody > tr > td, .ant-table-cell span {
+    @media print {
+      font-size: 10px !important;
+      font-weight: 400 !important;
+      padding: 10px 0 !important;
+    }
+  }
+
+  .badge-container, .page-number, .container-value {
+    @media print {
+      color: var(--ant-color-text-heading);
+    }
+  }
+}

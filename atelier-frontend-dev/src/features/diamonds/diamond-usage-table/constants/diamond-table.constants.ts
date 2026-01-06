@@ -1,0 +1,1 @@
+export const DIAMOND_TABLE_PAGE_SIZE = 100;

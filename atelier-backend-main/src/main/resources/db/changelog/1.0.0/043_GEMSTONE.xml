@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_GEMSTONE_CREATE" author="${author}">
+        <renameTable oldTableName="stone" newTableName="gemstone"/>
+        <addColumn tableName="gemstone">
+            <column name="certificate" type="varchar(64)"/>
+        </addColumn>
+        <renameSequence oldSequenceName="stone_id_seq" newSequenceName="gemstone_id_seq"/>
+
+        <renameTable oldTableName="order_stone" newTableName="order_gemstone"/>
+        <dropForeignKeyConstraint baseTableName="order_gemstone" constraintName="fk_order_stone__order"/>
+        <dropUniqueConstraint tableName="order_gemstone" constraintName="uk_order_stone_unique"/>
+        <renameColumn tableName="order_gemstone" oldColumnName="stone_id" newColumnName="gemstone_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_gemstone__order"
+                                 baseTableName="order_gemstone" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="order_gemstone" constraintName="fk_order_stone__stone"/>
+        <addForeignKeyConstraint constraintName="fk_order_gemstone__gemstone"
+                                 baseTableName="order_gemstone" baseColumnNames="gemstone_id"
+                                 referencedTableName="gemstone" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="uk_order_gemstone_unique"
+                             tableName="order_gemstone"
+                             columnNames="order_id, gemstone_id"/>
+
+        <renameTable oldTableName="order_task_stone" newTableName="order_task_gemstone"/>
+        <dropForeignKeyConstraint baseTableName="order_task_gemstone" constraintName="fk_order_task_stone__order_task"/>
+        <dropUniqueConstraint tableName="order_task_gemstone" constraintName="uk_order_task_stone_unique"/>
+        <renameColumn tableName="order_task_gemstone" oldColumnName="stone_id" newColumnName="gemstone_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_gemstone__order_task"
+                                 baseTableName="order_task_gemstone" baseColumnNames="order_task_id"
+                                 referencedTableName="order_task" referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="order_task_gemstone" constraintName="fk_order_task_stone__stone"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_gemstone__gemstone"
+                                 baseTableName="order_task_gemstone" baseColumnNames="gemstone_id"
+                                 referencedTableName="gemstone" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="uk_order_task_gemstone_unique"
+                             tableName="order_task_gemstone"
+                             columnNames="order_task_id, gemstone_id"/>
+    </changeSet>
+
+    <changeSet id="002_GEMSTONE_CREATE" author="${author}">
+        <sql dbms="${dbms}">
+            alter table gemstone
+                rename constraint stone_pkey to gemstone_pkey;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

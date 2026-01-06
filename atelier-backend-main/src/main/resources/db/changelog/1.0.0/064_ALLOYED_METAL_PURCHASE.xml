@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ALLOYED_METAL_PURCHASE_CREATE" author="${author}">
+        <createTable tableName="alloyed_metal_purchase">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="BIGINT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price_gram" type="NUMERIC(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="batch_weight" type="NUMERIC(11, 5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remaining_weight" type="NUMERIC(11, 5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alloy_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alloyed_metal_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql dbms="${dbms}">
+            ALTER TABLE alloyed_metal_purchase
+                ADD COLUMN batch_price NUMERIC GENERATED ALWAYS AS (price_gram * batch_weight) STORED;
+
+            ALTER TABLE alloyed_metal_purchase
+                ADD COLUMN remaining_price NUMERIC GENERATED ALWAYS AS (price_gram * remaining_weight) STORED;
+        </sql>
+
+        <addForeignKeyConstraint constraintName="fk_alloyed_metal_purchase__alloy"
+                                 baseTableName="alloyed_metal_purchase" baseColumnNames="alloy_id"
+                                 referencedTableName="alloy" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_alloyed_metal_purchase__alloyed_metal"
+                                 baseTableName="alloyed_metal_purchase" baseColumnNames="alloyed_metal_id"
+                                 referencedTableName="alloyed_metal" referencedColumnNames="id"/>
+
+        <createIndex tableName="alloyed_metal_purchase" indexName="idx_alloyed_metal_purchase_alloy_id">
+            <column name="alloy_id"/>
+        </createIndex>
+        <createIndex tableName="alloyed_metal_purchase" indexName="idx_alloyed_metal_purchase_alloyed_metal_id">
+            <column name="alloyed_metal_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="002_ALLOYED_METAL_PURCHASE_CREATE" author="${author}">
+        <sqlFile path="063_CREATE_UPDATE_ALLOYED_METAL_FUNCTION.sql" relativeToChangelogFile="true" dbms="${dbms}"/>
+    </changeSet>
+
+    <changeSet id="003_ALLOYED_METAL_PURCHASE_CREATE" author="${author}">
+        <sql dbms="${dbms}">
+            CREATE TRIGGER tr_alloyed_metal_purchase_insert
+                AFTER INSERT
+                ON public.alloyed_metal_purchase
+                FOR EACH ROW
+                EXECUTE FUNCTION update_alloyed_metal_summary();
+
+            CREATE TRIGGER tr_alloyed_metal_purchase_update
+                AFTER UPDATE
+                ON public.alloyed_metal_purchase
+                FOR EACH ROW
+                EXECUTE FUNCTION update_alloyed_metal_summary();
+
+            CREATE TRIGGER tr_alloyed_metal_purchase_delete
+                AFTER DELETE
+                ON public.alloyed_metal_purchase
+                FOR EACH ROW
+                EXECUTE FUNCTION update_alloyed_metal_summary();
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_SEGMENT_CREATE" author="${author}">
+        <dropForeignKeyConstraint baseTableName="atelier_order" constraintName="fk_category_piece_order"/>
+        <renameTable oldTableName="category_piece" newTableName="segment"/>
+        <renameColumn tableName="atelier_order" oldColumnName="category_piece_id" newColumnName="segment_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_segment"
+                                 baseColumnNames="segment_id"
+                                 baseTableName="atelier_order"
+                                 referencedColumnNames="id"
+                                 referencedTableName="segment"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+</databaseChangeLog>

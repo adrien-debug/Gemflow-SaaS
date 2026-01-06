@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_CYLINDER_SETTING_CREATE" author="${author}">
+        <createTable tableName="cylinder_setting">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002_CYLINDER_RENAME" author="${author}">
+        <renameTable oldTableName="cylinder_setting" newTableName="cylinder"/>
+    </changeSet>
+
+    <changeSet id="003_CYLINDER_CREATE" author="${author}">
+        <addColumn tableName="cylinder">
+            <column name="available" type="boolean"/>
+        </addColumn>
+        <update tableName="cylinder">
+            <column name="available" value="true"/>
+        </update>
+        <addNotNullConstraint tableName="cylinder" columnName="available"/>
+    </changeSet>
+
+    <changeSet id="004_CYLINDER_CREATE" author="${author}">
+        <addColumn tableName="cylinder">
+            <column name="metal_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="005_CYLINDER_UPDATE" author="${author}">
+        <renameColumn tableName="cylinder" oldColumnName="available" newColumnName="open"/>
+        <update tableName="cylinder">
+            <column name="open" value="false"/>
+            <column name="metal_id" value="null"/>
+        </update>
+        <addColumn tableName="cylinder">
+            <column name="version" type="bigint" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

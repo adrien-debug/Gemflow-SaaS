@@ -1,0 +1,43 @@
+.dashboard-layout {
+  min-height: 100dvh;
+  width: 100%;
+
+  .sider {
+    .sider-container {
+      max-height: 100dvh;
+      overflow: auto;
+      height: 100%;
+
+      .sider-logo-container {
+        border-right: 1px solid var(--ant-color-split);
+      }
+    }
+
+    .sider-logo {
+      width: 132px;
+      height: 49px;
+      margin: 11px 0;
+    }
+
+    .sider-menu {
+      &-top {
+        height: 100%;
+      }
+    }
+  }
+
+  .dashboard-content {
+    overflow: auto;
+    max-height: 100dvh;
+  }
+
+  .header {
+    border-bottom: 1px solid var(--ant-color-split);
+  }
+
+  .ant-menu-item:not(.ant-menu-item-selected), .ant-menu-submenu {
+    svg {
+      fill: var(--ant-menu-dark-item-disabled-color);
+    }
+  }
+}

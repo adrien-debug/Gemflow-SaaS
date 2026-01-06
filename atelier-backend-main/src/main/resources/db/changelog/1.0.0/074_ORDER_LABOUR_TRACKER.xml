@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_LABOUR_TRACKER_CREATE" author="${author}">
+        <createTable tableName="order_labour_tracker">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="task_type" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="timestamp"/>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_order_labour_tracker__atelier_order_id"
+                                 baseTableName="order_labour_tracker" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_labour_tracker__user_id"
+                                 baseTableName="order_labour_tracker" baseColumnNames="user_id"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+        <createIndex tableName="order_labour_tracker" indexName="idx_order_labour_tracker_order_id">
+            <column name="order_id"/>
+        </createIndex>
+        <createIndex tableName="order_labour_tracker" indexName="idx_order_labour_tracker_user_id">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

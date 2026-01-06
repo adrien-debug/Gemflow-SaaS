@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_CARAT_TO_GRAM_FUNCTION" author="${author}">
+        <sqlFile path="055_CARAT_TO_GRAM_FUNCTION.sql" relativeToChangelogFile="true" dbms="${dbms}"/>
+    </changeSet>
+
+    <changeSet id="002_USE_CARAT_TO_GRAM_FUNCTION" author="${author}">
+        <sql dbms="${dbms}">
+            ALTER TABLE diamond
+                ADD stone_grams numeric GENERATED ALWAYS AS (carat_to_gram(stone_carat)) STORED;
+            ALTER TABLE diamond
+                ADD grams_left numeric GENERATED ALWAYS AS (carat_to_gram(stone_carat) * quantity) STORED;
+
+            ALTER TABLE gemstone
+                ADD total_weight_grams numeric GENERATED ALWAYS AS (carat_to_gram(total_weight)) STORED;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

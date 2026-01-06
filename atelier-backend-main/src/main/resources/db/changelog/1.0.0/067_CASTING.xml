@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_CASTING_CREATE" author="${author}">
+        <createTable tableName="casting">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="support_with_wax_tree_weight" type="NUMERIC(8, 2)" defaultOnNull="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="support_weight" type="NUMERIC(8, 2)" defaultOnNull="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alloyed_metal_weight" type="NUMERIC(8, 2)" defaultOnNull="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pure_metal_weight" type="NUMERIC(8, 2)" defaultOnNull="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alloy_weight" type="NUMERIC(8, 2)" defaultOnNull="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cylinder_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metal_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metal_purity_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alloyed_metal_id" type="BIGINT"/>
+            <column name="price_metal_name_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alloy_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql dbms="${dbms}">
+            ALTER TABLE casting
+                ADD COLUMN wax_weight NUMERIC(8, 2) GENERATED ALWAYS AS (support_with_wax_tree_weight - support_weight) STORED;
+        </sql>
+
+        <addForeignKeyConstraint constraintName="fk_casting__created_by"
+                                 baseTableName="casting" baseColumnNames="created_by_id"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_casting__cylinder"
+                                 baseTableName="casting" baseColumnNames="cylinder_id"
+                                 referencedTableName="cylinder" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_casting__metal"
+                                 baseTableName="casting" baseColumnNames="metal_id"
+                                 referencedTableName="metal" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_casting__metal_purity"
+                                 baseTableName="casting" baseColumnNames="metal_purity_id"
+                                 referencedTableName="metal_purity" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_casting__alloyed_metal"
+                                 baseTableName="casting" baseColumnNames="alloyed_metal_id"
+                                 referencedTableName="alloyed_metal" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_casting__price_metal_name"
+                                 baseTableName="casting" baseColumnNames="price_metal_name_id"
+                                 referencedTableName="price_metal_name" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_casting__alloy"
+                                 baseTableName="casting" baseColumnNames="alloy_id"
+                                 referencedTableName="alloy" referencedColumnNames="id"/>
+
+        <createIndex tableName="casting" indexName="idx_casting_created_by_id">
+            <column name="created_by_id"/>
+        </createIndex>
+        <createIndex tableName="casting" indexName="idx_casting_cylinder_id">
+            <column name="cylinder_id"/>
+        </createIndex>
+        <createIndex tableName="casting" indexName="idx_casting_metal_id">
+            <column name="metal_id"/>
+        </createIndex>
+        <createIndex tableName="casting" indexName="idx_casting_metal_purity_id">
+            <column name="metal_purity_id"/>
+        </createIndex>
+        <createIndex tableName="casting" indexName="idx_casting_alloyed_metal_id">
+            <column name="alloyed_metal_id"/>
+        </createIndex>
+        <createIndex tableName="casting" indexName="idx_casting_price_metal_name_id">
+            <column name="price_metal_name_id"/>
+        </createIndex>
+        <createIndex tableName="casting" indexName="idx_casting_alloy_id">
+            <column name="alloy_id"/>
+        </createIndex>
+
+        <dropColumn tableName="order_task" columnName="cylinder_id"/>
+        <addColumn tableName="order_task">
+            <column name="casting_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="order_task__casting"
+                                 baseTableName="order_task" baseColumnNames="casting_id"
+                                 referencedTableName="casting" referencedColumnNames="id"/>
+        <createIndex tableName="order_task" indexName="idx_order_task_casting_id">
+            <column name="casting_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="002_CASTING_CREATE" author="${author}">
+        <addColumn tableName="casting">
+            <column name="alloyed_metal_cost" type="numeric(13, 3)"/>
+            <column name="pure_metal_cost" type="numeric(13, 3)"/>
+            <column name="alloy_cost" type="numeric(13, 3)"/>
+            <column name="reuse_weight" type="numeric(8, 2)"/>
+            <column name="completed_at" type="timestamp"/>
+            <column name="completed_by_id" type="bigint"/>
+        </addColumn>
+        <update tableName="casting">
+            <column name="alloyed_metal_cost" value="0"/>
+            <column name="pure_metal_cost" value="0"/>
+            <column name="alloy_cost" value="0"/>
+            <column name="reuse_weight" value="0"/>
+        </update>
+        <addNotNullConstraint tableName="casting" columnName="alloyed_metal_cost"/>
+        <addNotNullConstraint tableName="casting" columnName="pure_metal_cost"/>
+        <addNotNullConstraint tableName="casting" columnName="alloy_cost"/>
+        <addNotNullConstraint tableName="casting" columnName="reuse_weight"/>
+        <sql dbms="${dbms}">
+            ALTER TABLE casting
+                ADD COLUMN total_weight NUMERIC GENERATED ALWAYS AS (alloyed_metal_weight + pure_metal_weight + alloy_weight) STORED;
+
+            ALTER TABLE casting
+                ADD COLUMN total_cost NUMERIC GENERATED ALWAYS AS (alloyed_metal_cost + pure_metal_cost + alloy_cost) STORED;
+        </sql>
+
+        <addForeignKeyConstraint constraintName="fk_casting__completed_by"
+                                 baseTableName="casting" baseColumnNames="completed_by_id"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+        <createIndex tableName="casting" indexName="idx_casting_completed_by_id">
+            <column name="completed_by_id"/>
+        </createIndex>
+
+        <addColumn tableName="alloyed_metal_purchase">
+            <column name="casting_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="alloyed_metal_purchase__casting"
+                                 baseTableName="alloyed_metal_purchase" baseColumnNames="casting_id"
+                                 referencedTableName="casting" referencedColumnNames="id"/>
+        <createIndex tableName="alloyed_metal_purchase" indexName="idx_alloyed_metal_purchase_casting_id">
+            <column name="casting_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

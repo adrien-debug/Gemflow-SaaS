@@ -1,0 +1,35 @@
+.metal-card {
+  .ant-card-extra {
+    svg {
+      color: var(--ant-color-text-heading);
+    }
+
+    &:hover {
+      svg {
+        color: var(--ant-color-primary);
+      }
+    }
+  }
+
+  &:hover {
+    .ant-card-head-title {
+      color: var(--ant-color-primary);
+    }
+  }
+
+  .content-title {
+    font-size: 14px;
+    color: var(--ant-color-text-description);
+  }
+
+  .content-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ant-color-text-heading);
+
+    &-primary {
+      color: var(--ant-color-primary);
+      font-size: 20px;
+    }
+  }
+}

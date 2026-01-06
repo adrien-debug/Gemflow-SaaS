@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_METAL_TOTAL" author="${author}">
+        <createTable tableName="order_metal_total">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="BIGINT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_cost" type="NUMERIC(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight_in" type="NUMERIC(8, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight_out" type="NUMERIC(8, 2)"/>
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metal_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metal_purity_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_order_metal_total__order"
+                                 baseTableName="order_metal_total" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_metal_total__metal"
+                                 baseTableName="order_metal_total" baseColumnNames="metal_id"
+                                 referencedTableName="metal" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_metal_total__metal_purity"
+                                 baseTableName="order_metal_total" baseColumnNames="metal_purity_id"
+                                 referencedTableName="metal_purity" referencedColumnNames="id"/>
+
+        <createIndex tableName="order_metal_total" indexName="idx_order_metal_total_order_id">
+            <column name="order_id"/>
+        </createIndex>
+        <createIndex tableName="order_metal_total" indexName="idx_order_metal_total_metal_id">
+            <column name="metal_id"/>
+        </createIndex>
+        <createIndex tableName="order_metal_total" indexName="idx_order_metal_total_metal_purity_id">
+            <column name="metal_purity_id"/>
+        </createIndex>
+
+        <addUniqueConstraint constraintName="uk_order_metal_total_unique" tableName="order_metal_total"
+                             columnNames="order_id, metal_id, metal_purity_id"/>
+
+        <sql dbms="${dbms}">
+            ALTER TABLE order_metal_total
+                ADD CONSTRAINT weight_in_gt_zero CHECK (weight_in >= 0);
+            ALTER TABLE order_metal_total
+                ADD CONSTRAINT weight_out_gt_zero CHECK (weight_out >= 0);
+            ALTER TABLE order_metal_total
+                ADD CONSTRAINT total_cost_gt_zero CHECK (total_cost >= 0);
+        </sql>
+
+        <sql dbms="${dbms}">
+            INSERT INTO order_metal_total(version,
+                                          total_cost,
+                                          weight_in,
+                                          order_id,
+                                          metal_id,
+                                          metal_purity_id)
+            SELECT 0              as version,
+                   sum(omc.cost)  as total_cost,
+                   sum(ot.weight) as weight_in,
+                   ot.order_id,
+                   c.metal_id,
+                   c.metal_purity_id
+            FROM order_metal_casting omc
+                     INNER JOIN order_task ot ON omc.order_task_id = ot.id
+                     INNER JOIN casting c ON omc.casting_id = c.id
+            GROUP BY ot.order_id, c.metal_id, c.metal_purity_id;
+        </sql>
+    </changeSet>
+
+    <changeSet id="002_ORDER_METAL_TOTAL" author="${author}">
+        <sql dbms="${dbms}">
+            ALTER TABLE order_metal_total
+                ADD COLUMN price_gram NUMERIC GENERATED ALWAYS AS (CASE WHEN total_cost = 0 THEN 0 ELSE (weight_in / total_cost) END) STORED NOT NULL;
+        </sql>
+    </changeSet>
+
+    <changeSet id="003_ORDER_METAL_TOTAL" author="${author}">
+        <dropColumn tableName="order_metal_total" columnName="price_gram"/>
+        <sql dbms="${dbms}">
+            ALTER TABLE order_metal_total
+                ADD COLUMN price_gram NUMERIC GENERATED ALWAYS AS (CASE WHEN weight_in = 0 THEN 0 ELSE (total_cost / weight_in) END) STORED NOT NULL;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

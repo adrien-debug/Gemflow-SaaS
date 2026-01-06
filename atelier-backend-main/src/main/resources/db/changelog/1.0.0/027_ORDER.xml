@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_CREATE" author="${author}">
+        <createTable tableName="atelier_order">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="bigint"/>
+            <column name="category_piece_id" type="bigint"/>
+            <column name="size" type="integer"/>
+            <column name="stl_number" type="integer"/>
+            <column name="cad_time_spent" type="integer"/>
+            <column name="due_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="envelope_text" type="varchar(1500)"/>
+            <column name="priority" type="varchar(16)"/>
+            <column name="order_status" type="varchar(16)"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_project_order"
+                                 baseColumnNames="project_id"
+                                 baseTableName="atelier_order"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project"
+                                 onDelete="SET NULL"
+                                 onUpdate="NO ACTION"/>
+
+        <addForeignKeyConstraint constraintName="fk_category_piece_order"
+                                 baseColumnNames="category_piece_id"
+                                 baseTableName="atelier_order"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category_piece"
+                                 onDelete="CASCADE"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+
+    <changeSet id="001_ORDER_METAL_CREATE" author="${author}">
+        <createTable tableName="order_metal">
+            <column name="order_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="metal_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_order_metal_order_id"
+                                 baseTableName="order_metal"
+                                 baseColumnNames="order_id"
+                                 referencedTableName="atelier_order"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_metal_metal_id"
+                                 baseTableName="order_metal"
+                                 baseColumnNames="metal_id"
+                                 referencedTableName="metal"
+                                 referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="uk_order_metal_unique"
+                             tableName="order_metal"
+                             columnNames="order_id, metal_id"/>
+    </changeSet>
+
+    <changeSet id="001_ORDER_STONE_CREATE" author="${author}">
+        <createTable tableName="order_stone">
+            <column name="order_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="stone_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_order_stone_order_id"
+                                 baseTableName="order_stone"
+                                 baseColumnNames="order_id"
+                                 referencedTableName="atelier_order"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_stone_stone_id"
+                                 baseTableName="order_stone"
+                                 baseColumnNames="stone_id"
+                                 referencedTableName="stone"
+                                 referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="uk_order_stone_unique"
+                             tableName="order_stone"
+                             columnNames="order_id, stone_id"/>
+    </changeSet>
+
+    <changeSet id="002_ORDER_CREATE" author="${author}">
+        <dropForeignKeyConstraint baseTableName="atelier_order" constraintName="fk_category_piece_order"/>
+        <addForeignKeyConstraint constraintName="fk_category_piece_order"
+                                 baseColumnNames="category_piece_id"
+                                 baseTableName="atelier_order"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category_piece"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+
+    <changeSet id="003_ORDER_CREATE" author="${author}">
+        <modifyDataType tableName="atelier_order" columnName="due_date" newDataType="date"/>
+    </changeSet>
+
+    <changeSet id="004_ORDER_CREATE" author="${author}">
+        <dropForeignKeyConstraint baseTableName="atelier_order" constraintName="fk_project_order"/>
+        <addForeignKeyConstraint constraintName="fk_order_project"
+                                 baseColumnNames="project_id"
+                                 baseTableName="atelier_order"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+
+        <addColumn tableName="atelier_order">
+            <column name="client_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_order_client"
+                                 baseColumnNames="client_id"
+                                 baseTableName="atelier_order"
+                                 referencedColumnNames="id"
+                                 referencedTableName="client"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+
+</databaseChangeLog>

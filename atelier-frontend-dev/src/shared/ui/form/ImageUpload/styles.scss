@@ -1,0 +1,66 @@
+.image-upload {
+  position: relative;
+  display: block;
+  width: var(--image-size);
+  height: var(--image-size);
+  overflow: hidden;
+  border-radius: var(--ant-border-radius-lg);
+
+  .image-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    margin: 0;
+  }
+
+  .preview-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    width: calc(var(--image-size));
+    height: calc(var(--image-size));
+  }
+
+  .ant-upload {
+    overflow: hidden;
+  }
+
+  .remove-button {
+    visibility: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  &:hover {
+    .remove-button {
+      visibility: visible;
+    }
+  }
+
+  &.circle {
+    border-radius: 50%;
+
+    .ant-upload {
+      border-radius: 50%;
+    }
+
+    img {
+      border-radius: 50%;
+    }
+  }
+}
+
+.ant-form-item-has-error {
+  .ant-upload.ant-upload-drag, {
+    border-color: var(--ant-color-error);
+  }
+  .ant-upload.ant-upload-drag:hover {
+    border-color: var(--ant-color-error-border-hover);
+  }
+}
