@@ -1,4 +1,6 @@
-# Atelier - Projet SaaS
+# Atelier - Projet SaaS (Gemsflow ERP)
+
+**Repository GitHub :** https://github.com/adrien-debug/Gemflow-SaaS.git
 
 ## Structure du projet
 
