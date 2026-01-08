@@ -1,0 +1,47 @@
+# ============================================================
+# RAILWAY - VARIABLES MINIMALES (copier dans Railway Dashboard)
+# ============================================================
+
+# ---- DATABASE (3 variables obligatoires) ----
+# Utilise les références Railway pour Postgres addon:
+
+APP_DATABASE_URL=jdbc:postgresql://${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/${{Postgres.PGDATABASE}}
+APP_DATABASE_USERNAME=${{Postgres.PGUSER}}
+APP_DATABASE_PASSWORD=${{Postgres.PGPASSWORD}}
+
+# ---- CORS & Frontend (adapter l'URL après déploiement) ----
+APP_CORS_ALLOWED_ORIGINS=https://${{RAILWAY_PUBLIC_DOMAIN}}
+APP_FRONTEND_URL=https://${{RAILWAY_PUBLIC_DOMAIN}}
+
+# ============================================================
+# OPTIONNEL - Ajouter plus tard si nécessaire
+# ============================================================
+
+# ---- Stripe (décommenter si tu actives les paiements) ----
+# STRIPE_API_KEY=sk_live_...
+# STRIPE_WEBHOOK_SECRET=whsec_...
+# STRIPE_PRICE_STANDARD_25_MONTHLY=price_...
+# STRIPE_PRICE_STANDARD_25_YEARLY=price_...
+# STRIPE_PRICE_STANDARD_20_MONTHLY=price_...
+# STRIPE_PRICE_STANDARD_20_YEARLY=price_...
+
+# ---- QuickBooks (décommenter si tu actives l'intégration) ----
+# QUICKBOOKS_CLIENT_ID=...
+# QUICKBOOKS_CLIENT_SECRET=...
+# QUICKBOOKS_REDIRECT_URI=https://${{RAILWAY_PUBLIC_DOMAIN}}/integrations/quickbooks/callback
+# QUICKBOOKS_ENV=production
+
+# ---- Email (décommenter si tu veux activer les emails) ----
+# APP_EMAIL_ENABLE=true
+# APP_EMAIL_HOST=smtp.gmail.com
+# APP_EMAIL_PORT=587
+# APP_EMAIL_USERNAME=your-email@gmail.com
+# APP_EMAIL_PASSWORD=your-app-password
+
+# ---- S3 (décommenter si tu veux utiliser S3 au lieu de LOCAL) ----
+# APP_FILE_SOURCE=S3
+# APP_S3_REGION=us-east-1
+# APP_S3_ACCESS_KEY=...
+# APP_S3_SECRET_KEY=...
+# APP_S3_BUCKET=gemsflow-files
+
