@@ -131,7 +131,7 @@ docker compose up -d postgres
 ### Frontend
 
 **Prérequis :**
-- Node.js (version récente)
+- Node.js (>= 20)
 - npm
 
 **Commandes :**
