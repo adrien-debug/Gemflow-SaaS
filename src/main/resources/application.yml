@@ -3,19 +3,19 @@ server:
 
 spring:
   application:
-    name: ${APP_NAME}
+    name: ${APP_NAME:Gemsflow}
   profiles:
-    active: ${APP_ACTIVE_PROFILE}
+    active: ${APP_ACTIVE_PROFILE:prod}
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${APP_JWT_ISSUER_URI}
+          issuer-uri: ${APP_JWT_ISSUER_URI:https://placeholder-keycloak.com/realms/atelier}
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: none
-    show-sql: ${APP_SHOW_SQL}
+    show-sql: ${APP_SHOW_SQL:false}
     properties:
       hibernate:
         query:
@@ -37,43 +37,43 @@ spring:
       max-file-size: 5MB
 
 email:
-  enable: ${APP_EMAIL_ENABLE}
+  enable: ${APP_EMAIL_ENABLE:false}
   properties:
-    host: ${APP_EMAIL_HOST}
-    port: ${APP_EMAIL_PORT}
-    username: ${APP_EMAIL_USERNAME}
-    password: ${APP_EMAIL_PASSWORD}
-    protocol: ${APP_EMAIL_PROTOCOL}
-    sender: ${APP_EMAIL_SENDER}
+    host: ${APP_EMAIL_HOST:smtp.gmail.com}
+    port: ${APP_EMAIL_PORT:587}
+    username: ${APP_EMAIL_USERNAME:}
+    password: ${APP_EMAIL_PASSWORD:}
+    protocol: ${APP_EMAIL_PROTOCOL:smtp}
+    sender: ${APP_EMAIL_SENDER:noreply@gemsflow.com}
 
 organization:
-  name: ${APP_KEYCLOAK_ORGANIZATION}
+  name: ${APP_KEYCLOAK_ORGANIZATION:Gemsflow}
 
 keycloak:
-  url: ${APP_KEYCLOAK_URL}
-  realm: ${APP_KEYCLOAK_REALM}
-  organization: ${APP_KEYCLOAK_ORGANIZATION}
-  client-id: ${APP_KEYCLOAK_CLIENT_ID}
-  client-secret: ${APP_KEYCLOAK_CLIENT_SECRET}
+  url: ${APP_KEYCLOAK_URL:https://placeholder-keycloak.com}
+  realm: ${APP_KEYCLOAK_REALM:atelier}
+  organization: ${APP_KEYCLOAK_ORGANIZATION:Gemsflow}
+  client-id: ${APP_KEYCLOAK_CLIENT_ID:atelier-client}
+  client-secret: ${APP_KEYCLOAK_CLIENT_SECRET:}
 
 cors:
-  allowed-origins: ${APP_CORS_ALLOWED_ORIGINS}
+  allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:7101}
   allowed-methods:
     - '*'
   allowed-headers:
     - '*'
 
 frontend:
-  url: ${APP_FRONTEND_URL}
-  new-password-path: ${APP_FRONTEND_NEW_PASSWORD_PATH}
-  restore-password-path: ${APP_FRONTEND_RESTORE_PASSWORD_PATH}
-  timezone: ${APP_FRONTEND_TIMEZONE}
+  url: ${APP_FRONTEND_URL:http://localhost:7101}
+  new-password-path: ${APP_FRONTEND_NEW_PASSWORD_PATH:/new-password}
+  restore-password-path: ${APP_FRONTEND_RESTORE_PASSWORD_PATH:/restore-password}
+  timezone: ${APP_FRONTEND_TIMEZONE:America/New_York}
 
 springdoc:
   api-docs:
-    enabled: ${APP_SWAGGER_ENABLE}
+    enabled: ${APP_SWAGGER_ENABLE:true}
   swagger-ui:
-    enabled: ${APP_SWAGGER_ENABLE}
+    enabled: ${APP_SWAGGER_ENABLE:true}
 
 management:
   endpoints:
@@ -82,12 +82,12 @@ management:
         include: health
 
 file:
-  source: ${APP_FILE_SOURCE}
+  source: ${APP_FILE_SOURCE:LOCAL}
   s3:
-    region: ${APP_S3_REGION}
-    access-key: ${APP_S3_ACCESS_KEY}
-    secret-key: ${APP_S3_SECRET_KEY}
-    bucket: ${APP_S3_BUCKET}
+    region: ${APP_S3_REGION:us-east-1}
+    access-key: ${APP_S3_ACCESS_KEY:}
+    secret-key: ${APP_S3_SECRET_KEY:}
+    bucket: ${APP_S3_BUCKET:}
 
 # QuickBooks Integration
 quickbooks:
