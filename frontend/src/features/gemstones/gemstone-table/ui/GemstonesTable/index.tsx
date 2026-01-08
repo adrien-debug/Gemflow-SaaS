@@ -97,7 +97,7 @@ const GemstonesTable: FC<Props> = ({ paginationConfiguration, setPaginationConfi
     },
     onPaymentStatusChange: (gemstone, paymentStatusId) => {
       updatePaymentStatus.mutate(
-        { id: gemstone.id, paymentStatusId, paymentStatuses },
+        { id: gemstone.id, paymentStatusId },
         {
           onError: () => {
             void messageApi.error("Failed to update gemstone payment status");

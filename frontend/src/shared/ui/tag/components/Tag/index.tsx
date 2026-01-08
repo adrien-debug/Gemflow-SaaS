@@ -42,7 +42,7 @@ const Tag: FC<Props> = ({
   const [editing, setEditing] = useState<boolean>(false);
   const [tag, setTag] = useState<TagItem>({ ...tagProp });
   const inputRef = useRef<InputRef>(null);
-  const inputNumberRef = useRef<HTMLInputElement>(null);
+  const inputNumberRef = useRef<any>(null);
 
   const [currentValue, setCurrentValue] = useState<string | number>(tag.name);
 

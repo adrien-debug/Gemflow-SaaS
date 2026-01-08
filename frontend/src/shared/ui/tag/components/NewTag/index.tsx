@@ -23,7 +23,7 @@ const NewTag: FC<Props> = ({ label = "New tag", onCreate, isNumber, maxLength = 
 
   const inputRef = useRef<InputRef>(null);
 
-  const inputNumberRef = useRef<HTMLInputElement>(null);
+  const inputNumberRef = useRef<any>(null);
 
   useEffect(() => {
     if (editing) {
