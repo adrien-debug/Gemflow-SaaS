@@ -1,7 +1,9 @@
 [phases.setup]
 # Nixpacks installe ces paquets dans le même profile Nix.
 # IMPORTANT: ne mettre qu'UN seul JDK ici (sinon "collision" entre OpenJDKs).
-nixPkgs = ["jdk21", "bash", "curl", "cacert"]
+# NOTE: éviter d'ajouter des paquets CA/cert ici (ex: cacert) : ça peut créer
+# des collisions entre versions de certificats dans le profile Nix.
+nixPkgs = ["jdk21", "bash"]
 
 [phases.build]
 cmds = ["./mvnw -B -DskipTests clean package"]
