@@ -1,0 +1,29 @@
+# ============================================================
+# RAILWAY - VARIABLES AVEC SUPABASE POSTGRESQL
+# ============================================================
+# Copie ce contenu dans Railway Dashboard → Variables → Raw Editor
+
+APP_DATABASE_URL=jdbc:postgresql://db.ldnvfnwkqywdgnsrqxuq.supabase.co:5432/postgres
+APP_DATABASE_USERNAME=postgres
+APP_DATABASE_PASSWORD=Adrien0334$$
+
+# ---- Application Config ----
+APP_NAME=Gemsflow
+APP_ACTIVE_PROFILE=prod
+
+# ---- CORS & Frontend ----
+APP_CORS_ALLOWED_ORIGINS=https://${{RAILWAY_PUBLIC_DOMAIN}}
+APP_FRONTEND_URL=https://${{RAILWAY_PUBLIC_DOMAIN}}
+
+# ---- Features optionnelles (désactivées par défaut) ----
+APP_EMAIL_ENABLE=false
+APP_FILE_SOURCE=local
+
+# ---- Stripe (à configurer plus tard) ----
+# STRIPE_API_KEY=
+# STRIPE_WEBHOOK_SECRET=
+
+# ---- QuickBooks (à configurer plus tard) ----
+# QUICKBOOKS_CLIENT_ID=
+# QUICKBOOKS_CLIENT_SECRET=
+

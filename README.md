@@ -14,6 +14,29 @@
 └── README.md                 # Ce fichier
 ```
 
+## 🚀 Déploiement Railway avec Supabase PostgreSQL
+
+**Base de données : Supabase PostgreSQL**
+
+Le projet utilise Supabase comme base de données PostgreSQL hébergée.
+
+**Configuration Railway :**
+
+1. **Copier les variables** depuis `.railway-env-supabase` dans Railway Dashboard → Variables → Raw Editor
+
+2. **Déploiement automatique** : Chaque push sur `main` déclenche un redéploiement
+
+3. **Healthcheck** : Railway vérifie `/actuator/health` toutes les 5 minutes
+
+**URL Supabase :**
+- Dashboard : https://supabase.com/dashboard/project/ldnvfnwkqywdgnsrqxuq
+- API URL : https://ldnvfnwkqywdgnsrqxuq.supabase.co
+
+**Migrations :**
+Les migrations Liquibase s'appliquent automatiquement au démarrage de l'application.
+
+---
+
 ## Démarrage local
 
 ### Backend
