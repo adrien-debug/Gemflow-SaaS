@@ -1,6 +1,7 @@
 package io.hearstcorporation.atelier.config.security;
 
 import io.hearstcorporation.atelier.config.security.property.CorsProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+@Slf4j
 @Configuration
 @EnableConfigurationProperties(CorsProperties.class)
 public class CorsConfig {
@@ -18,6 +20,10 @@ public class CorsConfig {
         configuration.setAllowedOriginPatterns(corsProperties.getAllowedOrigins());
         configuration.setAllowedMethods(corsProperties.getAllowedMethods());
         configuration.setAllowedHeaders(corsProperties.getAllowedHeaders());
+        log.info("[cors] allowedOriginPatterns={}, allowedMethods={}, allowedHeaders={}",
+                corsProperties.getAllowedOrigins(),
+                corsProperties.getAllowedMethods(),
+                corsProperties.getAllowedHeaders());
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
