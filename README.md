@@ -159,8 +159,8 @@ Tous les endpoints sont accessibles sans JWT/token.
 Le login et les contrôles de rôles sont désactivés.
 
 **Fichiers modifiés :**
-- `frontend/src/app/router/PrivateRoute.tsx` (bypass login check)
-- `frontend/src/app/router/UserRoute.tsx` (bypass role check)
+- `frontend/src/app_/router/PrivateRoute.tsx` (bypass login check)
+- `frontend/src/app_/router/UserRoute.tsx` (bypass role check)
 - `frontend/src/shared/providers/UserProvider.tsx` (allow null user)
 
 **⚠️ NE JAMAIS déployer en production avec cette configuration !**
