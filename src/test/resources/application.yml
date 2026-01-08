@@ -1,0 +1,24 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: atelier-backend-test
+  profiles:
+    active: test
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/master
+
+frontend:
+  url: http://localhost:7101
+  new-password-path: /new-password
+  restore-password-path: /restore-password
+  timezone: Europe/Paris
+
+cors:
+  allowed-origins: http://localhost:7101
+
+

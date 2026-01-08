@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemsflow ERP - Architecture Complète</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Gemsflow Brand Palette - Exact from branding.ts */
+            --brand1: #FCFAF8;
+            --brand2: #F6F0EA;
+            --brand3: #E7D7C6;
+            --brand4: #DBC2AA;
+            --brand5: #CFAE8D;
+            --brand6: #C39A71;
+            --brand7: #9C7B5A;
+            --brand8: #755C44;
+            --brand9: #4E3E2D;
+            --brand10: #271F17;
+            
+            /* Sider/Dark Theme */
+            --sider-bg: #131C30;
+            --dark-navy: #0D1321;
+            --dark-surface: #1A2332;
+            
+            /* Status Colors */
+            --success: #4CAF50;
+            --warning: #FFA726;
+            --error: #EF5350;
+            --info: #42A5F5;
+            
+            /* Text */
+            --text-primary: rgba(0, 0, 0, 0.88);
+            --text-secondary: #777777;
+            --text-light: rgba(255, 255, 255, 0.95);
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark-navy);
+            min-height: 100vh;
+            color: var(--text-light);
+        }
+        
+        /* ================================
+           HEADER - Luxurious Hero Section
+           ================================ */
+        .hero {
+            background: linear-gradient(135deg, var(--sider-bg) 0%, var(--dark-navy) 50%, var(--brand10) 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 60px 40px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(195, 154, 113, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(156, 123, 90, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 60% 80%, rgba(207, 174, 141, 0.08) 0%, transparent 45%);
+            pointer-events: none;
+        }
+        
+        /* Geometric Pattern Overlay */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(30deg, transparent 40%, rgba(195, 154, 113, 0.03) 40%, rgba(195, 154, 113, 0.03) 60%, transparent 60%),
+                linear-gradient(-30deg, transparent 40%, rgba(195, 154, 113, 0.03) 40%, rgba(195, 154, 113, 0.03) 60%, transparent 60%);
+            background-size: 60px 100px;
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .logo-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--brand6) 0%, var(--brand8) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 32px rgba(195, 154, 113, 0.3);
+        }
+        
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--brand3) 0%, var(--brand6) 50%, var(--brand4) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8em;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2em;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+        
+        .hero-tech {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(195, 154, 113, 0.2);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            color: var(--brand5);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-badge:hover {
+            border-color: var(--brand6);
+            background: rgba(195, 154, 113, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* ================================
+           LEGEND BAR
+           ================================ */
+        .legend-bar {
+            background: var(--dark-surface);
+            border-bottom: 1px solid rgba(195, 154, 113, 0.15);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9em;
+        }
+        
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .legend-dot.existing { background: linear-gradient(135deg, #4CAF50, #2E7D32); }
+        .legend-dot.new { background: linear-gradient(135deg, var(--brand6), var(--brand8)); }
+        .legend-dot.integration { background: linear-gradient(135deg, #42A5F5, #1565C0); }
+        .legend-dot.missing { background: linear-gradient(135deg, #EF5350, #C62828); }
+        
+        /* ================================
+           MAIN CONTENT
+           ================================ */
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        /* ================================
+           SECTIONS
+           ================================ */
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--brand6) 0%, var(--brand7) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(195, 154, 113, 0.25);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            font-weight: 500;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+        
+        /* ================================
+           FEATURE HIGHLIGHT CARD
+           ================================ */
+        .feature-card {
+            background: linear-gradient(135deg, var(--brand9) 0%, var(--brand10) 100%);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(195, 154, 113, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(195, 154, 113, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            color: var(--brand5);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(195, 154, 113, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: rgba(195, 154, 113, 0.08);
+            border-color: rgba(195, 154, 113, 0.3);
+            transform: translateX(4px);
+        }
+        
+        .feature-check {
+            color: var(--brand6);
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+        
+        .feature-item span {
+            color: var(--text-light);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        /* ================================
+           ARCHITECTURE GRID
+           ================================ */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        
+        @media (max-width: 1200px) {
+            .arch-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 768px) {
+            .arch-grid { grid-template-columns: 1fr; }
+        }
+        
+        .layer-card {
+            background: var(--dark-surface);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(195, 154, 113, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .layer-card:hover {
+            border-color: rgba(195, 154, 113, 0.3);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+        }
+        
+        .layer-header {
+            background: linear-gradient(135deg, var(--sider-bg) 0%, var(--dark-navy) 100%);
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(195, 154, 113, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .layer-header-icon {
+            font-size: 24px;
+        }
+        
+        .layer-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3em;
+            font-weight: 500;
+            color: var(--brand5);
+        }
+        
+        .layer-content {
+            padding: 20px;
+        }
+        
+        .module {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--success);
+            transition: all 0.3s ease;
+        }
+        
+        .module:last-child { margin-bottom: 0; }
+        
+        .module:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(4px);
+        }
+        
+        .module.new {
+            border-left-color: var(--brand6);
+            background: rgba(195, 154, 113, 0.05);
+        }
+        
+        .module.missing {
+            border-left-color: var(--error);
+            background: rgba(239, 83, 80, 0.05);
+        }
+        
+        .module.integration {
+            border-left-color: var(--info);
+            background: rgba(66, 165, 245, 0.05);
+        }
+        
+        .module-name {
+            font-weight: 600;
+            font-size: 1em;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .module-desc {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        .module-tech {
+            font-size: 0.8em;
+            color: var(--brand6);
+            margin-top: 8px;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+        }
+        
+        /* ================================
+           DATA MODEL CARDS
+           ================================ */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        
+        .data-card {
+            background: var(--dark-surface);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(195, 154, 113, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .data-card:hover {
+            border-color: var(--brand6);
+            box-shadow: 0 12px 40px rgba(195, 154, 113, 0.15);
+        }
+        
+        .data-card-header {
+            background: linear-gradient(135deg, var(--brand9) 0%, var(--brand10) 100%);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .data-card-header h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--brand4);
+        }
+        
+        .data-card-body {
+            padding: 16px 20px;
+        }
+        
+        .data-field {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.82em;
+            color: var(--text-muted);
+            border-left: 2px solid transparent;
+        }
+        
+        .data-field:last-child { margin-bottom: 0; }
+        
+        .data-field.pk {
+            border-left-color: var(--brand6);
+            background: rgba(195, 154, 113, 0.08);
+            color: var(--brand5);
+        }
+        
+        .data-field.fk {
+            border-left-color: var(--info);
+            background: rgba(66, 165, 245, 0.05);
+        }
+        
+        /* ================================
+           WORKFLOW / FLOW DIAGRAM
+           ================================ */
+        .flow-container {
+            background: var(--dark-surface);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid rgba(195, 154, 113, 0.1);
+        }
+        
+        .flow-step {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--brand6);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .flow-step:hover {
+            background: rgba(195, 154, 113, 0.05);
+            transform: translateX(8px);
+        }
+        
+        .flow-step:last-child { margin-bottom: 0; }
+        
+        .flow-step-number {
+            position: absolute;
+            left: -20px;
+            top: 24px;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--brand6) 0%, var(--brand7) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+            color: var(--brand10);
+            box-shadow: 0 4px 16px rgba(195, 154, 113, 0.3);
+        }
+        
+        .flow-step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3em;
+            color: var(--brand5);
+            margin-bottom: 12px;
+            padding-left: 24px;
+        }
+        
+        .flow-step-content {
+            color: var(--text-muted);
+            line-height: 1.7;
+            padding-left: 24px;
+        }
+        
+        .flow-step-content strong {
+            color: var(--text-light);
+        }
+        
+        .flow-step-content ul {
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+        
+        .flow-step-content li {
+            margin-bottom: 4px;
+        }
+        
+        .flow-arrow {
+            display: flex;
+            justify-content: center;
+            padding: 8px 0;
+            color: var(--brand6);
+            font-size: 1.5em;
+        }
+        
+        /* ================================
+           INFO / WARNING BOXES
+           ================================ */
+        .info-box {
+            background: linear-gradient(135deg, rgba(66, 165, 245, 0.1) 0%, rgba(66, 165, 245, 0.05) 100%);
+            border: 1px solid rgba(66, 165, 245, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .info-box h3 {
+            color: var(--info);
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-box p, .info-box ul {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        
+        .info-box ul { padding-left: 20px; margin-top: 12px; }
+        .info-box li { margin-bottom: 6px; }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 167, 38, 0.1) 0%, rgba(255, 167, 38, 0.05) 100%);
+            border: 1px solid rgba(255, 167, 38, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .warning-box h3 {
+            color: var(--warning);
+            font-size: 1.2em;
+            margin-bottom: 12px;
+        }
+        
+        /* ================================
+           STATUS TABLE
+           ================================ */
+        .status-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--dark-surface);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(195, 154, 113, 0.1);
+        }
+        
+        .status-table th {
+            background: linear-gradient(135deg, var(--brand9) 0%, var(--brand10) 100%);
+            color: var(--brand4);
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        
+        .status-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+        
+        .status-table tr:last-child td { border-bottom: none; }
+        
+        .status-table tr:hover td {
+            background: rgba(195, 154, 113, 0.05);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        
+        .status-badge.done {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .status-badge.partial {
+            background: rgba(255, 167, 38, 0.15);
+            color: #FFA726;
+            border: 1px solid rgba(255, 167, 38, 0.3);
+        }
+        
+        .status-badge.missing {
+            background: rgba(239, 83, 80, 0.15);
+            color: #EF5350;
+            border: 1px solid rgba(239, 83, 80, 0.3);
+        }
+        
+        /* ================================
+           ROADMAP TIMELINE
+           ================================ */
+        .roadmap {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--brand6) 0%, var(--brand8) 100%);
+        }
+        
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 24px;
+            padding-left: 32px;
+        }
+        
+        .roadmap-item:last-child { margin-bottom: 0; }
+        
+        .roadmap-dot {
+            position: absolute;
+            left: -33px;
+            top: 4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--dark-navy);
+            border: 3px solid var(--brand6);
+            box-shadow: 0 0 0 4px var(--dark-surface);
+        }
+        
+        .roadmap-item.high .roadmap-dot { border-color: var(--error); }
+        .roadmap-item.medium .roadmap-dot { border-color: var(--warning); }
+        .roadmap-item.critical .roadmap-dot { border-color: #9C27B0; }
+        
+        .roadmap-card {
+            background: var(--dark-surface);
+            border-radius: 16px;
+            padding: 20px 24px;
+            border: 1px solid rgba(195, 154, 113, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .roadmap-card:hover {
+            border-color: rgba(195, 154, 113, 0.3);
+            transform: translateX(8px);
+        }
+        
+        .roadmap-phase {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2em;
+            color: var(--brand5);
+            margin-bottom: 8px;
+        }
+        
+        .roadmap-duration {
+            font-size: 0.9em;
+            color: var(--brand6);
+            margin-bottom: 12px;
+        }
+        
+        .roadmap-desc {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        
+        /* ================================
+           INTEGRATION FLOW
+           ================================ */
+        .integration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        
+        .integration-card {
+            background: rgba(66, 165, 245, 0.03);
+            border: 1px solid rgba(66, 165, 245, 0.15);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .integration-card:hover {
+            border-color: rgba(66, 165, 245, 0.4);
+            background: rgba(66, 165, 245, 0.06);
+        }
+        
+        .integration-card h4 {
+            color: var(--info);
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .integration-card p {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        
+        .code-snippet {
+            background: var(--dark-navy);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.82em;
+            color: var(--brand5);
+            overflow-x: auto;
+            border: 1px solid rgba(195, 154, 113, 0.1);
+        }
+        
+        /* ================================
+           MISSING FEATURES GRID
+           ================================ */
+        .missing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        
+        .missing-card {
+            background: rgba(239, 83, 80, 0.03);
+            border: 1px solid rgba(239, 83, 80, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .missing-card:hover {
+            border-color: rgba(239, 83, 80, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .missing-card h4 {
+            color: var(--error);
+            font-size: 1em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .missing-card p {
+            color: var(--text-muted);
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        .missing-card .effort {
+            margin-top: 12px;
+            font-size: 0.8em;
+            color: var(--brand6);
+            font-weight: 500;
+        }
+        
+        /* ================================
+           FOOTER
+           ================================ */
+        footer {
+            background: linear-gradient(135deg, var(--sider-bg) 0%, var(--dark-navy) 100%);
+            border-top: 1px solid rgba(195, 154, 113, 0.1);
+            padding: 40px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        footer .logo-text {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+        
+        footer .tech-info {
+            color: var(--brand6);
+            font-size: 0.85em;
+            margin-top: 16px;
+        }
+        
+        /* ================================
+           ANIMATIONS
+           ================================ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        /* ================================
+           SCROLLBAR STYLING
+           ================================ */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--dark-navy);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--brand8);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--brand6);
+        }
+        
+        /* ================================
+           QR CODES WITH HOVER EXPLANATION
+           ================================ */
+        .qr-section {
+            background: linear-gradient(135deg, var(--dark-surface) 0%, var(--sider-bg) 100%);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(195, 154, 113, 0.15);
+        }
+        
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .qr-card {
+            position: relative;
+            background: var(--dark-navy);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(195, 154, 113, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .qr-card:hover {
+            border-color: var(--brand6);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(195, 154, 113, 0.2);
+        }
+        
+        .qr-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--brand6), var(--brand8));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .qr-card:hover::before {
+            opacity: 1;
+        }
+        
+        .qr-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .qr-code {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 8px;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .qr-code svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* QR Code Pattern using CSS */
+        .qr-pattern {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(7, 1fr);
+            gap: 1px;
+            background: white;
+        }
+        
+        .qr-pattern .cell {
+            background: var(--brand10);
+        }
+        
+        .qr-pattern .cell.white {
+            background: white;
+        }
+        
+        .qr-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1em;
+            color: var(--brand5);
+            margin-bottom: 4px;
+        }
+        
+        .qr-subtitle {
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+        
+        .qr-preview {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.75em;
+            color: var(--brand5);
+            margin-bottom: 16px;
+            height: 60px;
+            overflow: hidden;
+            border: 1px solid rgba(195, 154, 113, 0.1);
+        }
+        
+        .qr-scan-hint {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8em;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+        
+        .qr-card:hover .qr-scan-hint {
+            color: var(--brand6);
+        }
+        
+        /* Tooltip / Popup on Hover */
+        .qr-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            width: 350px;
+            max-width: 90vw;
+            background: var(--dark-navy);
+            border: 1px solid var(--brand6);
+            border-radius: 16px;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+        
+        .qr-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 10px solid transparent;
+            border-top-color: var(--brand6);
+        }
+        
+        .qr-card:hover .qr-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-10px);
+        }
+        
+        .qr-tooltip-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1em;
+            color: var(--brand5);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .qr-tooltip-code {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.8em;
+            line-height: 1.6;
+            color: var(--text-light);
+            margin-bottom: 16px;
+            border: 1px solid rgba(195, 154, 113, 0.15);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .qr-tooltip-code .keyword {
+            color: #C792EA;
+        }
+        
+        .qr-tooltip-code .type {
+            color: #FFCB6B;
+        }
+        
+        .qr-tooltip-code .string {
+            color: #C3E88D;
+        }
+        
+        .qr-tooltip-code .comment {
+            color: #546E7A;
+            font-style: italic;
+        }
+        
+        .qr-tooltip-code .annotation {
+            color: #89DDFF;
+        }
+        
+        .qr-tooltip-code .field {
+            color: #F78C6C;
+        }
+        
+        .qr-tooltip-desc {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        .qr-tooltip-desc strong {
+            color: var(--brand6);
+        }
+        
+        /* Animated scan line */
+        .qr-code::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--brand6), transparent);
+            opacity: 0;
+            animation: none;
+        }
+        
+        .qr-card:hover .qr-code::after {
+            opacity: 1;
+            animation: scanLine 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes scanLine {
+            0% { top: 0; }
+            50% { top: calc(100% - 2px); }
+            100% { top: 0; }
+        }
+        
+        /* File path badge */
+        .file-path {
+            display: inline-block;
+            background: rgba(195, 154, 113, 0.1);
+            border: 1px solid rgba(195, 154, 113, 0.2);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 0.75em;
+            color: var(--brand6);
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================
+         HERO SECTION
+         ================================ -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="logo-wrapper">
+                <div class="logo-icon">💎</div>
+                <span class="logo-text">GEMSFLOW</span>
+            </div>
+            <h1>Architecture Complète du Système</h1>
+            <p class="hero-subtitle">Système de Monitoring de Fabrication de Bijoux • Feature Produit Industrialisable</p>
+            <div class="hero-tech">
+                <span class="tech-badge">Spring Boot 3.x • Java 21</span>
+                <span class="tech-badge">React 18 • TypeScript</span>
+                <span class="tech-badge">PostgreSQL • Liquibase</span>
+                <span class="tech-badge">OAuth2 • Keycloak</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================================
+         LEGEND BAR
+         ================================ -->
+    <div class="legend-bar">
+        <div class="legend-item">
+            <div class="legend-dot existing"></div>
+            <span>Existant (Implémenté)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot new"></div>
+            <span>Nouveau (Feature Produit)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot integration"></div>
+            <span>Intégration (Future)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot missing"></div>
+            <span>Manquant (Non implémenté)</span>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- ================================
+             SECTION: VUE D'ENSEMBLE
+             ================================ -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">📊</div>
+                <h2 class="section-title">Vue d'Ensemble du Système</h2>
+            </div>
+
+            <div class="info-box">
+                <h3>ℹ️ État Actuel de l'Application</h3>
+                <p><strong>Complétude MVP: 75%</strong></p>
+                <ul>
+                    <li>✅ Gestion complète des commandes (Orders) avec workflow CAD → Prototyping → Casting → Mounting → Setting → QC</li>
+                    <li>✅ Gestion inventaire multi-types (Diamonds, Gemstones, Metals, Alloys, Other Materials)</li>
+                    <li>✅ Tracking production avec OrderTask et statuts granulaires</li>
+                    <li>✅ Gestion clients, fournisseurs, employés avec RBAC</li>
+                    <li>✅ Calcul automatique des coûts (métaux, labour, pierres)</li>
+                    <li>✅ Stock management avec OrderStock</li>
+                    <li>⚠️ Sécurité OAuth2 + Keycloak (désactivée en DEV, prête pour PROD)</li>
+                    <li>❌ Multi-tenant, Paiements, CRM avancé, QuickBooks (non implémentés)</li>
+                </ul>
+            </div>
+
+            <!-- FEATURE HIGHLIGHT -->
+            <div class="feature-card">
+                <h3>🎯 Nouvelle Feature: Produit Industrialisable</h3>
+                <p>Cette feature permet de définir des produits standardisés avec nomenclature (BOM), gamme de fabrication (Routing), contrôles qualité et traçabilité complète.</p>
+                
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>Définition produit avec SKU, variantes (taille, métal, pierre)</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>BOM (Bill of Materials) avec composants, quantités, pertes attendues</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>Routing (Gamme de fabrication) avec étapes ordonnées, temps standards</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>Critères qualité par étape avec contrôles obligatoires</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>Traçabilité par lot ou par pièce (serial)</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>Génération automatique ordres de fabrication</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>Monitoring temps réel: WIP, lead time, cycle time</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>Identification goulots, suivi scrap et rework</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION: ARCHITECTURE 3-TIERS
+             ================================ -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">🏗️</div>
+                <h2 class="section-title">Architecture Technique (3 Tiers)</h2>
+            </div>
+
+            <div class="arch-grid">
+                
+                <!-- FRONTEND -->
+                <div class="layer-card">
+                    <div class="layer-header">
+                        <span class="layer-header-icon">🎨</span>
+                        <h3>Frontend (React)</h3>
+                    </div>
+                    <div class="layer-content">
+                        <div class="module">
+                            <div class="module-name">Router & Navigation</div>
+                            <div class="module-desc">React Router avec PrivateRoute, UserRoute, gestion rôles</div>
+                            <div class="module-tech">AppRouter.tsx, PrivateRoute.tsx</div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-name">State Management</div>
+                            <div class="module-desc">React Query (TanStack Query) pour cache API, UserProvider pour contexte utilisateur</div>
+                            <div class="module-tech">useQuery, useMutation, UserContext</div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-name">Features Existantes</div>
+                            <div class="module-desc">
+                                Orders (liste, détails, création) • CAD, 3D Printing, Casting • 
+                                Inventory (Diamonds, Gems, Metals) • Stock, Settings, Users, Clients
+                            </div>
+                            <div class="module-tech">107 fichiers orders/, 26 gemstones/, 35 metals/</div>
+                        </div>
+                        
+                        <div class="module new">
+                            <div class="module-name">🆕 Feature Produit (UI)</div>
+                            <div class="module-desc">
+                                ProductList, ProductDetails • ProductForm (SKU, variantes) • 
+                                BOMEditor, RoutingEditor • QualityControlConfig • ProductionOrderLaunch
+                            </div>
+                            <div class="module-tech">src/features/product/, src/entities/product/</div>
+                        </div>
+                        
+                        <div class="module missing">
+                            <div class="module-name">❌ Landing Page</div>
+                            <div class="module-desc">Page publique signup multi-tenant (non implémentée)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BACKEND -->
+                <div class="layer-card">
+                    <div class="layer-header">
+                        <span class="layer-header-icon">⚙️</span>
+                        <h3>Backend (Spring Boot)</h3>
+                    </div>
+                    <div class="layer-content">
+                        <div class="module">
+                            <div class="module-name">Security Layer</div>
+                            <div class="module-desc">OAuth2 + JWT + Keycloak, RBAC (ADMIN, DESIGNER, MOUNTER, SETTER, etc.)</div>
+                            <div class="module-tech">SecurityConfig.java, ROLE.java (⚠️ désactivé en DEV)</div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-name">Controllers Existants</div>
+                            <div class="module-desc">
+                                OrderController, OrderTaskController • CastingController, DiamondController • 
+                                GemstoneController, MetalController • ClientController, SupplierController
+                            </div>
+                            <div class="module-tech">53 controllers, REST API complète</div>
+                        </div>
+                        
+                        <div class="module new">
+                            <div class="module-name">🆕 Product Controllers</div>
+                            <div class="module-desc">
+                                ProductController (CRUD) • BOMController • RoutingController • 
+                                ProductionOrderController • ProductQualityController
+                            </div>
+                            <div class="module-tech">controller/product/</div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-name">Services Layer</div>
+                            <div class="module-desc">Logique métier, orchestration, calculs coûts, validations</div>
+                            <div class="module-tech">143 services existants</div>
+                        </div>
+                        
+                        <div class="module integration">
+                            <div class="module-name">🔗 Intégrations (Futures)</div>
+                            <div class="module-desc">
+                                QuickBooks API (sync factures/clients) • Stripe (paiements SaaS) • Email (SMTP)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DATABASE -->
+                <div class="layer-card">
+                    <div class="layer-header">
+                        <span class="layer-header-icon">🗄️</span>
+                        <h3>Base de Données (PostgreSQL)</h3>
+                    </div>
+                    <div class="layer-content">
+                        <div class="module">
+                            <div class="module-name">Tables Existantes (Core)</div>
+                            <div class="module-desc">
+                                atelier_user, atelier_role • client, supplier • 
+                                atelier_order, order_task • casting, order_metal_casting
+                            </div>
+                            <div class="module-tech">76 migrations Liquibase (001-076)</div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-name">Tables Inventory</div>
+                            <div class="module-desc">
+                                diamond, gemstone • pure_metal_purchase, alloy, alloyed_metal • 
+                                other_material, order_metal_production
+                            </div>
+                        </div>
+                        
+                        <div class="module new">
+                            <div class="module-name">🆕 Tables Produit (10 nouvelles)</div>
+                            <div class="module-desc">
+                                product, product_variant • bom, bom_line • routing, routing_step • 
+                                quality_criteria • production_order, production_event • lot_traceability
+                            </div>
+                            <div class="module-tech">Migrations 077-090 (à créer)</div>
+                        </div>
+                        
+                        <div class="module">
+                            <div class="module-name">Fonctions SQL</div>
+                            <div class="module-desc">
+                                is_row_referenced() • carat_to_gram() • create_pure_metal_summary() • 
+                                create_update_alloy/alloyed_metal()
+                            </div>
+                            <div class="module-tech">8 fichiers .sql dans migrations</div>
+                        </div>
+                        
+                        <div class="module missing">
+                            <div class="module-name">❌ Multi-tenant</div>
+                            <div class="module-desc">tenant_id sur toutes les tables + RLS (38 entities restantes)</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION: MODÈLE DE DONNÉES PRODUIT
+             ================================ -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">📐</div>
+                <h2 class="section-title">Modèle de Données — Feature Produit</h2>
+            </div>
+
+            <div class="data-grid">
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>🏷️</span>
+                        <h4>PRODUCT</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field">sku VARCHAR(64) UNIQUE NOT NULL</div>
+                        <div class="data-field">name VARCHAR(255) NOT NULL</div>
+                        <div class="data-field">traceability_type VARCHAR(16) -- LOT, SERIAL</div>
+                        <div class="data-field fk">default_bom_id BIGINT → bom(id)</div>
+                        <div class="data-field fk">default_routing_id BIGINT → routing(id)</div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>🔧</span>
+                        <h4>PRODUCT_VARIANT</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field fk">product_id BIGINT → product(id)</div>
+                        <div class="data-field">variant_sku VARCHAR(64) UNIQUE</div>
+                        <div class="data-field">size VARCHAR(32)</div>
+                        <div class="data-field fk">metal_id BIGINT → metal(id)</div>
+                        <div class="data-field">options JSONB</div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>📋</span>
+                        <h4>BOM (Bill of Materials)</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field fk">product_id BIGINT → product(id)</div>
+                        <div class="data-field">version VARCHAR(16) NOT NULL</div>
+                        <div class="data-field">effective_from DATE</div>
+                        <div class="data-field">status VARCHAR(16) -- DRAFT, ACTIVE</div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>📦</span>
+                        <h4>BOM_LINE</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field fk">bom_id BIGINT → bom(id)</div>
+                        <div class="data-field">component_type VARCHAR(32)</div>
+                        <div class="data-field">quantity DECIMAL(10,3) NOT NULL</div>
+                        <div class="data-field">scrap_rate DECIMAL(5,2) -- % perte</div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>🛣️</span>
+                        <h4>ROUTING (Gamme)</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field fk">product_id BIGINT → product(id)</div>
+                        <div class="data-field">version VARCHAR(16) NOT NULL</div>
+                        <div class="data-field">status VARCHAR(16)</div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>👣</span>
+                        <h4>ROUTING_STEP</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field fk">routing_id BIGINT → routing(id)</div>
+                        <div class="data-field">step_number INTEGER NOT NULL</div>
+                        <div class="data-field">workstation_type VARCHAR(64)</div>
+                        <div class="data-field">time_standard_minutes INTEGER</div>
+                        <div class="data-field">qc_required BOOLEAN</div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>✅</span>
+                        <h4>QUALITY_CRITERIA</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field fk">routing_step_id BIGINT → routing_step(id)</div>
+                        <div class="data-field">criteria_name VARCHAR(128)</div>
+                        <div class="data-field">criteria_type VARCHAR(32)</div>
+                        <div class="data-field">min_value / max_value DECIMAL</div>
+                        <div class="data-field">is_mandatory BOOLEAN</div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>🏭</span>
+                        <h4>PRODUCTION_ORDER</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field">order_number VARCHAR(64) UNIQUE</div>
+                        <div class="data-field fk">product_id BIGINT → product(id)</div>
+                        <div class="data-field">quantity INTEGER NOT NULL</div>
+                        <div class="data-field">status VARCHAR(32)</div>
+                        <div class="data-field fk">client_order_id BIGINT → atelier_order(id)</div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>📊</span>
+                        <h4>PRODUCTION_EVENT</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field fk">production_order_id BIGINT</div>
+                        <div class="data-field">event_type VARCHAR(32)</div>
+                        <div class="data-field">event_timestamp TIMESTAMP</div>
+                        <div class="data-field">serial_number / lot_number VARCHAR</div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <span>🔍</span>
+                        <h4>LOT_TRACEABILITY</h4>
+                    </div>
+                    <div class="data-card-body">
+                        <div class="data-field pk">id BIGSERIAL PRIMARY KEY</div>
+                        <div class="data-field">lot_number VARCHAR(64) UNIQUE</div>
+                        <div class="data-field fk">production_order_id BIGINT</div>
+                        <div class="data-field">material_type VARCHAR(32)</div>
+                        <div class="data-field">supplier_lot VARCHAR(64)</div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION: QR CODES - CODE EXPLANATION
+             ================================ -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">📱</div>
+                <h2 class="section-title">Code Source — Scan & Explore</h2>
+            </div>
+
+            <div class="info-box" style="margin-bottom: 32px;">
+                <h3>🔍 Survolez les QR codes pour voir le code</h3>
+                <p>Chaque QR code représente un élément clé du système. Passez votre souris dessus pour voir l'implémentation exacte du code avec explications.</p>
+            </div>
+
+            <div class="qr-section">
+                <div class="qr-grid">
+                    
+                    <!-- QR 1: Product Entity -->
+                    <div class="qr-card">
+                        <div class="qr-header">
+                            <div class="qr-code">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="100" height="100" fill="white"/>
+                                    <rect x="10" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="65" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="70" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="73" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="10" y="65" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="70" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="73" width="9" height="9" fill="#271F17"/>
+                                    <rect x="40" y="10" width="5" height="5" fill="#271F17"/>
+                                    <rect x="50" y="10" width="5" height="5" fill="#271F17"/>
+                                    <rect x="40" y="20" width="5" height="5" fill="#271F17"/>
+                                    <rect x="45" y="25" width="5" height="5" fill="#271F17"/>
+                                    <rect x="40" y="40" width="20" height="20" fill="#C39A71" rx="3"/>
+                                    <rect x="45" y="45" width="10" height="10" fill="white" rx="2"/>
+                                    <rect x="65" y="45" width="5" height="5" fill="#271F17"/>
+                                    <rect x="75" y="55" width="5" height="5" fill="#271F17"/>
+                                    <rect x="45" y="65" width="5" height="5" fill="#271F17"/>
+                                    <rect x="55" y="75" width="5" height="5" fill="#271F17"/>
+                                    <rect x="65" y="70" width="25" height="5" fill="#271F17"/>
+                                    <rect x="65" y="80" width="5" height="10" fill="#271F17"/>
+                                    <rect x="80" y="80" width="10" height="10" fill="#271F17"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="qr-title">Product.java</div>
+                                <div class="qr-subtitle">Entity JPA - Produit industrialisable</div>
+                            </div>
+                        </div>
+                        <div class="qr-preview">
+                            @Entity @Table(name = "product")
+                            public class Product extends BaseModel...
+                        </div>
+                        <div class="qr-scan-hint">
+                            <span>👆</span> Survoler pour voir le code complet
+                        </div>
+                        <div class="file-path">model/product/Product.java</div>
+                        
+                        <!-- Tooltip with code -->
+                        <div class="qr-tooltip">
+                            <div class="qr-tooltip-title">🏷️ Product Entity</div>
+                            <div class="qr-tooltip-code">
+<span class="annotation">@Entity</span>
+<span class="annotation">@Table</span>(name = <span class="string">"product"</span>)
+<span class="keyword">public class</span> <span class="type">Product</span> <span class="keyword">extends</span> BaseModel {
+
+    <span class="annotation">@Column</span>(unique = <span class="keyword">true</span>, nullable = <span class="keyword">false</span>)
+    <span class="keyword">private</span> <span class="type">String</span> <span class="field">sku</span>;
+
+    <span class="annotation">@Column</span>(nullable = <span class="keyword">false</span>)
+    <span class="keyword">private</span> <span class="type">String</span> <span class="field">name</span>;
+
+    <span class="annotation">@Enumerated</span>(EnumType.STRING)
+    <span class="keyword">private</span> <span class="type">TraceabilityType</span> <span class="field">traceabilityType</span>;
+    <span class="comment">// LOT ou SERIAL</span>
+
+    <span class="annotation">@OneToOne</span>(fetch = FetchType.LAZY)
+    <span class="keyword">private</span> <span class="type">BOM</span> <span class="field">defaultBom</span>;
+
+    <span class="annotation">@OneToOne</span>(fetch = FetchType.LAZY)
+    <span class="keyword">private</span> <span class="type">Routing</span> <span class="field">defaultRouting</span>;
+}
+                            </div>
+                            <div class="qr-tooltip-desc">
+                                <strong>Product</strong> représente un bijou industrialisable avec son SKU unique, sa nomenclature (BOM) par défaut et sa gamme de fabrication (Routing).
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- QR 2: BOM Entity -->
+                    <div class="qr-card">
+                        <div class="qr-header">
+                            <div class="qr-code">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="100" height="100" fill="white"/>
+                                    <rect x="10" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="65" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="70" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="73" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="10" y="65" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="70" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="73" width="9" height="9" fill="#271F17"/>
+                                    <rect x="40" y="15" width="5" height="5" fill="#271F17"/>
+                                    <rect x="50" y="20" width="5" height="5" fill="#271F17"/>
+                                    <rect x="40" y="40" width="20" height="20" fill="#42A5F5" rx="3"/>
+                                    <rect x="45" y="45" width="10" height="10" fill="white" rx="2"/>
+                                    <rect x="70" y="45" width="5" height="5" fill="#271F17"/>
+                                    <rect x="80" y="50" width="5" height="5" fill="#271F17"/>
+                                    <rect x="45" y="70" width="5" height="5" fill="#271F17"/>
+                                    <rect x="55" y="80" width="5" height="5" fill="#271F17"/>
+                                    <rect x="65" y="65" width="25" height="5" fill="#271F17"/>
+                                    <rect x="75" y="75" width="5" height="15" fill="#271F17"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="qr-title">BOM.java</div>
+                                <div class="qr-subtitle">Bill of Materials - Nomenclature</div>
+                            </div>
+                        </div>
+                        <div class="qr-preview">
+                            @Entity @Table(name = "bom")
+                            public class BOM extends BaseModel...
+                        </div>
+                        <div class="qr-scan-hint">
+                            <span>👆</span> Survoler pour voir le code complet
+                        </div>
+                        <div class="file-path">model/product/BOM.java</div>
+                        
+                        <div class="qr-tooltip">
+                            <div class="qr-tooltip-title">📋 Bill of Materials</div>
+                            <div class="qr-tooltip-code">
+<span class="annotation">@Entity</span>
+<span class="annotation">@Table</span>(name = <span class="string">"bom"</span>)
+<span class="keyword">public class</span> <span class="type">BOM</span> <span class="keyword">extends</span> BaseModel {
+
+    <span class="annotation">@ManyToOne</span>(fetch = FetchType.LAZY)
+    <span class="keyword">private</span> <span class="type">Product</span> <span class="field">product</span>;
+
+    <span class="keyword">private</span> <span class="type">String</span> <span class="field">version</span>;
+
+    <span class="annotation">@Enumerated</span>(EnumType.STRING)
+    <span class="keyword">private</span> <span class="type">BOMStatus</span> <span class="field">status</span>;
+    <span class="comment">// DRAFT, ACTIVE, OBSOLETE</span>
+
+    <span class="annotation">@OneToMany</span>(mappedBy = <span class="string">"bom"</span>)
+    <span class="keyword">private</span> <span class="type">List&lt;BOMLine&gt;</span> <span class="field">lines</span>;
+    <span class="comment">// Composants: métaux, pierres...</span>
+
+    <span class="keyword">private</span> <span class="type">LocalDate</span> <span class="field">effectiveFrom</span>;
+    <span class="keyword">private</span> <span class="type">LocalDate</span> <span class="field">effectiveTo</span>;
+}
+                            </div>
+                            <div class="qr-tooltip-desc">
+                                <strong>BOM</strong> définit la liste des composants nécessaires (métaux, pierres, etc.) avec leurs quantités et taux de perte pour fabriquer un produit.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- QR 3: BOMLine -->
+                    <div class="qr-card">
+                        <div class="qr-header">
+                            <div class="qr-code">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="100" height="100" fill="white"/>
+                                    <rect x="10" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="65" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="70" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="73" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="10" y="65" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="70" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="73" width="9" height="9" fill="#271F17"/>
+                                    <rect x="40" y="40" width="20" height="20" fill="#4CAF50" rx="3"/>
+                                    <rect x="45" y="45" width="10" height="10" fill="white" rx="2"/>
+                                    <rect x="42" y="15" width="5" height="5" fill="#271F17"/>
+                                    <rect x="52" y="20" width="5" height="5" fill="#271F17"/>
+                                    <rect x="65" y="50" width="5" height="5" fill="#271F17"/>
+                                    <rect x="75" y="45" width="5" height="5" fill="#271F17"/>
+                                    <rect x="50" y="70" width="5" height="5" fill="#271F17"/>
+                                    <rect x="65" y="75" width="20" height="5" fill="#271F17"/>
+                                    <rect x="70" y="65" width="5" height="5" fill="#271F17"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="qr-title">BOMLine.java</div>
+                                <div class="qr-subtitle">Ligne de nomenclature - Composant</div>
+                            </div>
+                        </div>
+                        <div class="qr-preview">
+                            @Entity public class BOMLine {
+                              ComponentType type; BigDecimal qty...
+                        </div>
+                        <div class="qr-scan-hint">
+                            <span>👆</span> Survoler pour voir le code complet
+                        </div>
+                        <div class="file-path">model/product/BOMLine.java</div>
+                        
+                        <div class="qr-tooltip">
+                            <div class="qr-tooltip-title">📦 BOM Line (Composant)</div>
+                            <div class="qr-tooltip-code">
+<span class="annotation">@Entity</span>
+<span class="keyword">public class</span> <span class="type">BOMLine</span> <span class="keyword">extends</span> BaseModel {
+
+    <span class="annotation">@ManyToOne</span>
+    <span class="keyword">private</span> <span class="type">BOM</span> <span class="field">bom</span>;
+
+    <span class="keyword">private</span> <span class="type">Integer</span> <span class="field">lineNumber</span>;
+
+    <span class="annotation">@Enumerated</span>(EnumType.STRING)
+    <span class="keyword">private</span> <span class="type">ComponentType</span> <span class="field">componentType</span>;
+    <span class="comment">// METAL, DIAMOND, GEMSTONE, OTHER</span>
+
+    <span class="keyword">private</span> <span class="type">Long</span> <span class="field">componentId</span>;
+    <span class="comment">// FK polymorphique vers inventory</span>
+
+    <span class="keyword">private</span> <span class="type">BigDecimal</span> <span class="field">quantity</span>;
+    <span class="keyword">private</span> <span class="type">String</span> <span class="field">unit</span>; <span class="comment">// GRAM, CARAT, PIECE</span>
+
+    <span class="keyword">private</span> <span class="type">BigDecimal</span> <span class="field">scrapRate</span>;
+    <span class="comment">// % perte attendue (ex: 5.00)</span>
+}
+                            </div>
+                            <div class="qr-tooltip-desc">
+                                <strong>BOMLine</strong> représente un composant dans la nomenclature avec sa quantité, unité et taux de perte. Pointe vers metal, diamond, gemstone ou other_material.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- QR 4: Routing -->
+                    <div class="qr-card">
+                        <div class="qr-header">
+                            <div class="qr-code">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="100" height="100" fill="white"/>
+                                    <rect x="10" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="65" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="70" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="73" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="10" y="65" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="70" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="73" width="9" height="9" fill="#271F17"/>
+                                    <rect x="40" y="40" width="20" height="20" fill="#FFA726" rx="3"/>
+                                    <rect x="45" y="45" width="10" height="10" fill="white" rx="2"/>
+                                    <rect x="45" y="15" width="5" height="5" fill="#271F17"/>
+                                    <rect x="55" y="25" width="5" height="5" fill="#271F17"/>
+                                    <rect x="70" y="55" width="5" height="5" fill="#271F17"/>
+                                    <rect x="45" y="65" width="5" height="5" fill="#271F17"/>
+                                    <rect x="60" y="75" width="5" height="5" fill="#271F17"/>
+                                    <rect x="70" y="70" width="20" height="5" fill="#271F17"/>
+                                    <rect x="85" y="75" width="5" height="15" fill="#271F17"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="qr-title">RoutingStep.java</div>
+                                <div class="qr-subtitle">Étape de gamme de fabrication</div>
+                            </div>
+                        </div>
+                        <div class="qr-preview">
+                            @Entity public class RoutingStep {
+                              String workstationType; Integer timeStd...
+                        </div>
+                        <div class="qr-scan-hint">
+                            <span>👆</span> Survoler pour voir le code complet
+                        </div>
+                        <div class="file-path">model/product/RoutingStep.java</div>
+                        
+                        <div class="qr-tooltip">
+                            <div class="qr-tooltip-title">👣 Routing Step</div>
+                            <div class="qr-tooltip-code">
+<span class="annotation">@Entity</span>
+<span class="keyword">public class</span> <span class="type">RoutingStep</span> <span class="keyword">extends</span> BaseModel {
+
+    <span class="annotation">@ManyToOne</span>
+    <span class="keyword">private</span> <span class="type">Routing</span> <span class="field">routing</span>;
+
+    <span class="keyword">private</span> <span class="type">Integer</span> <span class="field">stepNumber</span>;
+    <span class="keyword">private</span> <span class="type">String</span> <span class="field">stepName</span>;
+
+    <span class="annotation">@Enumerated</span>(EnumType.STRING)
+    <span class="keyword">private</span> <span class="type">WorkstationType</span> <span class="field">workstationType</span>;
+    <span class="comment">// CAD, PRINTING_3D, CASTING,</span>
+    <span class="comment">// MOUNTING, SETTING, POLISHING, QC</span>
+
+    <span class="keyword">private</span> <span class="type">Integer</span> <span class="field">timeStandardMinutes</span>;
+    <span class="keyword">private</span> <span class="type">Boolean</span> <span class="field">qcRequired</span>;
+
+    <span class="annotation">@ManyToOne</span>
+    <span class="keyword">private</span> <span class="type">RoutingStep</span> <span class="field">reworkStep</span>;
+    <span class="comment">// Étape de retour si défaut</span>
+}
+                            </div>
+                            <div class="qr-tooltip-desc">
+                                <strong>RoutingStep</strong> définit une étape de fabrication avec son temps standard, le poste de travail compatible et l'éventuelle étape de rework en cas de défaut.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- QR 5: Production Order -->
+                    <div class="qr-card">
+                        <div class="qr-header">
+                            <div class="qr-code">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="100" height="100" fill="white"/>
+                                    <rect x="10" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="65" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="70" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="73" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="10" y="65" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="70" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="73" width="9" height="9" fill="#271F17"/>
+                                    <rect x="40" y="40" width="20" height="20" fill="#9C27B0" rx="3"/>
+                                    <rect x="45" y="45" width="10" height="10" fill="white" rx="2"/>
+                                    <rect x="42" y="12" width="5" height="5" fill="#271F17"/>
+                                    <rect x="50" y="22" width="5" height="5" fill="#271F17"/>
+                                    <rect x="68" y="48" width="5" height="5" fill="#271F17"/>
+                                    <rect x="78" y="58" width="5" height="5" fill="#271F17"/>
+                                    <rect x="48" y="68" width="5" height="5" fill="#271F17"/>
+                                    <rect x="65" y="72" width="20" height="5" fill="#271F17"/>
+                                    <rect x="75" y="82" width="10" height="8" fill="#271F17"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="qr-title">ProductionOrder.java</div>
+                                <div class="qr-subtitle">Ordre de fabrication généré</div>
+                            </div>
+                        </div>
+                        <div class="qr-preview">
+                            @Entity public class ProductionOrder {
+                              String orderNumber; Integer quantity...
+                        </div>
+                        <div class="qr-scan-hint">
+                            <span>👆</span> Survoler pour voir le code complet
+                        </div>
+                        <div class="file-path">model/product/ProductionOrder.java</div>
+                        
+                        <div class="qr-tooltip">
+                            <div class="qr-tooltip-title">🏭 Production Order</div>
+                            <div class="qr-tooltip-code">
+<span class="annotation">@Entity</span>
+<span class="keyword">public class</span> <span class="type">ProductionOrder</span> <span class="keyword">extends</span> BaseModel {
+
+    <span class="annotation">@Column</span>(unique = <span class="keyword">true</span>)
+    <span class="keyword">private</span> <span class="type">String</span> <span class="field">orderNumber</span>;
+
+    <span class="annotation">@ManyToOne</span>
+    <span class="keyword">private</span> <span class="type">Product</span> <span class="field">product</span>;
+
+    <span class="annotation">@ManyToOne</span>
+    <span class="keyword">private</span> <span class="type">ProductVariant</span> <span class="field">variant</span>;
+
+    <span class="keyword">private</span> <span class="type">Integer</span> <span class="field">quantity</span>;
+
+    <span class="annotation">@Enumerated</span>(EnumType.STRING)
+    <span class="keyword">private</span> <span class="type">ProductionStatus</span> <span class="field">status</span>;
+    <span class="comment">// PLANNED, RELEASED, IN_PROGRESS,</span>
+    <span class="comment">// COMPLETED, CANCELLED</span>
+
+    <span class="annotation">@ManyToOne</span>
+    <span class="keyword">private</span> <span class="type">Order</span> <span class="field">clientOrder</span>;
+    <span class="comment">// Lien avec commande client</span>
+}
+                            </div>
+                            <div class="qr-tooltip-desc">
+                                <strong>ProductionOrder</strong> est généré automatiquement depuis un produit. Il est lié à la commande client (atelier_order) et contient tous les événements de fabrication.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- QR 6: Production Event -->
+                    <div class="qr-card">
+                        <div class="qr-header">
+                            <div class="qr-code">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="100" height="100" fill="white"/>
+                                    <rect x="10" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="65" y="10" width="25" height="25" fill="#271F17"/>
+                                    <rect x="70" y="15" width="15" height="15" fill="white"/>
+                                    <rect x="73" y="18" width="9" height="9" fill="#271F17"/>
+                                    <rect x="10" y="65" width="25" height="25" fill="#271F17"/>
+                                    <rect x="15" y="70" width="15" height="15" fill="white"/>
+                                    <rect x="18" y="73" width="9" height="9" fill="#271F17"/>
+                                    <rect x="40" y="40" width="20" height="20" fill="#EF5350" rx="3"/>
+                                    <rect x="45" y="45" width="10" height="10" fill="white" rx="2"/>
+                                    <rect x="40" y="15" width="5" height="5" fill="#271F17"/>
+                                    <rect x="55" y="10" width="5" height="5" fill="#271F17"/>
+                                    <rect x="50" y="25" width="5" height="5" fill="#271F17"/>
+                                    <rect x="72" y="45" width="5" height="5" fill="#271F17"/>
+                                    <rect x="82" y="55" width="5" height="5" fill="#271F17"/>
+                                    <rect x="50" y="65" width="5" height="5" fill="#271F17"/>
+                                    <rect x="40" y="75" width="5" height="5" fill="#271F17"/>
+                                    <rect x="65" y="70" width="5" height="20" fill="#271F17"/>
+                                    <rect x="75" y="80" width="15" height="10" fill="#271F17"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="qr-title">ProductionEvent.java</div>
+                                <div class="qr-subtitle">Événement atelier (STEP_IN, QC...)</div>
+                            </div>
+                        </div>
+                        <div class="qr-preview">
+                            @Entity public class ProductionEvent {
+                              EventType type; Instant timestamp...
+                        </div>
+                        <div class="qr-scan-hint">
+                            <span>👆</span> Survoler pour voir le code complet
+                        </div>
+                        <div class="file-path">model/product/ProductionEvent.java</div>
+                        
+                        <div class="qr-tooltip">
+                            <div class="qr-tooltip-title">📊 Production Event</div>
+                            <div class="qr-tooltip-code">
+<span class="annotation">@Entity</span>
+<span class="keyword">public class</span> <span class="type">ProductionEvent</span> <span class="keyword">extends</span> BaseModel {
+
+    <span class="annotation">@ManyToOne</span>
+    <span class="keyword">private</span> <span class="type">ProductionOrder</span> <span class="field">productionOrder</span>;
+
+    <span class="annotation">@ManyToOne</span>
+    <span class="keyword">private</span> <span class="type">RoutingStep</span> <span class="field">routingStep</span>;
+
+    <span class="annotation">@Enumerated</span>(EnumType.STRING)
+    <span class="keyword">private</span> <span class="type">EventType</span> <span class="field">eventType</span>;
+    <span class="comment">// STEP_IN, STEP_OUT, QC_PASS,</span>
+    <span class="comment">// QC_FAIL, DEFECT, REWORK, SCRAP</span>
+
+    <span class="keyword">private</span> <span class="type">Instant</span> <span class="field">eventTimestamp</span>;
+
+    <span class="annotation">@ManyToOne</span>
+    <span class="keyword">private</span> <span class="type">User</span> <span class="field">user</span>;
+
+    <span class="keyword">private</span> <span class="type">String</span> <span class="field">serialNumber</span>;
+    <span class="keyword">private</span> <span class="type">String</span> <span class="field">lotNumber</span>;
+    <span class="keyword">private</span> <span class="type">String</span> <span class="field">defectType</span>;
+}
+                            </div>
+                            <div class="qr-tooltip-desc">
+                                <strong>ProductionEvent</strong> trace chaque action: entrée/sortie d'étape, contrôles qualité, défauts, rework et scrap. Utilisé pour calculer WIP, lead time et goulots.
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION: WORKFLOW FEATURE PRODUIT
+             ================================ -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">🔄</div>
+                <h2 class="section-title">Workflow Feature Produit</h2>
+            </div>
+
+            <div class="flow-container">
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-step-title">Définition Produit</div>
+                    <div class="flow-step-content">
+                        <strong>Acteur:</strong> Product Manager / Admin<br>
+                        <strong>Actions:</strong> Créer fiche produit (SKU, nom), définir variantes (tailles, métaux, pierres), choisir type de traçabilité (LOT ou SERIAL)<br>
+                        <strong>Résultat:</strong> Produit créé en statut DRAFT
+                    </div>
+                </div>
+                
+                <div class="flow-arrow">▼</div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-step-title">Configuration BOM (Nomenclature)</div>
+                    <div class="flow-step-content">
+                        <strong>Acteur:</strong> Production Engineer<br>
+                        <strong>Actions:</strong> Ajouter composants (métaux, pierres, autres), définir quantités, spécifier taux de perte (scrap_rate)<br>
+                        <strong>Résultat:</strong> BOM validée et attachée au produit
+                    </div>
+                </div>
+                
+                <div class="flow-arrow">▼</div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-step-title">Configuration Routing (Gamme)</div>
+                    <div class="flow-step-content">
+                        <strong>Acteur:</strong> Production Engineer<br>
+                        <strong>Actions:</strong> Définir séquence d'étapes (CAD → Prototyping → Casting → Mounting → Setting → Polishing → QC), temps standards, postes compatibles, contrôles QC obligatoires, étapes de rework<br>
+                        <strong>Résultat:</strong> Routing validé
+                    </div>
+                </div>
+                
+                <div class="flow-arrow">▼</div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div class="flow-step-title">Configuration Qualité</div>
+                    <div class="flow-step-content">
+                        <strong>Acteur:</strong> Quality Manager<br>
+                        <strong>Actions:</strong> Définir critères QC par étape, spécifier tolérances, marquer critères obligatoires, définir types de défauts<br>
+                        <strong>Résultat:</strong> Produit prêt pour production (statut ACTIVE)
+                    </div>
+                </div>
+                
+                <div class="flow-arrow">▼</div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">5</div>
+                    <div class="flow-step-title">Génération Ordre de Fabrication</div>
+                    <div class="flow-step-content">
+                        <strong>Déclencheur:</strong> Commande client (atelier_order) ou stock minimum<br>
+                        <strong>Génération automatique:</strong>
+                        <ul>
+                            <li>Liste des étapes (depuis routing)</li>
+                            <li>Besoins matière (depuis BOM)</li>
+                            <li>Contrôles qualité requis</li>
+                            <li>Numéros de lot/serial si traçabilité activée</li>
+                        </ul>
+                        <strong>Résultat:</strong> Production_order créé en statut RELEASED
+                    </div>
+                </div>
+                
+                <div class="flow-arrow">▼</div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">6</div>
+                    <div class="flow-step-title">Exécution Production (Monitoring)</div>
+                    <div class="flow-step-content">
+                        <strong>Acteurs:</strong> Opérateurs atelier (Designer, Mounter, Setter, etc.)<br>
+                        <strong>Événements enregistrés:</strong>
+                        <ul>
+                            <li><strong>STEP_IN/STEP_OUT:</strong> Entrée/sortie d'étape (timestamps)</li>
+                            <li><strong>QC_PASS/QC_FAIL:</strong> Contrôle qualité OK/KO</li>
+                            <li><strong>DEFECT:</strong> Défaut identifié (type, quantité)</li>
+                            <li><strong>REWORK:</strong> Renvoi vers étape spécifique</li>
+                            <li><strong>SCRAP:</strong> Rebut (pièce non récupérable)</li>
+                        </ul>
+                        <strong>Calculs automatiques:</strong> Cycle time, WIP par étape, lead time total, taux scrap/rework
+                    </div>
+                </div>
+                
+                <div class="flow-arrow">▼</div>
+                
+                <div class="flow-step">
+                    <div class="flow-step-number">7</div>
+                    <div class="flow-step-title">Monitoring & Dashboards</div>
+                    <div class="flow-step-content">
+                        <strong>Dashboards disponibles:</strong>
+                        <ul>
+                            <li><strong>WIP Dashboard:</strong> Quantité en cours par étape</li>
+                            <li><strong>Lead Time Analysis:</strong> Temps moyen de fabrication par produit</li>
+                            <li><strong>Bottleneck Detection:</strong> Étapes avec WIP élevé et temps long</li>
+                            <li><strong>Quality Dashboard:</strong> Taux de défauts, rework, scrap par produit/étape</li>
+                            <li><strong>Traceability Report:</strong> Historique complet lot/serial</li>
+                        </ul>
+                        <strong>Alertes:</strong> Retard, goulot, taux scrap anormal, stock insuffisant
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION: INTÉGRATION SYSTÈME EXISTANT
+             ================================ -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">🔗</div>
+                <h2 class="section-title">Intégration avec Système Existant</h2>
+            </div>
+
+            <div class="info-box">
+                <h3>ℹ️ Principe d'Intégration</h3>
+                <p>La feature Produit s'intègre au système existant sans le remplacer. Les deux modes coexistent:</p>
+                <ul>
+                    <li><strong>Mode Actuel (Order-based):</strong> Commandes sur-mesure, gestion manuelle des tâches</li>
+                    <li><strong>Mode Produit (Product-based):</strong> Produits standardisés, génération automatique des ordres de fabrication</li>
+                </ul>
+            </div>
+
+            <div class="integration-grid">
+                
+                <div class="integration-card">
+                    <h4>1. Lien atelier_order ↔ production_order</h4>
+                    <p>Lorsqu'une commande client concerne un produit standardisé, le système génère automatiquement un production_order lié.</p>
+                    <div class="code-snippet">production_order.client_order_id → atelier_order.id</div>
+                </div>
+                
+                <div class="integration-card">
+                    <h4>2. Réutilisation Événements Existants</h4>
+                    <p>Les production_event utilisent les mêmes types que le système actuel:</p>
+                    <div class="code-snippet">OrderTaskStatus: READY_FOR_CAD, IN_CAD, CAD_REVIEW...<br>OrderStatus: IN_CAD, PROTOTYPING, AT_THE_CASTING...</div>
+                </div>
+                
+                <div class="integration-card">
+                    <h4>3. Partage des Composants Inventory</h4>
+                    <p>Les BOM_LINE pointent vers les mêmes tables inventory existantes:</p>
+                    <div class="code-snippet">METAL → metal.id<br>DIAMOND → diamond.id<br>GEMSTONE → gemstone.id<br>OTHER → other_material.id</div>
+                </div>
+                
+                <div class="integration-card">
+                    <h4>4. Calcul Coûts Unifié</h4>
+                    <p>Le système de calcul existant (OrderProfit, OrderMetalTotal) est étendu pour les production_order:</p>
+                    <div class="code-snippet">Coût matière (BOM) + Coût labour (Routing) + Overhead</div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION: FEATURES MANQUANTES
+             ================================ -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">⚠️</div>
+                <h2 class="section-title">Features MVP Manquantes (25%)</h2>
+            </div>
+
+            <div class="warning-box">
+                <h3>🚧 À Implémenter pour MVP Complet</h3>
+                <p>Ces features sont documentées dans PLAN_MVP_SAAS_FEATURES.md et RAPPORT_AUDIT_COMPLET.md</p>
+            </div>
+
+            <div class="missing-grid">
+                
+                <div class="missing-card">
+                    <h4>❌ Multi-Tenant Complet</h4>
+                    <p>tenant_id sur 38 entities restantes, Row-Level Security, filtrage automatique, signup public</p>
+                    <div class="effort">Effort: 3-4 semaines</div>
+                </div>
+                
+                <div class="missing-card">
+                    <h4>❌ Système Paiements</h4>
+                    <p>Intégration Stripe, plans (Basic/Pro/Enterprise), abonnements, webhooks, billing portal</p>
+                    <div class="effort">Effort: 4-5 semaines</div>
+                </div>
+                
+                <div class="missing-card">
+                    <h4>❌ Landing Page</h4>
+                    <p>Page marketing avec features, pricing public, formulaire signup organisation</p>
+                    <div class="effort">Effort: 1-2 semaines</div>
+                </div>
+                
+                <div class="missing-card">
+                    <h4>❌ CRM Avancé</h4>
+                    <p>Gestion contacts complète, historique communications, email campaigns</p>
+                    <div class="effort">Effort: 3-4 semaines</div>
+                </div>
+                
+                <div class="missing-card">
+                    <h4>❌ Permissions UI</h4>
+                    <p>Grille checkboxes permissions, masquage coûts/clients selon rôle, protection IP (STL)</p>
+                    <div class="effort">Effort: 2-3 semaines</div>
+                </div>
+                
+                <div class="missing-card">
+                    <h4>❌ QuickBooks Integration</h4>
+                    <p>OAuth2 QuickBooks, sync factures/clients, mapping comptes</p>
+                    <div class="effort">Effort: 4-5 semaines</div>
+                </div>
+                
+                <div class="missing-card">
+                    <h4>❌ Margin Management</h4>
+                    <p>Marges par catégorie client, marge par défaut, override manuel</p>
+                    <div class="effort">Effort: 1-2 semaines</div>
+                </div>
+                
+                <div class="missing-card">
+                    <h4>❌ Time Tracking QR</h4>
+                    <p>Génération QR par tâche, scanner mobile, clock in/out automatique</p>
+                    <div class="effort">Effort: 3-4 semaines</div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION: ROADMAP
+             ================================ -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">🗺️</div>
+                <h2 class="section-title">Roadmap Recommandée</h2>
+            </div>
+
+            <div class="roadmap">
+                
+                <div class="roadmap-item high">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-phase">Phase 1: Feature Produit</div>
+                        <div class="roadmap-duration">🔴 HAUTE PRIORITÉ — 6-8 semaines</div>
+                        <div class="roadmap-desc">Modèle de données complet (10 tables), Backend & Frontend, génération ordres de fabrication, dashboards monitoring (WIP, lead time, goulots)</div>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item high">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-phase">Phase 2: Multi-Tenant Complet</div>
+                        <div class="roadmap-duration">🔴 HAUTE PRIORITÉ — 3-4 semaines</div>
+                        <div class="roadmap-desc">tenant_id sur toutes les tables, Row-Level Security, landing page + signup, système d'invitations</div>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item high">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-phase">Phase 3: Paiements</div>
+                        <div class="roadmap-duration">🔴 HAUTE PRIORITÉ — 4-5 semaines</div>
+                        <div class="roadmap-desc">Intégration Stripe, plans (Basic/Pro/Enterprise), abonnements + webhooks, billing portal</div>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item medium">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-phase">Phase 4: Features Métier</div>
+                        <div class="roadmap-duration">🟡 MOYENNE PRIORITÉ — 4-7 semaines</div>
+                        <div class="roadmap-desc">Permissions UI granulaires, margin management, proforma invoice</div>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item medium">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-phase">Phase 5: Intégrations</div>
+                        <div class="roadmap-duration">🟡 MOYENNE PRIORITÉ — 8-11 semaines</div>
+                        <div class="roadmap-desc">QuickBooks integration, time tracking QR codes, CRM avancé</div>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item critical">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-card">
+                        <div class="roadmap-phase">Phase 6: Qualité & Production</div>
+                        <div class="roadmap-duration">🔴 CRITIQUE — 5-6 semaines</div>
+                        <div class="roadmap-desc">Tests automatiques (backend + frontend), réactivation sécurité (OAuth2 + RBAC), monitoring & logging, documentation déploiement</div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div style="margin-top: 40px;">
+                <table class="status-table">
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Durée</th>
+                            <th>Priorité</th>
+                            <th>Focus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Phase 1: Feature Produit</td>
+                            <td><strong>6-8 semaines</strong></td>
+                            <td><span class="status-badge missing">🔴 HAUTE</span></td>
+                            <td>Industrialisation production</td>
+                        </tr>
+                        <tr>
+                            <td>Phase 2: Multi-Tenant</td>
+                            <td><strong>3-4 semaines</strong></td>
+                            <td><span class="status-badge missing">🔴 HAUTE</span></td>
+                            <td>SaaS multi-organisations</td>
+                        </tr>
+                        <tr>
+                            <td>Phase 3: Paiements</td>
+                            <td><strong>4-5 semaines</strong></td>
+                            <td><span class="status-badge missing">🔴 HAUTE</span></td>
+                            <td>Monétisation</td>
+                        </tr>
+                        <tr>
+                            <td>Phase 4: Features Métier</td>
+                            <td><strong>4-7 semaines</strong></td>
+                            <td><span class="status-badge partial">🟡 MOYENNE</span></td>
+                            <td>Enrichissement</td>
+                        </tr>
+                        <tr>
+                            <td>Phase 5: Intégrations</td>
+                            <td><strong>8-11 semaines</strong></td>
+                            <td><span class="status-badge partial">🟡 MOYENNE</span></td>
+                            <td>Écosystème</td>
+                        </tr>
+                        <tr>
+                            <td>Phase 6: Qualité & Production</td>
+                            <td><strong>5-6 semaines</strong></td>
+                            <td><span class="status-badge missing">🔴 CRITIQUE</span></td>
+                            <td>Production-ready</td>
+                        </tr>
+                        <tr style="background: var(--brand10);">
+                            <td style="color: var(--brand5); font-weight: bold;">TOTAL MVP COMPLET</td>
+                            <td style="color: var(--brand6); font-weight: bold;">30-41 semaines</td>
+                            <td></td>
+                            <td style="color: var(--text-muted);">7-10 mois</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ================================
+         FOOTER
+         ================================ -->
+    <footer>
+        <span class="logo-text">GEMSFLOW</span>
+        <p>Système de Monitoring de Fabrication de Bijoux</p>
+        <p>Architecture Complète + Feature Produit Industrialisable</p>
+        <p class="tech-info">
+            Backend: Spring Boot 3.x (Java 21) • Frontend: React 18 + TypeScript • DB: PostgreSQL<br>
+            API: http://localhost:7001 • Frontend: http://localhost:7101
+        </p>
+        <p style="margin-top: 20px; opacity: 0.5;">Document généré le 6 janvier 2026</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_TENANT_CREATE" author="${author}">
+        <comment>Create tenant table for multi-tenant architecture</comment>
+        <createTable tableName="tenant">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subdomain" type="VARCHAR(63)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="plan" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(24)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <addUniqueConstraint tableName="tenant" columnNames="subdomain" 
+                             constraintName="uk_tenant_subdomain"/>
+        
+        <createIndex tableName="tenant" indexName="idx_tenant_status">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+    
+    <changeSet id="002_TENANT_DEFAULT_DATA" author="${author}">
+        <comment>Insert default tenant for existing data migration</comment>
+        <insert tableName="tenant">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Default Organization"/>
+            <column name="subdomain" value="default"/>
+            <column name="plan" value="ENTERPRISE"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
+

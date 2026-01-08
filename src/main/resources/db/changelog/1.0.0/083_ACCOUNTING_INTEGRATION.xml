@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="083-1" author="atelier">
+        <createTable tableName="accounting_integration">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tenant_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="provider" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="access_token" type="TEXT"/>
+            <column name="refresh_token" type="TEXT"/>
+            <column name="realm_id" type="VARCHAR(64)">
+                <constraints unique="true"/>
+            </column>
+            <column name="token_expires_at" type="TIMESTAMP"/>
+            <column name="connected_at" type="TIMESTAMP"/>
+            <column name="last_sync_at" type="TIMESTAMP"/>
+            <column name="status" type="VARCHAR(24)" defaultValue="DISCONNECTED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- FK to tenant disabled until multi-tenant is enabled -->
+        <!-- <addForeignKeyConstraint 
+            baseTableName="accounting_integration" 
+            baseColumnNames="tenant_id"
+            constraintName="fk_accounting_integration_tenant"
+            referencedTableName="tenant"
+            referencedColumnNames="id"/> -->
+
+        <createIndex tableName="accounting_integration" indexName="idx_accounting_integration_tenant">
+            <column name="tenant_id"/>
+        </createIndex>
+        
+        <createIndex tableName="accounting_integration" indexName="idx_accounting_integration_provider">
+            <column name="provider"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="083-2" author="atelier">
+        <createTable tableName="accounting_sync_log">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tenant_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="integration_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_type" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_id" type="BIGINT"/>
+            <column name="external_id" type="VARCHAR(64)"/>
+            <column name="action" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="error_message" type="TEXT"/>
+            <column name="request_payload" type="TEXT"/>
+            <column name="response_payload" type="TEXT"/>
+            <column name="synced_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- FK to tenant disabled until multi-tenant is enabled -->
+        <!-- <addForeignKeyConstraint 
+            baseTableName="accounting_sync_log" 
+            baseColumnNames="tenant_id"
+            constraintName="fk_accounting_sync_log_tenant"
+            referencedTableName="tenant"
+            referencedColumnNames="id"/> -->
+
+        <addForeignKeyConstraint 
+            baseTableName="accounting_sync_log" 
+            baseColumnNames="integration_id"
+            constraintName="fk_accounting_sync_log_integration"
+            referencedTableName="accounting_integration"
+            referencedColumnNames="id"/>
+
+        <createIndex tableName="accounting_sync_log" indexName="idx_accounting_sync_log_tenant">
+            <column name="tenant_id"/>
+        </createIndex>
+        
+        <createIndex tableName="accounting_sync_log" indexName="idx_accounting_sync_log_integration">
+            <column name="integration_id"/>
+        </createIndex>
+        
+        <createIndex tableName="accounting_sync_log" indexName="idx_accounting_sync_log_entity">
+            <column name="entity_type"/>
+            <column name="entity_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
+

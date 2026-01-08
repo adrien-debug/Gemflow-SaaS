@@ -1,0 +1,35 @@
+.quickbooks-connect-card {
+  max-width: 800px;
+  margin: 0 auto;
+
+  .quickbooks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .quickbooks-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .quickbooks-actions {
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+
+  .quickbooks-details {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .quickbooks-summary {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #f0f0f0;
+  }
+}
+

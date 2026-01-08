@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_CREATE_CRM_COMMUNICATION" author="${author}">
+        <comment>Create CRM communication table</comment>
+        
+        <createTable tableName="crm_communication">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tenant_id" type="BIGINT" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="client_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="type" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="direction" type="VARCHAR(16)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="subject" type="VARCHAR(512)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="content" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="sent_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_crm_communication__contact"
+                                 baseTableName="crm_communication" baseColumnNames="contact_id"
+                                 referencedTableName="crm_contact" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_crm_communication__client"
+                                 baseTableName="crm_communication" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_crm_communication__created_by"
+                                 baseTableName="crm_communication" baseColumnNames="created_by"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+
+        <createIndex tableName="crm_communication" indexName="idx_crm_communication_contact_id">
+            <column name="contact_id"/>
+        </createIndex>
+        <createIndex tableName="crm_communication" indexName="idx_crm_communication_client_id">
+            <column name="client_id"/>
+        </createIndex>
+        <createIndex tableName="crm_communication" indexName="idx_crm_communication_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="084-create-permission-table" author="system">
+        <createTable tableName="permission">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(64)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="category" type="VARCHAR(64)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="084-create-role-permission-table" author="system">
+        <createTable tableName="role_permission">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tenant_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="permission_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="granted" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="role_permission"
+                baseColumnNames="tenant_id"
+                constraintName="fk_role_permission_tenant"
+                referencedTableName="tenant"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="role_permission"
+                baseColumnNames="role_id"
+                constraintName="fk_role_permission_role"
+                referencedTableName="atelier_role"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="role_permission"
+                baseColumnNames="permission_id"
+                constraintName="fk_role_permission_permission"
+                referencedTableName="permission"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+
+        <addUniqueConstraint
+                tableName="role_permission"
+                columnNames="tenant_id, role_id, permission_id"
+                constraintName="uk_tenant_role_permission"/>
+    </changeSet>
+
+    <changeSet id="084-insert-default-permissions" author="system">
+        <insert tableName="permission">
+            <column name="code" value="VIEW_CLIENT_NAMES"/>
+            <column name="name" value="View client names"/>
+            <column name="description" value="Ability to view client names and contact information"/>
+            <column name="category" value="CLIENTS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="VIEW_COSTING"/>
+            <column name="name" value="View cost breakdown"/>
+            <column name="description" value="Ability to view detailed cost information on orders"/>
+            <column name="category" value="ORDERS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="VIEW_PRICING"/>
+            <column name="name" value="View pricing information"/>
+            <column name="description" value="Ability to view pricing and margins"/>
+            <column name="category" value="ORDERS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="DOWNLOAD_STL"/>
+            <column name="name" value="Download STL files"/>
+            <column name="description" value="Ability to download STL and 3D model files"/>
+            <column name="category" value="FILES"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="EDIT_ORDERS"/>
+            <column name="name" value="Edit orders"/>
+            <column name="description" value="Ability to modify order information"/>
+            <column name="category" value="ORDERS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="DELETE_ORDERS"/>
+            <column name="name" value="Delete orders"/>
+            <column name="description" value="Ability to delete orders"/>
+            <column name="category" value="ORDERS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="MANAGE_INVENTORY"/>
+            <column name="name" value="Manage inventory"/>
+            <column name="description" value="Ability to manage inventory (metals, diamonds, gemstones)"/>
+            <column name="category" value="INVENTORY"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="VIEW_REPORTS"/>
+            <column name="name" value="View reports"/>
+            <column name="description" value="Ability to view business reports and analytics"/>
+            <column name="category" value="REPORTS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="MANAGE_USERS"/>
+            <column name="name" value="Manage users"/>
+            <column name="description" value="Ability to create, edit, and delete users"/>
+            <column name="category" value="SETTINGS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="MANAGE_SETTINGS"/>
+            <column name="name" value="Manage settings"/>
+            <column name="description" value="Ability to modify system settings"/>
+            <column name="category" value="SETTINGS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="CREATE_ORDERS"/>
+            <column name="name" value="Create orders"/>
+            <column name="description" value="Ability to create new orders"/>
+            <column name="category" value="ORDERS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="code" value="VIEW_ORDERS"/>
+            <column name="name" value="View orders"/>
+            <column name="description" value="Ability to view order list and details"/>
+            <column name="category" value="ORDERS"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
+
+

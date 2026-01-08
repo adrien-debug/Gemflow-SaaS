@@ -1,8 +1,0 @@
-export enum TabKeys {
-  PRICES = "PRICES",
-  LABOUR = "LABOUR",
-  METALS = "METALS",
-  CYLINDERS = "CYLINDERS",
-  STONES = "STONES",
-  PARAMETERS = "PARAMETERS",
-}

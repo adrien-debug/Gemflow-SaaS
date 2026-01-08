@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- STEP 1: Add tenant_id column to all business tables (nullable for migration) -->
+    <changeSet id="001_ADD_TENANT_ID_COLUMNS" author="${author}">
+        <comment>Add tenant_id column to all business tables (nullable for migration)</comment>
+        
+        <!-- Users & Administration -->
+        <addColumn tableName="atelier_user">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="atelier_user_role">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="atelier_user_image">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="atelier_token">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="client">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="supplier">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        
+        <!-- Projects & Orders -->
+        <addColumn tableName="project">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="project_image">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_task">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_task_file">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_task_metal">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_task_gemstone">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_task_image">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_material">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_diamond">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_labour">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_labour_tracker">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_stock">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_metal_casting">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_profit">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_metal_total">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_metal_production">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_technical_sheet">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_technical_sheet_image">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        
+        <!-- Inventory -->
+        <addColumn tableName="diamond">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="gemstone">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="gemstone_image">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="order_gemstone">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="pure_metal_summary">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="pure_metal_purchase">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="alloy">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="alloy_purchase">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="alloyed_metal">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="alloyed_metal_purchase">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="other_material">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="other_material_transaction">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        
+        <!-- Business Settings -->
+        <addColumn tableName="price_setting">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="cylinder_setting">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="labour_setting">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="item_category">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="collection">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="category_piece">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="business_location">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="location">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="casting">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="gems_payment">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="hallmark_logo">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="atelier_file">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+    <!-- STEP 2: Populate tenant_id with default value (1) for existing data -->
+    <changeSet id="002_POPULATE_TENANT_ID" author="${author}">
+        <comment>Set default tenant_id for existing data</comment>
+        
+        <update tableName="atelier_user">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="atelier_user_role">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="atelier_user_image">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="atelier_token">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="client">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="supplier">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="project">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="project_image">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_task">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_task_file">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_task_metal">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_task_gemstone">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_task_image">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_material">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_diamond">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_labour">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_labour_tracker">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_stock">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_metal_casting">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_profit">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_metal_total">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_metal_production">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_technical_sheet">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_technical_sheet_image">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="diamond">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="gemstone">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="gemstone_image">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="order_gemstone">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="pure_metal_summary">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="pure_metal_purchase">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="alloy">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="alloy_purchase">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="alloyed_metal">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="alloyed_metal_purchase">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="other_material">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="other_material_transaction">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="price_setting">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="cylinder_setting">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="labour_setting">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="item_category">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="collection">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="category_piece">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="business_location">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="location">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="casting">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="gems_payment">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="hallmark_logo">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        <update tableName="atelier_file">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+    </changeSet>
+
+    <!-- STEP 3: Make tenant_id NOT NULL -->
+    <changeSet id="003_MAKE_TENANT_ID_NOT_NULL" author="${author}">
+        <comment>Make tenant_id NOT NULL on all business tables</comment>
+        
+        <addNotNullConstraint tableName="atelier_user" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="atelier_user_role" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="atelier_user_image" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="atelier_token" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="client" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="supplier" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="project" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="project_image" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_task" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_task_file" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_task_metal" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_task_gemstone" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_task_image" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_material" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_diamond" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_labour" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_labour_tracker" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_stock" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_metal_casting" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_profit" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_metal_total" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_metal_production" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_technical_sheet" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_technical_sheet_image" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="diamond" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="gemstone" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="gemstone_image" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_gemstone" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="pure_metal_summary" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="pure_metal_purchase" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="alloy" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="alloy_purchase" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="alloyed_metal" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="alloyed_metal_purchase" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="other_material" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="other_material_transaction" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="price_setting" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="cylinder_setting" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="labour_setting" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="item_category" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="collection" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="category_piece" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="business_location" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="location" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="casting" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="gems_payment" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="hallmark_logo" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="atelier_file" columnName="tenant_id" columnDataType="BIGINT"/>
+    </changeSet>
+
+    <!-- STEP 4: Add foreign key constraints to tenant table -->
+    <changeSet id="004_ADD_TENANT_FK" author="${author}">
+        <comment>Add foreign key constraints to tenant table</comment>
+        
+        <addForeignKeyConstraint constraintName="fk_atelier_user__tenant"
+                                 baseTableName="atelier_user" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_atelier_user_role__tenant"
+                                 baseTableName="atelier_user_role" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_atelier_user_image__tenant"
+                                 baseTableName="atelier_user_image" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_atelier_token__tenant"
+                                 baseTableName="atelier_token" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_client__tenant"
+                                 baseTableName="client" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_supplier__tenant"
+                                 baseTableName="supplier" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_project__tenant"
+                                 baseTableName="project" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_project_image__tenant"
+                                 baseTableName="project_image" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task__tenant"
+                                 baseTableName="order_task" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_file__tenant"
+                                 baseTableName="order_task_file" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_metal__tenant"
+                                 baseTableName="order_task_metal" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_gemstone__tenant"
+                                 baseTableName="order_task_gemstone" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_image__tenant"
+                                 baseTableName="order_task_image" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_material__tenant"
+                                 baseTableName="order_material" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_diamond__tenant"
+                                 baseTableName="order_diamond" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_labour__tenant"
+                                 baseTableName="order_labour" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_labour_tracker__tenant"
+                                 baseTableName="order_labour_tracker" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_stock__tenant"
+                                 baseTableName="order_stock" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_metal_casting__tenant"
+                                 baseTableName="order_metal_casting" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_profit__tenant"
+                                 baseTableName="order_profit" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_metal_total__tenant"
+                                 baseTableName="order_metal_total" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_metal_production__tenant"
+                                 baseTableName="order_metal_production" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_technical_sheet__tenant"
+                                 baseTableName="order_technical_sheet" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_technical_sheet_image__tenant"
+                                 baseTableName="order_technical_sheet_image" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_diamond__tenant"
+                                 baseTableName="diamond" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_gemstone__tenant"
+                                 baseTableName="gemstone" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_gemstone_image__tenant"
+                                 baseTableName="gemstone_image" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_gemstone__tenant"
+                                 baseTableName="order_gemstone" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_pure_metal_summary__tenant"
+                                 baseTableName="pure_metal_summary" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_pure_metal_purchase__tenant"
+                                 baseTableName="pure_metal_purchase" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_alloy__tenant"
+                                 baseTableName="alloy" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_alloy_purchase__tenant"
+                                 baseTableName="alloy_purchase" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_alloyed_metal__tenant"
+                                 baseTableName="alloyed_metal" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_alloyed_metal_purchase__tenant"
+                                 baseTableName="alloyed_metal_purchase" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_other_material__tenant"
+                                 baseTableName="other_material" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_other_material_transaction__tenant"
+                                 baseTableName="other_material_transaction" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_price_setting__tenant"
+                                 baseTableName="price_setting" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_cylinder_setting__tenant"
+                                 baseTableName="cylinder_setting" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_labour_setting__tenant"
+                                 baseTableName="labour_setting" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_item_category__tenant"
+                                 baseTableName="item_category" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_collection__tenant"
+                                 baseTableName="collection" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_category_piece__tenant"
+                                 baseTableName="category_piece" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_business_location__tenant"
+                                 baseTableName="business_location" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_location__tenant"
+                                 baseTableName="location" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_casting__tenant"
+                                 baseTableName="casting" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_gems_payment__tenant"
+                                 baseTableName="gems_payment" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_hallmark_logo__tenant"
+                                 baseTableName="hallmark_logo" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_atelier_file__tenant"
+                                 baseTableName="atelier_file" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+    </changeSet>
+
+    <!-- STEP 5: Add indexes on tenant_id for query performance -->
+    <changeSet id="005_ADD_TENANT_ID_INDEXES" author="${author}">
+        <comment>Add indexes on tenant_id for query performance</comment>
+        
+        <createIndex tableName="atelier_user" indexName="idx_atelier_user_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="atelier_user_role" indexName="idx_atelier_user_role_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="atelier_user_image" indexName="idx_atelier_user_image_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="atelier_token" indexName="idx_atelier_token_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="client" indexName="idx_client_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="supplier" indexName="idx_supplier_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="project" indexName="idx_project_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="project_image" indexName="idx_project_image_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_task" indexName="idx_order_task_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_task_file" indexName="idx_order_task_file_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_task_metal" indexName="idx_order_task_metal_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_task_gemstone" indexName="idx_order_task_gemstone_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_task_image" indexName="idx_order_task_image_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_material" indexName="idx_order_material_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_diamond" indexName="idx_order_diamond_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_labour" indexName="idx_order_labour_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_labour_tracker" indexName="idx_order_labour_tracker_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_stock" indexName="idx_order_stock_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_metal_casting" indexName="idx_order_metal_casting_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_profit" indexName="idx_order_profit_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_metal_total" indexName="idx_order_metal_total_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_metal_production" indexName="idx_order_metal_production_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_technical_sheet" indexName="idx_order_technical_sheet_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_technical_sheet_image" indexName="idx_order_technical_sheet_image_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="diamond" indexName="idx_diamond_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="gemstone" indexName="idx_gemstone_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="gemstone_image" indexName="idx_gemstone_image_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="order_gemstone" indexName="idx_order_gemstone_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="pure_metal_summary" indexName="idx_pure_metal_summary_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="pure_metal_purchase" indexName="idx_pure_metal_purchase_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="alloy" indexName="idx_alloy_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="alloy_purchase" indexName="idx_alloy_purchase_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="alloyed_metal" indexName="idx_alloyed_metal_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="alloyed_metal_purchase" indexName="idx_alloyed_metal_purchase_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="other_material" indexName="idx_other_material_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="other_material_transaction" indexName="idx_other_material_transaction_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="price_setting" indexName="idx_price_setting_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="cylinder_setting" indexName="idx_cylinder_setting_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="labour_setting" indexName="idx_labour_setting_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="item_category" indexName="idx_item_category_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="collection" indexName="idx_collection_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="category_piece" indexName="idx_category_piece_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="business_location" indexName="idx_business_location_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="location" indexName="idx_location_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="casting" indexName="idx_casting_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="gems_payment" indexName="idx_gems_payment_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="hallmark_logo" indexName="idx_hallmark_logo_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="atelier_file" indexName="idx_atelier_file_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
+

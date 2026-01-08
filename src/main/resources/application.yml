@@ -1,0 +1,115 @@
+server:
+  port: ${SERVER_PORT:8000}
+
+spring:
+  application:
+    name: ${APP_NAME}
+  profiles:
+    active: ${APP_ACTIVE_PROFILE}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${APP_JWT_ISSUER_URI}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    show-sql: ${APP_SHOW_SQL}
+    properties:
+      hibernate:
+        query:
+          fail_on_pagination_over_collection_fetch: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${APP_DATABASE_URL}
+    username: ${APP_DATABASE_USERNAME}
+    password: ${APP_DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: 16
+      connection-timeout: 60000
+      validation-timeout: 60000
+      max-lifetime: 900000
+  liquibase:
+    change-log: db/changelog/root.xml
+  servlet:
+    multipart:
+      max-file-size: 5MB
+
+email:
+  enable: ${APP_EMAIL_ENABLE}
+  properties:
+    host: ${APP_EMAIL_HOST}
+    port: ${APP_EMAIL_PORT}
+    username: ${APP_EMAIL_USERNAME}
+    password: ${APP_EMAIL_PASSWORD}
+    protocol: ${APP_EMAIL_PROTOCOL}
+    sender: ${APP_EMAIL_SENDER}
+
+organization:
+  name: ${APP_KEYCLOAK_ORGANIZATION}
+
+keycloak:
+  url: ${APP_KEYCLOAK_URL}
+  realm: ${APP_KEYCLOAK_REALM}
+  organization: ${APP_KEYCLOAK_ORGANIZATION}
+  client-id: ${APP_KEYCLOAK_CLIENT_ID}
+  client-secret: ${APP_KEYCLOAK_CLIENT_SECRET}
+
+cors:
+  allowed-origins: ${APP_CORS_ALLOWED_ORIGINS}
+  allowed-methods:
+    - '*'
+  allowed-headers:
+    - '*'
+
+frontend:
+  url: ${APP_FRONTEND_URL}
+  new-password-path: ${APP_FRONTEND_NEW_PASSWORD_PATH}
+  restore-password-path: ${APP_FRONTEND_RESTORE_PASSWORD_PATH}
+  timezone: ${APP_FRONTEND_TIMEZONE}
+
+springdoc:
+  api-docs:
+    enabled: ${APP_SWAGGER_ENABLE}
+  swagger-ui:
+    enabled: ${APP_SWAGGER_ENABLE}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+file:
+  source: ${APP_FILE_SOURCE}
+  s3:
+    region: ${APP_S3_REGION}
+    access-key: ${APP_S3_ACCESS_KEY}
+    secret-key: ${APP_S3_SECRET_KEY}
+    bucket: ${APP_S3_BUCKET}
+
+# QuickBooks Integration
+quickbooks:
+  client-id: ${QUICKBOOKS_CLIENT_ID:}
+  client-secret: ${QUICKBOOKS_CLIENT_SECRET:}
+  redirect-uri: ${QUICKBOOKS_REDIRECT_URI:http://localhost:7101/integrations/quickbooks/callback}
+  environment: ${QUICKBOOKS_ENV:sandbox}
+
+# Stripe Billing / Checkout (SaaS)
+stripe:
+  api-key: ${STRIPE_API_KEY:}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+  prices:
+    # Standard plan (per-seat) with tiered unit price
+    standard-25-monthly: ${STRIPE_PRICE_STANDARD_25_MONTHLY:}
+    standard-25-yearly: ${STRIPE_PRICE_STANDARD_25_YEARLY:}
+    standard-20-monthly: ${STRIPE_PRICE_STANDARD_20_MONTHLY:}
+    standard-20-yearly: ${STRIPE_PRICE_STANDARD_20_YEARLY:}
+
+    basic-monthly: ${STRIPE_PRICE_BASIC_MONTHLY:}
+    basic-yearly: ${STRIPE_PRICE_BASIC_YEARLY:}
+    pro-monthly: ${STRIPE_PRICE_PRO_MONTHLY:}
+    pro-yearly: ${STRIPE_PRICE_PRO_YEARLY:}
+    enterprise-monthly: ${STRIPE_PRICE_ENTERPRISE_MONTHLY:}
+    enterprise-yearly: ${STRIPE_PRICE_ENTERPRISE_YEARLY:}
