@@ -2,6 +2,27 @@
 
 **Repository GitHub :** https://github.com/adrien-debug/Gemflow-SaaS.git
 
+---
+
+## 🚀 Déploiement Railway (Quick Start)
+
+### Option 1 : Configuration manuelle (recommandé)
+
+1. **Copier les variables** : Ouvrir `.railway-env-minimal` et copier tout le contenu
+2. **Railway Dashboard** → Variables → Raw Editor → Coller
+3. **Remplacer** `<YOUR_SUPABASE_PASSWORD>` par le vrai mot de passe
+4. **Déployer** : Railway redémarre automatiquement
+
+### Option 2 : Script automatique
+
+```bash
+./setup-railway.sh
+```
+
+📖 **Guide complet** : Voir `RAILWAY_DEPLOY_GUIDE.md`
+
+---
+
 ## Structure du projet
 
 ```
@@ -20,13 +41,35 @@
 
 Le projet utilise Supabase comme base de données PostgreSQL hébergée.
 
-**Configuration Railway :**
+### Configuration Railway (3 étapes)
 
-1. **Copier les variables** depuis `.railway-env-supabase` dans Railway Dashboard → Variables → Raw Editor
+#### 1️⃣ Configurer les variables d'environnement
 
-2. **Déploiement automatique** : Chaque push sur `main` déclenche un redéploiement
+**Copier le contenu de `.railway-env-minimal`** dans Railway :
+- Aller sur Railway Dashboard → Votre service → **Variables** → **Raw Editor**
+- Coller tout le contenu du fichier
+- **⚠️ Remplacer `<YOUR_SUPABASE_PASSWORD>` par le vrai mot de passe**
 
-3. **Healthcheck** : Railway vérifie `/actuator/health` toutes les 5 minutes
+**Variables obligatoires :**
+```bash
+APP_DATABASE_URL=jdbc:postgresql://db.ldnvfnwkqywdgnsrqxuq.supabase.co:5432/postgres
+APP_DATABASE_USERNAME=postgres
+APP_DATABASE_PASSWORD=<votre_mot_de_passe>
+```
+
+#### 2️⃣ Vérifier le build
+
+Railway utilise **Nixpacks** pour détecter automatiquement Maven et Java 21.
+
+**Fichiers de configuration :**
+- `nixpacks.toml` : Build Maven + Java 21
+- `railway.json` : Healthcheck `/actuator/health`
+
+#### 3️⃣ Déployer
+
+- **Déploiement automatique** : Chaque push sur `main` déclenche un redéploiement
+- **Healthcheck** : Railway vérifie `/actuator/health` toutes les 5 minutes
+- **Logs** : Vérifier les logs Railway pour confirmer le démarrage
 
 **URL Supabase :**
 - Dashboard : https://supabase.com/dashboard/project/ldnvfnwkqywdgnsrqxuq
@@ -34,6 +77,21 @@ Le projet utilise Supabase comme base de données PostgreSQL hébergée.
 
 **Migrations :**
 Les migrations Liquibase s'appliquent automatiquement au démarrage de l'application.
+
+### ✅ Vérification du déploiement
+
+Une fois déployé, tester :
+```bash
+curl https://your-app.railway.app/actuator/health
+# Devrait retourner : {"status":"UP"}
+```
+
+### 🔧 Features désactivées (pas de clés configurées)
+
+- ❌ **QuickBooks** : Intégration désactivée (pas de `QUICKBOOKS_CLIENT_ID`)
+- ❌ **Stripe** : Paiements désactivés (pas de `STRIPE_API_KEY`)
+- ❌ **Email** : Envoi d'emails désactivé (`APP_EMAIL_ENABLE=false`)
+- ✅ **Stockage** : Fichiers en local (`APP_FILE_SOURCE=LOCAL`)
 
 ---
 

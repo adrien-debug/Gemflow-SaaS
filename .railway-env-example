@@ -1,0 +1,74 @@
+# ============================================
+# RAILWAY ENVIRONMENT VARIABLES - EXAMPLE
+# ============================================
+# Ce fichier montre la structure complète des variables Railway
+# Copier dans Railway Dashboard → Variables → Raw Editor
+# ⚠️ NE PAS commiter les vraies valeurs (mot de passe, clés API)
+
+# === DATABASE (OBLIGATOIRE) ===
+APP_DATABASE_URL=jdbc:postgresql://db.ldnvfnwkqywdgnsrqxuq.supabase.co:5432/postgres
+APP_DATABASE_USERNAME=postgres.ldnvfnwkqywdgnsrqxuq
+APP_DATABASE_PASSWORD=<YOUR_SUPABASE_PASSWORD>
+
+# === APPLICATION ===
+APP_NAME=Gemsflow
+APP_ACTIVE_PROFILE=prod
+SERVER_PORT=8000
+
+# === LOGS & DEBUG ===
+APP_SHOW_SQL=false
+
+# === SWAGGER (désactiver en production) ===
+APP_SWAGGER_ENABLE=false
+
+# === CORS & FRONTEND ===
+# Utiliser la variable Railway pour le domaine public
+APP_CORS_ALLOWED_ORIGINS=https://${{RAILWAY_PUBLIC_DOMAIN}},http://localhost:7101
+APP_FRONTEND_URL=https://${{RAILWAY_PUBLIC_DOMAIN}}
+
+# === SECURITY (placeholders - auth désactivée en dev) ===
+APP_JWT_ISSUER_URI=https://placeholder-keycloak.com/realms/atelier
+APP_KEYCLOAK_URL=https://placeholder-keycloak.com
+APP_KEYCLOAK_REALM=atelier
+APP_KEYCLOAK_CLIENT_ID=atelier-client
+APP_KEYCLOAK_CLIENT_SECRET=
+
+# === EMAIL (désactivé) ===
+APP_EMAIL_ENABLE=false
+APP_EMAIL_HOST=smtp.gmail.com
+APP_EMAIL_PORT=587
+APP_EMAIL_USERNAME=
+APP_EMAIL_PASSWORD=
+APP_EMAIL_SENDER=noreply@gemsflow.com
+
+# === STORAGE (local par défaut) ===
+APP_FILE_SOURCE=LOCAL
+APP_S3_REGION=us-east-1
+APP_S3_ACCESS_KEY=
+APP_S3_SECRET_KEY=
+APP_S3_BUCKET=
+
+# === QUICKBOOKS (désactivé - pas de clés) ===
+QUICKBOOKS_CLIENT_ID=
+QUICKBOOKS_CLIENT_SECRET=
+QUICKBOOKS_REDIRECT_URI=https://${{RAILWAY_PUBLIC_DOMAIN}}/integrations/quickbooks/callback
+QUICKBOOKS_ENV=sandbox
+
+# === STRIPE (désactivé - pas de clés) ===
+STRIPE_API_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_STANDARD_25_MONTHLY=
+STRIPE_PRICE_STANDARD_25_YEARLY=
+STRIPE_PRICE_STANDARD_20_MONTHLY=
+STRIPE_PRICE_STANDARD_20_YEARLY=
+STRIPE_PRICE_BASIC_MONTHLY=
+STRIPE_PRICE_BASIC_YEARLY=
+STRIPE_PRICE_PRO_MONTHLY=
+STRIPE_PRICE_PRO_YEARLY=
+STRIPE_PRICE_ENTERPRISE_MONTHLY=
+STRIPE_PRICE_ENTERPRISE_YEARLY=
+
+# === SUPABASE (optionnel - pour intégrations futures) ===
+SUPABASE_URL=https://ldnvfnwkqywdgnsrqxuq.supabase.co
+SUPABASE_ANON_KEY=<YOUR_SUPABASE_ANON_KEY>
+SUPABASE_SERVICE_ROLE_KEY=<YOUR_SUPABASE_SERVICE_ROLE_KEY>

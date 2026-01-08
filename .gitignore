@@ -23,6 +23,8 @@ out/
 .env
 .env.local
 .env.*.local
+.railway-env-production
+.railway-env-*-secrets
 
 # Logs
 logs/

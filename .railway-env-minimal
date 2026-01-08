@@ -1,0 +1,45 @@
+# ============================================
+# RAILWAY ENVIRONMENT VARIABLES (MINIMAL)
+# ============================================
+# Copier tout ce fichier dans Railway Dashboard → Variables → Raw Editor
+# Remplacer <YOUR_SUPABASE_PASSWORD> par le vrai mot de passe
+
+# === DATABASE (OBLIGATOIRE) ===
+# ⚠️ IMPORTANT : Remplacer <YOUR_SUPABASE_PASSWORD> par le vrai mot de passe
+APP_DATABASE_URL=jdbc:postgresql://db.ldnvfnwkqywdgnsrqxuq.supabase.co:5432/postgres
+APP_DATABASE_USERNAME=postgres.ldnvfnwkqywdgnsrqxuq
+APP_DATABASE_PASSWORD=<YOUR_SUPABASE_PASSWORD>
+
+# === APPLICATION ===
+APP_NAME=Gemsflow
+APP_ACTIVE_PROFILE=prod
+SERVER_PORT=8000
+
+# === LOGS & DEBUG ===
+APP_SHOW_SQL=false
+
+# === SWAGGER (optionnel - désactiver en prod) ===
+APP_SWAGGER_ENABLE=false
+
+# === CORS & FRONTEND ===
+# Remplacer par l'URL de votre frontend Railway
+APP_CORS_ALLOWED_ORIGINS=http://localhost:7101,https://your-frontend.railway.app
+APP_FRONTEND_URL=https://your-frontend.railway.app
+
+# === SECURITY (placeholders - auth désactivée en dev) ===
+APP_JWT_ISSUER_URI=https://placeholder-keycloak.com/realms/atelier
+APP_KEYCLOAK_URL=https://placeholder-keycloak.com
+APP_KEYCLOAK_REALM=atelier
+APP_KEYCLOAK_CLIENT_ID=atelier-client
+
+# === EMAIL (désactivé) ===
+APP_EMAIL_ENABLE=false
+
+# === STORAGE (local) ===
+APP_FILE_SOURCE=LOCAL
+
+# === QUICKBOOKS (désactivé - pas de clés) ===
+# Aucune variable nécessaire
+
+# === STRIPE (désactivé - pas de clés) ===
+# Aucune variable nécessaire
