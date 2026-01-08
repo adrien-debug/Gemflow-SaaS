@@ -16,20 +16,32 @@ const TokenApi = {
     if (!authData?.refresh_token) {
       throw {};
     }
+    if (environment.authClientSecret) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "[auth] VITE_AUTH_CLIENT_SECRET is set. This value is bundled into the frontend and should not be a secret for SPA deployments.",
+      );
+    }
     const response = await authApiInstance.post<AuthData>(
       `/realms/${environment.authRealm}/protocol/openid-connect/token`,
       new URLSearchParams({
         refresh_token: authData.refresh_token,
         scope: environment.authScope,
         client_id: environment.authClientId,
-        client_secret: environment.authClientSecret,
         grant_type: GrantType.RefreshToken,
+        ...(environment.authClientSecret ? { client_secret: environment.authClientSecret } : {}),
       }),
     );
     return response.data;
   },
 
   getAccessToken: async (username: string, password: string): Promise<AuthData> => {
+    if (environment.authClientSecret) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "[auth] VITE_AUTH_CLIENT_SECRET is set. This value is bundled into the frontend and should not be a secret for SPA deployments.",
+      );
+    }
     const response = await authApiInstance.post<AuthData>(
       `/realms/${environment.authRealm}/protocol/openid-connect/token`,
       new URLSearchParams({
@@ -37,8 +49,8 @@ const TokenApi = {
         password,
         scope: environment.authScope,
         client_id: environment.authClientId,
-        client_secret: environment.authClientSecret,
         grant_type: GrantType.Password,
+        ...(environment.authClientSecret ? { client_secret: environment.authClientSecret } : {}),
       }),
     );
     return response.data;
