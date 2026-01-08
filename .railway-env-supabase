@@ -5,7 +5,7 @@
 
 APP_DATABASE_URL=jdbc:postgresql://db.ldnvfnwkqywdgnsrqxuq.supabase.co:5432/postgres
 APP_DATABASE_USERNAME=postgres
-APP_DATABASE_PASSWORD=Adrien0334$$
+APP_DATABASE_PASSWORD=<SUPABASE_DB_PASSWORD>
 
 # ---- Application Config ----
 APP_NAME=Gemsflow
