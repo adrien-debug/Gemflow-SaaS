@@ -6,6 +6,7 @@ import io.hearstcorporation.atelier.dto.model.integration.QuickBooksAuthUrlDto;
 import io.hearstcorporation.atelier.dto.model.integration.QuickBooksCallbackDto;
 import io.hearstcorporation.atelier.dto.model.integration.QuickBooksTokenDto;
 import io.hearstcorporation.atelier.dto.mapper.integration.AccountingIntegrationMapper;
+import io.hearstcorporation.atelier.exception.FeatureNotConfiguredException;
 import io.hearstcorporation.atelier.exception.ServiceException;
 import io.hearstcorporation.atelier.model.integration.AccountingIntegration;
 import io.hearstcorporation.atelier.model.integration.AccountingProvider;
@@ -47,6 +48,7 @@ public class QuickBooksAuthService {
      * Generate the QuickBooks OAuth2 authorization URL
      */
     public QuickBooksAuthUrlDto getAuthorizationUrl() {
+        requireQuickBooksConfiguration();
         String state = UUID.randomUUID().toString();
         
         String authUrl = String.format(
@@ -209,6 +211,16 @@ public class QuickBooksAuthService {
             log.error("Failed to exchange code for tokens: {}", e.getMessage());
             throw new ServiceException("Failed to connect to QuickBooks: " + e.getMessage());
         }
+    }
+
+    private void requireQuickBooksConfiguration() {
+        if (isBlank(properties.getClientId()) || isBlank(properties.getClientSecret())) {
+            throw new FeatureNotConfiguredException("QuickBooks Integration", "QUICKBOOKS_CLIENT_ID, QUICKBOOKS_CLIENT_SECRET");
+        }
+    }
+
+    private boolean isBlank(String s) {
+        return s == null || s.trim().isEmpty();
     }
 
     private HttpHeaders createAuthHeaders() {

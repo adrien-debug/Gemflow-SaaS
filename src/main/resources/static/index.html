@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemsflow ERP - API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #718096;
+            font-size: 18px;
+        }
+        .status-badge {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        .features {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .features h2 {
+            font-size: 24px;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        .feature-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .feature-icon {
+            font-size: 24px;
+        }
+        .feature-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .feature-desc {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 2px;
+        }
+        .feature-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-active {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .status-config {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .link-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            text-decoration: none;
+            color: #2d3748;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .link-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .link-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .link-desc {
+            font-size: 14px;
+            color: #718096;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">💎</div>
+            <h1>Gemsflow ERP</h1>
+            <p class="subtitle">Jewellery Production Management System</p>
+            <div class="status-badge">✓ API Running</div>
+        </div>
+
+        <div class="features">
+            <h2>🚀 Core Features</h2>
+            <div class="feature-item">
+                <div class="feature-info">
+                    <div class="feature-icon">📦</div>
+                    <div>
+                        <div class="feature-name">Orders & Production</div>
+                        <div class="feature-desc">Full order lifecycle management</div>
+                    </div>
+                </div>
+                <span class="feature-status status-active">Active</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-info">
+                    <div class="feature-icon">💎</div>
+                    <div>
+                        <div class="feature-name">Inventory (Metals, Diamonds, Gems)</div>
+                        <div class="feature-desc">Stock management & tracking</div>
+                    </div>
+                </div>
+                <span class="feature-status status-active">Active</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-info">
+                    <div class="feature-icon">🏭</div>
+                    <div>
+                        <div class="feature-name">Casting & Labour</div>
+                        <div class="feature-desc">Production tracking & costing</div>
+                    </div>
+                </div>
+                <span class="feature-status status-active">Active</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-info">
+                    <div class="feature-icon">👥</div>
+                    <div>
+                        <div class="feature-name">CRM & Clients</div>
+                        <div class="feature-desc">Customer relationship management</div>
+                    </div>
+                </div>
+                <span class="feature-status status-active">Active</span>
+            </div>
+        </div>
+
+        <div class="features">
+            <h2>🔌 Optional Integrations</h2>
+            <div class="feature-item">
+                <div class="feature-info">
+                    <div class="feature-icon">💳</div>
+                    <div>
+                        <div class="feature-name">Stripe Billing</div>
+                        <div class="feature-desc">SaaS subscription management</div>
+                    </div>
+                </div>
+                <span class="feature-status status-config">Requires Config</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-info">
+                    <div class="feature-icon">📊</div>
+                    <div>
+                        <div class="feature-name">QuickBooks Integration</div>
+                        <div class="feature-desc">Accounting sync</div>
+                    </div>
+                </div>
+                <span class="feature-status status-config">Requires Config</span>
+            </div>
+        </div>
+
+        <div class="links">
+            <a href="/actuator/health" class="link-card">
+                <div class="link-icon">❤️</div>
+                <div class="link-title">Health Check</div>
+                <div class="link-desc">API status endpoint</div>
+            </a>
+            <a href="/swagger-ui.html" class="link-card">
+                <div class="link-icon">📚</div>
+                <div class="link-title">API Documentation</div>
+                <div class="link-desc">Swagger UI</div>
+            </a>
+            <a href="https://github.com/adrien-debug/Gemflow-SaaS" class="link-card">
+                <div class="link-icon">🐙</div>
+                <div class="link-title">GitHub Repository</div>
+                <div class="link-desc">View source code</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+

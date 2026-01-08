@@ -16,6 +16,7 @@ import io.hearstcorporation.atelier.dto.model.billing.CheckoutSessionDto;
 import io.hearstcorporation.atelier.dto.model.billing.CreateCheckoutSessionRequestDto;
 import io.hearstcorporation.atelier.dto.model.billing.PortalSessionDto;
 import io.hearstcorporation.atelier.dto.model.error.ErrorCode;
+import io.hearstcorporation.atelier.exception.FeatureNotConfiguredException;
 import io.hearstcorporation.atelier.exception.IllegalStateException;
 import io.hearstcorporation.atelier.exception.InvalidDataException;
 import io.hearstcorporation.atelier.exception.ServiceException;
@@ -311,7 +312,7 @@ public class StripeBillingServiceImpl implements StripeBillingService {
     private String requireApiKey() {
         String apiKey = stripeProperties.getApiKey();
         if (!isNotBlank(apiKey)) {
-            throw new IllegalStateException("Stripe API key is not configured (stripe.api-key / STRIPE_API_KEY)");
+            throw new FeatureNotConfiguredException("Stripe Billing", "STRIPE_API_KEY");
         }
         return apiKey;
     }
