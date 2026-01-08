@@ -186,3 +186,4 @@ L'authentification est **désactivée** en dev (voir `SecurityConfig.java`). Tou
 - [Railway Postgres](https://docs.railway.app/databases/postgresql)
 - [Spring Boot Config](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config)
 
+
