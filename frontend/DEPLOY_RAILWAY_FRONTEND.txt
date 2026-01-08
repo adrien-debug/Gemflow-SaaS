@@ -1,0 +1,25 @@
+# ============================================
+# RAILWAY FRONTEND - VARIABLES À COPIER
+# ============================================
+# 1. Ouvrir https://railway.app
+# 2. Sélectionner ton service FRONTEND
+# 3. Variables → Raw Editor
+# 4. COPIER TOUT LE CONTENU CI-DESSOUS
+# 5. REMPLACER les URLs par tes vraies URLs Railway
+# 6. Save → Railway va redéployer automatiquement
+
+# === BACKEND API ===
+# Remplacer par l'URL de ton service backend Railway
+VITE_BACKEND_HOST=https://your-backend.railway.app
+
+# === AUTH (Keycloak - optionnel) ===
+# Si tu utilises Keycloak, remplir ces variables
+# Sinon, laisser vide
+VITE_AUTH_HOST=
+VITE_AUTH_REALM=
+VITE_AUTH_CLIENT_ID=
+VITE_AUTH_CLIENT_SECRET=
+VITE_AUTH_CLIENT_SCOPE=
+
+# === PORT (Railway le définit automatiquement) ===
+PORT=3000
