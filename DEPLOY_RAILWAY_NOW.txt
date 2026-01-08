@@ -1,0 +1,79 @@
+# ============================================
+# RAILWAY DEPLOYMENT - VARIABLES À COPIER
+# ============================================
+# 1. Ouvrir https://railway.app
+# 2. Sélectionner ton projet backend
+# 3. Variables → Raw Editor
+# 4. COPIER TOUT LE CONTENU CI-DESSOUS
+# 5. REMPLACER <YOUR_SUPABASE_PASSWORD> par ton vrai mot de passe
+# 6. Save → Railway va redéployer automatiquement
+
+# === DATABASE (OBLIGATOIRE) ===
+APP_DATABASE_URL=jdbc:postgresql://db.ldnvfnwkqywdgnsrqxuq.supabase.co:5432/postgres
+APP_DATABASE_USERNAME=postgres.ldnvfnwkqywdgnsrqxuq
+APP_DATABASE_PASSWORD=<YOUR_SUPABASE_PASSWORD>
+
+# === APPLICATION ===
+APP_NAME=Gemsflow
+APP_ACTIVE_PROFILE=prod
+SERVER_PORT=8000
+PORT=8000
+
+# === LOGS & DEBUG ===
+APP_SHOW_SQL=false
+
+# === SWAGGER (désactivé en prod) ===
+APP_SWAGGER_ENABLE=false
+
+# === CORS & FRONTEND ===
+APP_CORS_ALLOWED_ORIGINS=https://${{RAILWAY_PUBLIC_DOMAIN}},http://localhost:7101
+APP_FRONTEND_URL=https://${{RAILWAY_PUBLIC_DOMAIN}}
+
+# === SECURITY (placeholders) ===
+APP_JWT_ISSUER_URI=https://placeholder-keycloak.com/realms/atelier
+APP_KEYCLOAK_URL=https://placeholder-keycloak.com
+APP_KEYCLOAK_REALM=atelier
+APP_KEYCLOAK_CLIENT_ID=atelier-client
+APP_KEYCLOAK_CLIENT_SECRET=
+APP_KEYCLOAK_ORGANIZATION=Gemsflow
+
+# === EMAIL (désactivé) ===
+APP_EMAIL_ENABLE=false
+APP_EMAIL_HOST=smtp.gmail.com
+APP_EMAIL_PORT=587
+APP_EMAIL_USERNAME=
+APP_EMAIL_PASSWORD=
+APP_EMAIL_PROTOCOL=smtp
+APP_EMAIL_SENDER=noreply@gemsflow.com
+
+# === STORAGE (local) ===
+APP_FILE_SOURCE=LOCAL
+APP_S3_REGION=us-east-1
+APP_S3_ACCESS_KEY=
+APP_S3_SECRET_KEY=
+APP_S3_BUCKET=
+
+# === QUICKBOOKS (désactivé) ===
+QUICKBOOKS_CLIENT_ID=
+QUICKBOOKS_CLIENT_SECRET=
+QUICKBOOKS_REDIRECT_URI=https://${{RAILWAY_PUBLIC_DOMAIN}}/integrations/quickbooks/callback
+QUICKBOOKS_ENV=sandbox
+
+# === STRIPE (désactivé) ===
+STRIPE_API_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_STANDARD_25_MONTHLY=
+STRIPE_PRICE_STANDARD_25_YEARLY=
+STRIPE_PRICE_STANDARD_20_MONTHLY=
+STRIPE_PRICE_STANDARD_20_YEARLY=
+STRIPE_PRICE_BASIC_MONTHLY=
+STRIPE_PRICE_BASIC_YEARLY=
+STRIPE_PRICE_PRO_MONTHLY=
+STRIPE_PRICE_PRO_YEARLY=
+STRIPE_PRICE_ENTERPRISE_MONTHLY=
+STRIPE_PRICE_ENTERPRISE_YEARLY=
+
+# === FRONTEND PATHS ===
+APP_FRONTEND_NEW_PASSWORD_PATH=/new-password
+APP_FRONTEND_RESTORE_PASSWORD_PATH=/restore-password
+APP_FRONTEND_TIMEZONE=America/New_York
