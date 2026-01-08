@@ -1,5 +1,6 @@
 server:
-  port: ${SERVER_PORT:8000}
+  # Railway fournit la variable d'env PORT. En local on garde 8000 par défaut.
+  port: ${PORT:${SERVER_PORT:8000}}
 
 spring:
   application:
