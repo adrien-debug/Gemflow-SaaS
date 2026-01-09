@@ -52,13 +52,14 @@
             </column>
         </createTable>
 
-        <addForeignKeyConstraint
+        <!-- FK to tenant disabled until multi-tenant is enabled (077/078/079 are disabled in master.xml) -->
+        <!-- <addForeignKeyConstraint
                 baseTableName="role_permission"
                 baseColumnNames="tenant_id"
                 constraintName="fk_role_permission_tenant"
                 referencedTableName="tenant"
                 referencedColumnNames="id"
-                onDelete="CASCADE"/>
+                onDelete="CASCADE"/> -->
 
         <addForeignKeyConstraint
                 baseTableName="role_permission"
