@@ -7,7 +7,7 @@
     "startCommand": "java -jar target/atelier-0.0.1-SNAPSHOT.jar",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10,
-    "healthcheckPath": "/actuator/health",
+    "healthcheckPath": "/actuator/health/railway",
     "healthcheckTimeout": 300
   }
 }
