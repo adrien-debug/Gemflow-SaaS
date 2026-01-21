@@ -4,22 +4,55 @@
 
 ---
 
+## 📊 Status Déploiement (21 janvier 2026)
+
+### Frontend (Vercel)
+- **URL :** https://gemflow-saas.vercel.app ✅ ONLINE
+- **Status :** ✅ Ready
+
+### Backend (Railway)
+- **URL :** https://gemflow-saas-production.up.railway.app ✅
+- **Status :** ✅ ONLINE
+
+### Keycloak (Railway)
+- **URL :** https://keycloak-production-7a33.up.railway.app ✅
+- **Realm :** `atelier`
+- **Client ID :** `atelier-client`
+- **Client Secret :** `q7uJjZgSfhVNseuzUW55Aw8NCmtxBqrJ`
+- **Status :** ✅ ONLINE
+
+### Database (Supabase)
+- **Instance :** xlvlcnrkrqstfoadoamk (EU Central 1)
+- **Status :** ✅ UP
+
+### Utilisateur Test (Keycloak)
+- **Username :** `testuser`
+- **Password :** `Test1234!`
+- **Email :** `test@gemflow.app`
+
+---
+
 ## 🚀 Déploiement Railway (Quick Start)
 
 ### Option 1 : Configuration manuelle (recommandé)
 
-1. **Copier les variables** : Ouvrir `.railway-env-minimal` et copier tout le contenu
+1. **Copier les variables** : Ouvrir `.railway-env-gemsflow` et copier tout le contenu
 2. **Railway Dashboard** → Variables → Raw Editor → Coller
-3. **Remplacer** `<YOUR_SUPABASE_PASSWORD>` par le vrai mot de passe
-4. **Déployer** : Railway redémarre automatiquement
+3. **Remplacer** le mot de passe par le vrai mot de passe Supabase
+4. **Utiliser le POOLER** : `aws-0-eu-central-1.pooler.supabase.com` (recommandé)
+5. **Déployer** : Railway redémarre automatiquement
 
-### Option 2 : Script automatique
+### Option 2 : Script de test
 
 ```bash
-./setup-railway.sh
+./test-railway-backend.sh
 ```
 
-📖 **Guide complet** : Voir `RAILWAY_DEPLOY_GUIDE.md`
+📖 **Guides disponibles :**
+- `ACTION_IMMEDIATE.md` - Fix urgent backend Railway
+- `FIX_SUPABASE_AUTH.md` - Problème auth Supabase
+- `SITUATION_ACTUELLE.md` - Status complet
+- `RAILWAY_DIAGNOSTIC.md` - Diagnostic détaillé
 
 ---
 
@@ -63,12 +96,12 @@ Railway utilise **Nixpacks** pour détecter automatiquement Maven et Java 21.
 
 **Fichiers de configuration :**
 - `nixpacks.toml` : Build Maven + Java 21
-- `railway.json` : Healthcheck `/actuator/health`
+- `railway.json` : Healthcheck `/actuator/health/railway` (ping)
 
 #### 3️⃣ Déployer
 
 - **Déploiement automatique** : Chaque push sur `main` déclenche un redéploiement
-- **Healthcheck** : Railway vérifie `/actuator/health` toutes les 5 minutes
+- **Healthcheck** : Railway vérifie `/actuator/health/railway` (UP dès que l'app tourne)
 - **Logs** : Vérifier les logs Railway pour confirmer le démarrage
 
 **URL Supabase :**
@@ -82,7 +115,7 @@ Les migrations Liquibase s'appliquent automatiquement au démarrage de l'applica
 
 Une fois déployé, tester :
 ```bash
-curl https://your-app.railway.app/actuator/health
+curl https://your-app.railway.app/actuator/health/railway
 # Devrait retourner : {"status":"UP"}
 ```
 

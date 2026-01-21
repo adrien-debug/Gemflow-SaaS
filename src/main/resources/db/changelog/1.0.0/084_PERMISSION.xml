@@ -28,6 +28,8 @@
     </changeSet>
 
     <changeSet id="084-create-role-permission-table" author="system">
+        <validCheckSum>9:bd78adbcaa57efdfb005abfeae801a45</validCheckSum>
+        <validCheckSum>9:808070b5c86a092921088dc141e5901f</validCheckSum>
         <createTable tableName="role_permission">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
