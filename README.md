@@ -178,29 +178,30 @@ npm run dev
 - Frontend : http://localhost:7101
 - Proxy API : http://localhost:7001 (automatique via Vite)
 
-## ⚠️ Configuration de sécurité (développement)
+## ✅ Configuration de sécurité (Production)
 
-**L'authentification est actuellement désactivée (backend + frontend) pour faciliter le développement local.**
+**L'authentification Keycloak est ACTIVÉE en production.**
 
 ### Backend
-Tous les endpoints sont accessibles sans JWT/token.
+Tous les endpoints (sauf `/actuator/health`, Swagger, et quelques routes publiques) nécessitent un JWT valide de Keycloak.
 
-**Fichier modifié :**
+**Configuration :**
 - `src/main/java/io/hearstcorporation/atelier/config/security/SecurityConfig.java`
+- `.anyRequest().authenticated()` - requiert un token JWT valide
 
 ### Frontend
-Le login et les contrôles de rôles sont désactivés.
+Le login et les contrôles de rôles sont activés.
 
-**Fichiers modifiés :**
-- `frontend/src/app_/router/PrivateRoute.tsx` (bypass login check)
-- `frontend/src/app_/router/UserRoute.tsx` (bypass role check)
-- `frontend/src/shared/providers/UserProvider.tsx` (allow null user)
+**Fichiers :**
+- `frontend/src/app_/router/PrivateRoute.tsx` - redirige vers `/login` si non authentifié
+- `frontend/src/app_/router/UserRoute.tsx` - vérifie les rôles utilisateur
+- `frontend/src/shared/providers/UserProvider.tsx` - charge les données utilisateur
 
-**⚠️ NE JAMAIS déployer en production avec cette configuration !**
-
-Pour réactiver la sécurité :
-- Backend : remplacer tous les `.permitAll()` par les rôles appropriés (`.hasAnyRole(...)` ou `.authenticated()`)
-- Frontend : décommenter les vérifications dans les fichiers ci-dessus
+### Keycloak
+- **URL :** https://keycloak-production-7a33.up.railway.app
+- **Realm :** `atelier`
+- **Client ID :** `atelier-client`
+- **Flow :** OAuth2 Resource Owner Password Credentials (ROPC)
 
 ## Vérification
 
