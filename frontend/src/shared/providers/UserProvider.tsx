@@ -12,9 +12,8 @@ export const UserContext = createContext<UserContextProps>({ user: null });
 export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
   const { data: user } = usePersonalDetails();
 
-  // ⚠️ AUTHENTICATION DISABLED FOR DEVELOPMENT ⚠️
-  // Allow access even without user data
-  // if (!user) return null;
+  // ✅ Authentication enabled - show nothing until user data is loaded
+  if (!user) return null;
 
-  return <UserContext.Provider value={{ user: user || null }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>;
 };

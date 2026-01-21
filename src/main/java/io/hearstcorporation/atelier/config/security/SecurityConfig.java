@@ -63,8 +63,8 @@ public class SecurityConfig {
                                                                  AuthUserJwtTokenConverter authenticationConverter,
                                                                  CorsConfigurationSource corsConfigurationSource,
                                                                  DelegatedAccessDeniedHandler delegatedAccessDeniedHandler) throws Exception {
-        // ⚠️ SÉCURITÉ DÉSACTIVÉE - DÉVELOPPEMENT LOCAL UNIQUEMENT ⚠️
-        log.warn("⚠️ AUTHENTICATION DISABLED - All endpoints are publicly accessible. DO NOT USE IN PRODUCTION!");
+        // ✅ Authentication enabled via Keycloak OAuth2/OIDC
+        log.info("✅ Authentication ENABLED - JWT validation via Keycloak at issuer URI");
         
         http.oauth2ResourceServer(resourceServer ->
                 resourceServer.jwt(jwtDecoder -> jwtDecoder.jwtAuthenticationConverter(authenticationConverter)));
@@ -162,8 +162,8 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.PUT, OtherMaterialTransactionController.BASE_URL + OtherMaterialTransactionController.OTHER_MATERIAL_TRANSACTION_ID).permitAll()
                     .requestMatchers(HttpMethod.DELETE, OtherMaterialTransactionController.BASE_URL + OtherMaterialTransactionController.OTHER_MATERIAL_TRANSACTION_ID).permitAll()
 
-                    // Any Request - DÉSACTIVÉ POUR DEV LOCAL
-                    .anyRequest().permitAll();
+                    // Any Request - Require authentication
+                    .anyRequest().authenticated();
         });
 
         http.exceptionHandling(exception ->
