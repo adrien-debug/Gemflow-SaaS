@@ -15,10 +15,10 @@ interface MetalConfig {
 }
 
 const metalConfigs: Record<string, MetalConfig> = {
-  GOLD: { name: "Or", symbol: "XAU", icon: "🥇" },
-  SILVER: { name: "Argent", symbol: "XAG", icon: "🥈" },
-  PLATINUM: { name: "Platine", symbol: "XPT", icon: "💎" },
-  PALLADIUM: { name: "Palladium", symbol: "XPD", icon: "⚫" },
+  GOLD: { name: "Or", symbol: "XAU", icon: "" },
+  SILVER: { name: "Argent", symbol: "XAG", icon: "" },
+  PLATINUM: { name: "Platine", symbol: "XPT", icon: "" },
+  PALLADIUM: { name: "Palladium", symbol: "XPD", icon: "" },
 };
 
 export const MetalPricesWidget = () => {
@@ -84,7 +84,7 @@ export const MetalPricesWidget = () => {
           const config = metalConfigs[price.metal] || {
             name: price.metal,
             symbol: price.metal,
-            icon: "💎",
+            icon: "",
           };
           
           const isPositive = price.change24h ? price.change24h > 0 : null;
@@ -93,7 +93,6 @@ export const MetalPricesWidget = () => {
           return (
             <div key={price.metal} className="metal-row">
               <div className="metal-info">
-                <span className="metal-icon">{config.icon}</span>
                 <div className="metal-details">
                   <span className="metal-name">{config.name}</span>
                   <span className="metal-symbol">{config.symbol}</span>

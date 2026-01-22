@@ -29,6 +29,7 @@ const KpiCards: FC<Props> = ({ stats, loading }) => {
           value={stats?.ordersInProgress ?? 0}
           icon={<ClockCircleOutlined style={{ color: SIDER_BG }} />}
           loading={loading}
+          linkTo="/orders?status=IN_PROGRESS"
         />
       </Col>
       <Col xs={24} sm={12} lg={5}>
@@ -37,6 +38,7 @@ const KpiCards: FC<Props> = ({ stats, loading }) => {
           value={stats?.ordersFinished ?? 0}
           icon={<CheckCircleOutlined style={{ color: GOLD }} />}
           loading={loading}
+          linkTo="/orders?status=FINISHED"
         />
       </Col>
       <Col xs={24} sm={12} lg={5}>
@@ -45,6 +47,7 @@ const KpiCards: FC<Props> = ({ stats, loading }) => {
           value={stats?.ordersInvoiced ?? 0}
           icon={<SendOutlined style={{ color: GOLD }} />}
           loading={loading}
+          linkTo="/orders?status=INVOICED"
         />
       </Col>
       <Col xs={24} sm={12} lg={5}>
@@ -54,6 +57,7 @@ const KpiCards: FC<Props> = ({ stats, loading }) => {
           icon={<WarningOutlined style={{ color: "#ff4d4f" }} />}
           valueStyle={{ color: stats?.ordersOverdue ? "#ff4d4f" : undefined }}
           loading={loading}
+          linkTo="/orders?filter=overdue"
         />
       </Col>
       <Col xs={24} sm={12} lg={5}>
