@@ -1,4 +1,5 @@
 import AppstoreOutlined from "@ant-design/icons/lib/icons/AppstoreOutlined";
+import DashboardOutlined from "@ant-design/icons/lib/icons/DashboardOutlined";
 import DatabaseOutlined from "@ant-design/icons/lib/icons/DatabaseOutlined";
 import DesktopOutlined from "@ant-design/icons/lib/icons/DesktopOutlined";
 import SettingOutlined from "@ant-design/icons/lib/icons/SettingOutlined";
@@ -7,11 +8,21 @@ import UsergroupAddOutlined from "@ant-design/icons/lib/icons/UsergroupAddOutlin
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 import ContactsOutlined from "@ant-design/icons/lib/icons/ContactsOutlined";
 import SafetyOutlined from "@ant-design/icons/lib/icons/SafetyOutlined";
+import RobotOutlined from "@ant-design/icons/lib/icons/RobotOutlined";
 import { MenuItem } from "@shared/ui/layouts/DashboardLayout/models/menu-item.model.ts";
 import { Link } from "react-router";
 import { FireOutlined } from "@ant-design/icons";
 
 export const dashboardTopMenuItems: MenuItem[] = [
+  {
+    key: "/dashboard",
+    label: (
+      <Link id="dashboard" to="/dashboard">
+        Dashboard
+      </Link>
+    ),
+    icon: <DashboardOutlined />,
+  },
   {
     key: "/orders",
     label: (
@@ -121,6 +132,15 @@ export const dashboardBottomMenuItems: MenuItem[] = [
       </Link>
     ),
     icon: <UsergroupAddOutlined />,
+  },
+  {
+    key: "/ai-agent",
+    label: (
+      <Link id="ai-agent" to="/ai-agent">
+        AI Agent
+      </Link>
+    ),
+    icon: <RobotOutlined />,
   },
   {
     key: "/settings",

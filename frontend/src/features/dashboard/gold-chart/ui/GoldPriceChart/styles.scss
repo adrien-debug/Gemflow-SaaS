@@ -1,0 +1,64 @@
+$gold: #C39A71;
+$gold-line: rgba(195, 154, 113, 0.35);
+$sider-bg: #131C30;
+
+.gold-price-chart-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  height: 100%;
+  border: 1px solid $gold-line;
+
+  .ant-card-head {
+    background: $sider-bg;
+    border-bottom: 1px solid $gold-line;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .ant-card-head-title {
+    font-weight: 600;
+    color: white;
+  }
+
+  .chart-live-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: $gold;
+    color: $sider-bg;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: $sider-bg;
+      border-radius: 50%;
+      margin-right: 6px;
+      animation: pulse 1.5s infinite;
+    }
+  }
+
+  .gold-price-chart-container {
+    height: 400px;
+    min-height: 400px;
+  }
+
+  .tradingview-widget {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}

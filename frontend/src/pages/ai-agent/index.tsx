@@ -1,1 +1,1 @@
-export { default as AiAgentPage } from "./AiAgentPage";
+export { default } from "./AiAgentPage";

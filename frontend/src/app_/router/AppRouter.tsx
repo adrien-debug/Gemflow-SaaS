@@ -9,6 +9,7 @@ import { getLoginWithRedirectBackUrl } from "@shared/utils/url-helper.ts";
 const Administration = lazy(() => import("@pages/administration"));
 const Authorization = lazy(() => import("@pages/authorization"));
 const CAD = lazy(() => import("@pages/cad"));
+const Dashboard = lazy(() => import("@pages/dashboard"));
 const Diamonds = lazy(() => import("@pages/diamonds"));
 const Orders = lazy(() => import("@pages/orders"));
 const Settings = lazy(() => import("@pages/settings"));
@@ -26,6 +27,7 @@ const QuickBooksCallback = lazy(() => import("@pages/integrations/QuickBooksCall
 const Permissions = lazy(() => import("@pages/permissions/PermissionsPage"));
 const BillingSuccess = lazy(() => import("@pages/billing/BillingSuccessPage"));
 const BillingCancel = lazy(() => import("@pages/billing/BillingCancelPage"));
+const AiAgent = lazy(() => import("@pages/ai-agent"));
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -39,7 +41,15 @@ const AppRouter = () => (
             <DashboardOutlet />
           </PrivateRoute>
         }>
-        <Route index element={<Navigate to="/orders" />} />
+        <Route index element={<Navigate to="/dashboard" />} />
+        <Route
+          path="dashboard"
+          element={
+            <UserRoute allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.SUPER_ADMIN]} redirectTo="/orders">
+              <Dashboard />
+            </UserRoute>
+          }
+        />
         <Route path="billing/success" element={<BillingSuccess />} />
         <Route path="billing/cancel" element={<BillingCancel />} />
         <Route
@@ -117,6 +127,14 @@ const AppRouter = () => (
           element={
             <UserRoute allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.SUPER_ADMIN]} redirectTo="/">
               <Permissions />
+            </UserRoute>
+          }
+        />
+        <Route
+          path="ai-agent"
+          element={
+            <UserRoute allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.SUPER_ADMIN]} redirectTo="/">
+              <AiAgent />
             </UserRoute>
           }
         />

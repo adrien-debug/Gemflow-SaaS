@@ -4,6 +4,41 @@
 
 ---
 
+## ✅ DERNIÈRES MODIFICATIONS - 22 janvier 2026
+
+### 🎨 Refonte Complète du Dashboard
+
+Le dashboard a été entièrement refondu pour correspondre pixel par pixel à l'identité visuelle du site :
+
+**Palette de couleurs appliquée :**
+- Gold principal : `#C39A71`
+- Background marine : `#131C30`
+- Bordures gold : `rgba(195, 154, 113, 0.35)`
+
+**Composants modifiés :**
+1. `frontend/src/pages/dashboard/DashboardPage.tsx` - Structure et layout
+2. `frontend/src/pages/dashboard/styles.scss` - Style principal avec palette gold/marine
+3. `frontend/src/features/dashboard/kpi-cards/ui/KpiCard/styles.scss` - Cards KPI avec bordures gold
+4. `frontend/src/features/dashboard/kpi-cards/ui/KpiCards/index.tsx` - Icônes avec couleurs cohérentes
+5. `frontend/src/features/dashboard/gold-chart/ui/GoldPriceChart/styles.scss` - Header marine + badge gold
+6. `frontend/src/features/dashboard/status-chart/ui/StatusDistributionChart/styles.scss` - Header marine + scrollbar gold
+7. `frontend/src/features/dashboard/alerts/ui/AlertsList/styles.scss` - Header marine + liens gold
+8. `frontend/src/features/ai-agent/metal-prices-widget/styles.scss` - Cards avec bordures gold
+9. `frontend/src/features/ai-agent/ai-chat/AiChat.tsx` - Messages avec style gold/marine
+10. `frontend/src/features/ai-agent/ai-chat/styles.scss` - Nouveau fichier de styles
+
+**Améliorations visuelles :**
+- ✅ Tous les cards ont des bordures gold cohérentes
+- ✅ Headers des cards en marine (`#131C30`) avec titres blancs
+- ✅ Icônes en gold pour cohérence visuelle
+- ✅ Effets hover avec bordures gold
+- ✅ Scrollbars personnalisées en gold
+- ✅ Messages chat avec style marine/gold
+- ✅ Boutons primaires en marine avec icônes gold
+- ✅ Welcome banner avec gradient marine et ligne gold
+
+---
+
 ## ✅ AUDIT COMPLET - 21 janvier 2026
 
 ### 🎯 Résumé Exécutif

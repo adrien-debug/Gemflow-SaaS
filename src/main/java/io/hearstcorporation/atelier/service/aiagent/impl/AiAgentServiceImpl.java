@@ -76,7 +76,6 @@ public class AiAgentServiceImpl implements AiAgentService {
             order.setName(importDto.getName());
             order.setDescription(importDto.getDescription());
             order.setClient(client);
-            order.setCreatedDate(LocalDate.now());
             order.setDueDate(importDto.getDueDate());
             
             // Save order
@@ -118,9 +117,9 @@ public class AiAgentServiceImpl implements AiAgentService {
         long totalClients = clientRepository.count();
         
         // Get recent orders (last 30 days)
-        LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
+        java.time.Instant thirtyDaysAgo = java.time.Instant.now().minus(30, java.time.temporal.ChronoUnit.DAYS);
         long recentOrders = orderRepository.findAll().stream()
-                .filter(o -> o.getCreatedDate() != null && o.getCreatedDate().isAfter(thirtyDaysAgo))
+                .filter(o -> o.getCreatedAt() != null && o.getCreatedAt().isAfter(thirtyDaysAgo))
                 .count();
         
         Map<String, Object> data = new HashMap<>();

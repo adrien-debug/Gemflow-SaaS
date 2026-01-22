@@ -1,0 +1,71 @@
+$gold: #C39A71;
+$gold-line: rgba(195, 154, 113, 0.35);
+$sider-bg: #131C30;
+
+.ai-chat {
+  .ai-chat-empty {
+    text-align: center;
+    padding: 32px;
+    color: #999;
+
+    .anticon {
+      color: $gold;
+    }
+  }
+
+  .user-message {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 12px 12px 4px 12px;
+    background: $sider-bg;
+    color: white;
+
+    .ant-typography {
+      color: white !important;
+      margin: 0;
+    }
+  }
+
+  .agent-message {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 12px 12px 12px 4px;
+    background: #f5f5f5;
+    border: 1px solid $gold-line;
+
+    .ant-typography {
+      margin: 0;
+    }
+
+    .message-suggestions {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid $gold-line;
+
+      .ant-btn {
+        border-color: $gold-line;
+        color: $sider-bg;
+
+        &:hover {
+          border-color: $gold;
+          color: $gold;
+        }
+      }
+    }
+  }
+
+  .ai-chat-input {
+    .ant-btn-primary {
+      background: $sider-bg;
+      border-color: $sider-bg;
+
+      &:hover:not(:disabled) {
+        background: lighten($sider-bg, 8%);
+      }
+
+      .anticon {
+        color: $gold;
+      }
+    }
+  }
+}
