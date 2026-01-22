@@ -12,6 +12,7 @@ import { AlertsList } from "@features/dashboard/alerts";
 import { StatusDistributionChart } from "@features/dashboard/status-chart";
 import { AiChat } from "@features/ai-agent/ai-chat/AiChat";
 import { MetalPricesWidget } from "@features/ai-agent/metal-prices-widget/MetalPricesWidget";
+import { JewelryGalleryWidget } from "@features/dashboard/jewelry-gallery";
 import "./styles.scss";
 
 const { Title, Paragraph } = Typography;
@@ -81,6 +82,11 @@ const DashboardPage: FC = () => {
               </Card>
             </Col>
           </Row>
+        </section>
+
+        {/* Jewelry Gallery Section */}
+        <section className="dashboard-section">
+          <JewelryGalleryWidget />
         </section>
       </div>
     </CommonLayout>
