@@ -32,7 +32,7 @@ const CrmContactsTable = () => {
     try {
       await deleteMutation.mutateAsync(contactId);
       message.success("Contact deleted successfully");
-    } catch (error) {
+    } catch {
       message.error("Failed to delete contact");
     }
   };
@@ -43,9 +43,7 @@ const CrmContactsTable = () => {
       dataIndex: "fullName",
       key: "fullName",
       render: (_, record) => (
-        <span style={{ color: brandingColorPalette.brand6, fontWeight: 500 }}>
-          {record.fullName || record.email}
-        </span>
+        <span style={{ color: brandingColorPalette.brand6, fontWeight: 500 }}>{record.fullName || record.email}</span>
       ),
     },
     {
@@ -83,17 +81,12 @@ const CrmContactsTable = () => {
       width: 120,
       render: (_, record) => (
         <Space size="small">
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => setEditingContact(record)}
-          />
+          <Button type="text" icon={<EditOutlined />} onClick={() => setEditingContact(record)} />
           <Popconfirm
             title="Delete this contact?"
             onConfirm={() => handleDelete(record.id)}
             okText="Yes"
-            cancelText="No"
-          >
+            cancelText="No">
             <Button type="text" danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
@@ -142,4 +135,3 @@ const CrmContactsTable = () => {
 };
 
 export default CrmContactsTable;
-

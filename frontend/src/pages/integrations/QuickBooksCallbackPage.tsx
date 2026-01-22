@@ -5,4 +5,3 @@ export const QuickBooksCallbackPage = () => {
 };
 
 export default QuickBooksCallbackPage;
-

@@ -15,4 +15,3 @@ const useCreateCrmContact = () => {
 };
 
 export default useCreateCrmContact;
-

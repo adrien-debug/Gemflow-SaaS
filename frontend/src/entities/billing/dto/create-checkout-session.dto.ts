@@ -5,5 +5,3 @@ export type CreateCheckoutSessionDto = {
   cancelUrl?: string;
   quantity?: number;
 };
-
-

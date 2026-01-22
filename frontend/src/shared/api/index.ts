@@ -51,6 +51,10 @@ api.interceptors.response.use(
 
     // Check if the error is a 401 (Unauthorized) and if the access token has expired
     if (error.response && error.response.status === HttpStatusCode.Unauthorized && !originalRequest._retry) {
+      const authData = LocalStorageService.getItem<AuthData>(StorageKey.AuthData) as AuthData | null;
+      if (!authData?.refresh_token) {
+        return Promise.reject(getAxiosErrorMessage(error));
+      }
       if (isRefreshing) {
         // If token is already being refreshed, add the original request to the queue
         return new Promise((resolve) => {

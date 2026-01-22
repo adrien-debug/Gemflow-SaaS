@@ -8,4 +8,3 @@ export interface CrmCommunicationDto {
   subject?: string;
   content?: string;
 }
-

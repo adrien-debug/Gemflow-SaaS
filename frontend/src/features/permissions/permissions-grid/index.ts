@@ -1,3 +1,1 @@
-export { PermissionsGrid } from './ui/PermissionsGrid';
-
-
+export { PermissionsGrid } from "./ui/PermissionsGrid";

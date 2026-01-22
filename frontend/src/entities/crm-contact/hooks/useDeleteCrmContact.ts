@@ -14,4 +14,3 @@ const useDeleteCrmContact = () => {
 };
 
 export default useDeleteCrmContact;
-

@@ -3,4 +3,3 @@ export const TabKeys = {
   COMMUNICATIONS: "communications",
   TEMPLATES: "templates",
 } as const;
-

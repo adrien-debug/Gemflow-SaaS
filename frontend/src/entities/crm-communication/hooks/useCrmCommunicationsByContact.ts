@@ -11,4 +11,3 @@ const useCrmCommunicationsByContact = (contactId: number) => {
 };
 
 export default useCrmCommunicationsByContact;
-

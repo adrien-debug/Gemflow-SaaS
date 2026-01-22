@@ -11,4 +11,3 @@ const useCrmContacts = (pageRequest: PageRequestModel) => {
 };
 
 export default useCrmContacts;
-

@@ -4,7 +4,7 @@ import Input, { InputRef } from "antd/es/input";
 import AntTag from "antd/es/tag";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
 import { MAX_LENGTH } from "@shared/ui/tag/constants/max-length.ts";
-import InputNumber from "antd/es/input-number";
+import InputNumber, { type InputNumberRef } from "antd/es/input-number";
 import { TagItem } from "@shared/ui/tag/components/Tag";
 
 interface Props {
@@ -23,7 +23,7 @@ const NewTag: FC<Props> = ({ label = "New tag", onCreate, isNumber, maxLength = 
 
   const inputRef = useRef<InputRef>(null);
 
-  const inputNumberRef = useRef<any>(null);
+  const inputNumberRef = useRef<InputNumberRef | null>(null);
 
   useEffect(() => {
     if (editing) {

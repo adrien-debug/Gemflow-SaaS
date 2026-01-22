@@ -92,7 +92,11 @@ export const getCastingColumns = (actions: CastingTableActions): ColumnsType<Cas
       title: "Orders",
       width: 250,
       render: (_, { orderIds }) => (
-        <>{orderIds?.map((id) => <Tag key={id} tag={{ id, name: id }} style={{ marginBottom: 8 }} />)}</>
+        <>
+          {orderIds?.map((id) => (
+            <Tag key={id} tag={{ id, name: id }} style={{ marginBottom: 8 }} />
+          ))}
+        </>
       ),
     },
     {

@@ -9,5 +9,3 @@ export const BillingApi = {
     return api.post(`${BASE_URL}/checkout-session`, dto);
   },
 };
-
-

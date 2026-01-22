@@ -15,4 +15,3 @@ const useCreateCrmCommunication = () => {
 };
 
 export default useCreateCrmCommunication;
-

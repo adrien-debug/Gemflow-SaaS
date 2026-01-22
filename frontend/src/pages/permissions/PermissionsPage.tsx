@@ -1,6 +1,6 @@
-import { PermissionsGrid } from '@features/permissions/permissions-grid';
-import ActionBar from '@shared/ui/ActionBar';
-import './styles.scss';
+import { PermissionsGrid } from "@features/permissions/permissions-grid";
+import ActionBar from "@shared/ui/ActionBar";
+import "./styles.scss";
 
 export const PermissionsPage = () => {
   return (
@@ -12,4 +12,3 @@ export const PermissionsPage = () => {
 };
 
 export default PermissionsPage;
-

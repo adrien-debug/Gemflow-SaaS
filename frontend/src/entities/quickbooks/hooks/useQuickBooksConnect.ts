@@ -7,7 +7,7 @@ export const useQuickBooksConnect = () => {
     mutationFn: async () => {
       const authUrl = await QuickBooksApi.getAuthUrl();
       // Store state in localStorage for verification after redirect
-      localStorage.setItem('quickbooks_oauth_state', authUrl.state);
+      localStorage.setItem("quickbooks_oauth_state", authUrl.state);
       // Redirect to QuickBooks authorization page
       window.location.href = authUrl.authorizationUrl;
     },
@@ -21,7 +21,7 @@ export const useQuickBooksCallback = () => {
     mutationFn: QuickBooksApi.handleCallback,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUICKBOOKS_QUERY_KEYS.status });
-      localStorage.removeItem('quickbooks_oauth_state');
+      localStorage.removeItem("quickbooks_oauth_state");
     },
   });
 };
@@ -41,4 +41,3 @@ export const useQuickBooksDisconnect = () => {
     },
   });
 };
-

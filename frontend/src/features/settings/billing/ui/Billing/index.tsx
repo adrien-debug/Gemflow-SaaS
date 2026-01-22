@@ -53,18 +53,11 @@ const Billing = () => {
       <div className="billing-grid">
         <Card title="Standard (Small Enterprise)">
           <Flex vertical gap={12}>
-            <Typography.Text>
-              Designed for small workshops & growing studios.
-            </Typography.Text>
+            <Typography.Text>Designed for small workshops & growing studios.</Typography.Text>
 
             <Flex align="center" gap={12} className="billing-controls">
               <Typography.Text strong>Seats</Typography.Text>
-              <InputNumber
-                min={1}
-                max={10}
-                value={seats}
-                onChange={(v) => setSeats(typeof v === "number" ? v : 1)}
-              />
+              <InputNumber min={1} max={10} value={seats} onChange={(v) => setSeats(typeof v === "number" ? v : 1)} />
 
               <Segmented
                 value={cycle}
@@ -77,42 +70,34 @@ const Billing = () => {
             </Flex>
 
             <Typography.Title level={3} style={{ margin: 0 }}>
-              {cycle === "annual"
-                ? `$${pricing.annualTotal}/year`
-                : `$${pricing.monthlyTotal}/month`}
+              {cycle === "annual" ? `$${pricing.annualTotal}/year` : `$${pricing.monthlyTotal}/month`}
             </Typography.Title>
             <Typography.Text type="secondary">
               {cycle === "annual"
-                ? `Billed annually. Equivalent ~$${((pricing.annualTotal / 12) || 0).toFixed(2)}/month.`
+                ? `Billed annually. Equivalent ~$${(pricing.annualTotal / 12 || 0).toFixed(2)}/month.`
                 : `$${unitPriceMonthly}/seat/month (${seats <= 5 ? "1–5 seats" : "6–10 seats"})`}
             </Typography.Text>
 
-            <Button
-              type="primary"
-              onClick={onSubscribe}
-              loading={loading}
-              disabled={!isStandardEligible}
-            >
+            <Button type="primary" onClick={onSubscribe} loading={loading} disabled={!isStandardEligible}>
               Subscribe
             </Button>
 
             <Typography.Text type="secondary" style={{ marginTop: 8 }}>
-              Included: Orders & job management, production stages, Kanban + timeline, roles (Admin/User),
-              basic reports, exports (CSV), secure cloud hosting.
+              Included: Orders & job management, production stages, Kanban + timeline, roles (Admin/User), basic
+              reports, exports (CSV), secure cloud hosting.
             </Typography.Text>
           </Flex>
         </Card>
 
         <Card title="Enterprise — On Demand">
           <Flex vertical gap={12}>
-            <Typography.Text>
-              For multi-workshop manufacturers & high-volume brands.
-            </Typography.Text>
+            <Typography.Text>For multi-workshop manufacturers & high-volume brands.</Typography.Text>
             <Typography.Title level={3} style={{ margin: 0 }}>
               Custom pricing
             </Typography.Title>
             <Typography.Text type="secondary">
-              Unlimited seats, multi-location, advanced planning, forecasting, QR/Barcode tracking, API & integrations, SLA.
+              Unlimited seats, multi-location, advanced planning, forecasting, QR/Barcode tracking, API & integrations,
+              SLA.
             </Typography.Text>
             <Button disabled>Contact sales</Button>
           </Flex>
@@ -123,5 +108,3 @@ const Billing = () => {
 };
 
 export default Billing;
-
-

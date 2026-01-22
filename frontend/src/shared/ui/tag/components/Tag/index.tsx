@@ -7,7 +7,7 @@ import CloseOutlined from "@ant-design/icons/lib/icons/CloseOutlined";
 import { getShortString } from "@shared/utils/get-short-string.ts";
 import { MAX_LENGTH } from "@shared/ui/tag/constants/max-length.ts";
 import { BaseItem } from "@shared/types/base-item.type.ts";
-import InputNumber from "antd/es/input-number";
+import InputNumber, { type InputNumberRef } from "antd/es/input-number";
 
 const CUT_LENGTH = 25;
 
@@ -42,7 +42,7 @@ const Tag: FC<Props> = ({
   const [editing, setEditing] = useState<boolean>(false);
   const [tag, setTag] = useState<TagItem>({ ...tagProp });
   const inputRef = useRef<InputRef>(null);
-  const inputNumberRef = useRef<any>(null);
+  const inputNumberRef = useRef<InputNumberRef | null>(null);
 
   const [currentValue, setCurrentValue] = useState<string | number>(tag.name);
 

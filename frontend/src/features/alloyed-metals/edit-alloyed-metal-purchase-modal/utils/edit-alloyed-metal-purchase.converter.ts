@@ -3,9 +3,10 @@ import { AlloyedMetalPurchaseFormSchema } from "@features/alloyed-metals/alloyed
 import { Converter } from "@shared/types/converter.type.ts";
 import { DateFormat } from "@shared/constants/date-format.ts";
 
-class EditAlloyedMetalPurchaseConverter
-  implements Converter<AlloyedMetalPurchaseFormSchema, UpdateAlloyedMetalPurchaseDto>
-{
+class EditAlloyedMetalPurchaseConverter implements Converter<
+  AlloyedMetalPurchaseFormSchema,
+  UpdateAlloyedMetalPurchaseDto
+> {
   convert(from: AlloyedMetalPurchaseFormSchema): UpdateAlloyedMetalPurchaseDto {
     return {
       balanceDate: from.balanceDate.format(DateFormat.YearMonthDay),

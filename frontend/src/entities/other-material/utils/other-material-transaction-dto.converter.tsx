@@ -3,9 +3,10 @@ import { OtherMaterialTransactionSchema } from "@features/other-materials/other-
 import { DateFormat } from "@shared/constants/date-format.ts";
 import { Converter } from "@shared/types/converter.type.ts";
 
-class OtherMaterialTransactionFormConverter
-  implements Converter<OtherMaterialTransactionSchema & { otherMaterialId: number }, CreateOtherMaterialTransactionDto>
-{
+class OtherMaterialTransactionFormConverter implements Converter<
+  OtherMaterialTransactionSchema & { otherMaterialId: number },
+  CreateOtherMaterialTransactionDto
+> {
   convert(from: OtherMaterialTransactionSchema & { otherMaterialId: number }): CreateOtherMaterialTransactionDto {
     return {
       otherMaterialId: from.otherMaterialId,

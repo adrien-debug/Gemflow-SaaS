@@ -16,7 +16,7 @@ interface OrderQRCodeModalProps {
 
 const OrderQRCodeModal = ({ isOpen, onClose, orderId, orderName }: OrderQRCodeModalProps) => {
   const qrRef = useRef<HTMLDivElement>(null);
-  
+
   const timeTrackerUrl = `${window.location.origin}/orders/${orderId}/time-tracker`;
 
   const handleDownload = () => {
@@ -82,23 +82,10 @@ const OrderQRCodeModal = ({ isOpen, onClose, orderId, orderName }: OrderQRCodeMo
   };
 
   return (
-    <Modal
-      title={`QR Code - Order #${orderId}`}
-      open={isOpen}
-      onCancel={onClose}
-      footer={null}
-      width={400}
-      centered
-    >
+    <Modal title={`QR Code - Order #${orderId}`} open={isOpen} onCancel={onClose} footer={null} width={400} centered>
       <Flex vertical align="center" gap={24} style={{ padding: "20px 0" }}>
         <div ref={qrRef}>
-          <QRCodeSVG
-            value={timeTrackerUrl}
-            size={200}
-            level="H"
-            includeMargin
-            fgColor={brandingColorPalette.brand6}
-          />
+          <QRCodeSVG value={timeTrackerUrl} size={200} level="H" includeMargin fgColor={brandingColorPalette.brand6} />
         </div>
 
         <Typography.Text type="secondary" style={{ textAlign: "center" }}>
@@ -114,10 +101,7 @@ const OrderQRCodeModal = ({ isOpen, onClose, orderId, orderName }: OrderQRCodeMo
           </Button>
         </Flex>
 
-        <Typography.Text
-          copyable={{ text: timeTrackerUrl }}
-          style={{ fontSize: 12, color: "#999" }}
-        >
+        <Typography.Text copyable={{ text: timeTrackerUrl }} style={{ fontSize: 12, color: "#999" }}>
           {timeTrackerUrl}
         </Typography.Text>
       </Flex>
@@ -126,4 +110,3 @@ const OrderQRCodeModal = ({ isOpen, onClose, orderId, orderName }: OrderQRCodeMo
 };
 
 export default OrderQRCodeModal;
-

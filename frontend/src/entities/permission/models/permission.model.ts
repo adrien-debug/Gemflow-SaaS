@@ -1,10 +1,10 @@
 export enum PermissionCategory {
-  CLIENTS = 'CLIENTS',
-  ORDERS = 'ORDERS',
-  INVENTORY = 'INVENTORY',
-  SETTINGS = 'SETTINGS',
-  REPORTS = 'REPORTS',
-  FILES = 'FILES',
+  CLIENTS = "CLIENTS",
+  ORDERS = "ORDERS",
+  INVENTORY = "INVENTORY",
+  SETTINGS = "SETTINGS",
+  REPORTS = "REPORTS",
+  FILES = "FILES",
 }
 
 export interface Permission {
@@ -36,5 +36,3 @@ export interface RolePermissionsMatrix {
   // Map<roleId, Map<permissionId, granted>>
   matrix: Record<number, Record<number, boolean>>;
 }
-
-

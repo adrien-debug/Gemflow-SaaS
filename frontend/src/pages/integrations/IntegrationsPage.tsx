@@ -9,13 +9,8 @@ const { Title } = Typography;
 export const IntegrationsPage = () => {
   return (
     <div className="integrations-page">
-      <Breadcrumb
-        items={[
-          { title: <Link to="/settings">Settings</Link> },
-          { title: 'Integrations' },
-        ]}
-      />
-      
+      <Breadcrumb items={[{ title: <Link to="/settings">Settings</Link> }, { title: "Integrations" }]} />
+
       <div className="page-header">
         <Title level={2}>Integrations</Title>
       </div>
@@ -29,4 +24,3 @@ export const IntegrationsPage = () => {
 };
 
 export default IntegrationsPage;
-

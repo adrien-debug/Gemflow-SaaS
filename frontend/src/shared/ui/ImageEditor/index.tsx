@@ -46,7 +46,7 @@ const ImageEditor = (
             width: `100%`,
             height: `${height + 50}px`,
           },
-          // @ts-ignore
+          // @ts-expect-error - TUI locale typing does not cover custom labels
           locale: {
             Delete: "Delete selected",
             DeleteAll: "Delete all",

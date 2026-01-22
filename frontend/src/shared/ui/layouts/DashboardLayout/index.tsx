@@ -23,31 +23,25 @@ const DashboardLayout: FC<Props> = ({ children, topItems, bottomItems }) => {
 
   return (
     <Layout className="dashboard-layout" style={{ minWidth: 1200 }}>
-      <Sider 
-        className={`sider ${collapsed ? 'sider-collapsed' : ''}`} 
-        theme="dark" 
+      <Sider
+        className={`sider ${collapsed ? "sider-collapsed" : ""}`}
+        theme="dark"
         width={240}
         collapsedWidth={72}
         collapsed={collapsed}
         collapsible
-        trigger={null}
-      >
+        trigger={null}>
         <Flex vertical flex={1} className="sider-container">
           <Flex justify="center" align="center" className="sider-logo-container">
-            {collapsed ? (
-              <div className="sider-logo-mini">A</div>
-            ) : (
-              <Logo className="sider-logo" />
-            )}
+            {collapsed ? <div className="sider-logo-mini">A</div> : <Logo className="sider-logo" />}
           </Flex>
-          
+
           <div className="sider-separator" />
-          
-          <button 
+
+          <button
             className="sider-toggle"
             onClick={() => setCollapsed(!collapsed)}
-            aria-label={collapsed ? "Ouvrir le menu" : "Fermer le menu"}
-          >
+            aria-label={collapsed ? "Ouvrir le menu" : "Fermer le menu"}>
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </button>
 
@@ -67,13 +61,13 @@ const DashboardLayout: FC<Props> = ({ children, topItems, bottomItems }) => {
               <div></div>
             )}
             {bottomItems?.length ? (
-              <Menu 
-                theme="dark" 
-                selectedKeys={[selectedKey]} 
-                items={bottomItems} 
-                mode="inline" 
+              <Menu
+                theme="dark"
+                selectedKeys={[selectedKey]}
+                items={bottomItems}
+                mode="inline"
                 inlineCollapsed={collapsed}
-                expandIcon={null} 
+                expandIcon={null}
               />
             ) : (
               <div></div>

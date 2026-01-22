@@ -17,4 +17,3 @@ const AddContactButton = () => {
 };
 
 export default AddContactButton;
-

@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import { Table, Checkbox, Button, message, Spin, Card } from 'antd';
-import Flex from 'antd/es/flex';
-import Typography from 'antd/es/typography';
-import { SaveOutlined } from '@ant-design/icons';
-import { usePermissionsMatrix } from '@entities/permission/hooks/usePermissionsMatrix';
-import { useUpdateRolePermissions } from '@entities/permission/hooks/useUpdateRolePermissions';
-import type { Permission } from '@entities/permission/models/permission.model';
-import type { UpdateRolePermissionsDto } from '@entities/permission/dto/update-role-permissions.dto';
-import './styles.scss';
+import { useState, useEffect } from "react";
+import { Table, Checkbox, Button, message, Spin, Card } from "antd";
+import Flex from "antd/es/flex";
+import Typography from "antd/es/typography";
+import { SaveOutlined } from "@ant-design/icons";
+import { usePermissionsMatrix } from "@entities/permission/hooks/usePermissionsMatrix";
+import { useUpdateRolePermissions } from "@entities/permission/hooks/useUpdateRolePermissions";
+import type { Permission } from "@entities/permission/models/permission.model";
+import type { UpdateRolePermissionsDto } from "@entities/permission/dto/update-role-permissions.dto";
+import "./styles.scss";
 
 export const PermissionsGrid = () => {
   const tenantId = 1; // TODO: Get from context
   const { data: matrixData, isLoading } = usePermissionsMatrix(tenantId);
   const updateMutation = useUpdateRolePermissions(tenantId);
-  
+
   // Local state for matrix changes
   const [localMatrix, setLocalMatrix] = useState<Record<number, Record<number, boolean>>>({});
   const [hasChanges, setHasChanges] = useState(false);
@@ -55,10 +55,10 @@ export const PermissionsGrid = () => {
         await updateMutation.mutateAsync(dto);
       }
 
-      message.success('Permissions updated successfully');
+      message.success("Permissions updated successfully");
       setHasChanges(false);
     } catch (error) {
-      message.error('Failed to update permissions');
+      message.error("Failed to update permissions");
       console.error(error);
     }
   };
@@ -84,14 +84,14 @@ export const PermissionsGrid = () => {
       acc[perm.category].push(perm);
       return acc;
     },
-    {} as Record<string, Permission[]>
+    {} as Record<string, Permission[]>,
   );
 
   const columns = [
     {
-      title: 'Permission',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Permission",
+      dataIndex: "name",
+      key: "name",
       width: 300,
       render: (text: string, record: Permission) => (
         <Flex vertical gap={4}>
@@ -109,7 +109,7 @@ export const PermissionsGrid = () => {
       dataIndex: role.id,
       key: role.id,
       width: 150,
-      align: 'center' as const,
+      align: "center" as const,
       render: (_: unknown, record: Permission) => (
         <Checkbox
           checked={localMatrix[role.id]?.[record.id] || false}
@@ -128,8 +128,7 @@ export const PermissionsGrid = () => {
             icon={<SaveOutlined />}
             onClick={handleSave}
             loading={updateMutation.isPending}
-            size="large"
-          >
+            size="large">
             Save Changes
           </Button>
         </Flex>
@@ -137,16 +136,9 @@ export const PermissionsGrid = () => {
 
       {Object.entries(permissionsByCategory).map(([category, permissions]) => (
         <Card key={category} title={category} className="permission-category-card">
-          <Table
-            dataSource={permissions}
-            columns={columns}
-            rowKey="id"
-            pagination={false}
-            size="middle"
-          />
+          <Table dataSource={permissions} columns={columns} rowKey="id" pagination={false} size="middle" />
         </Card>
       ))}
     </Flex>
   );
 };
-

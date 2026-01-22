@@ -3,9 +3,10 @@ import { OtherMaterialTransactionSchema } from "@features/other-materials/other-
 import { Converter } from "@shared/types/converter.type.ts";
 import dayjs from "dayjs";
 
-class OtherMaterialTransactionFormConverter
-  implements Converter<OtherMaterialTransaction, OtherMaterialTransactionSchema>
-{
+class OtherMaterialTransactionFormConverter implements Converter<
+  OtherMaterialTransaction,
+  OtherMaterialTransactionSchema
+> {
   convert(from: OtherMaterialTransaction): OtherMaterialTransactionSchema {
     return {
       description: from.description,

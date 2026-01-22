@@ -20,4 +20,3 @@ const useUpdateCrmContact = () => {
 };
 
 export default useUpdateCrmContact;
-

@@ -1,5 +1,11 @@
 import { Button, Card, Tag, Typography, Space, Descriptions, Statistic, Row, Col, Spin, Alert } from "antd";
-import { LinkOutlined, DisconnectOutlined, SyncOutlined, CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import {
+  LinkOutlined,
+  DisconnectOutlined,
+  SyncOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
 import { useQuickBooksStatus } from "@entities/quickbooks/hooks/useQuickBooksStatus";
 import { useQuickBooksConnect, useQuickBooksDisconnect } from "@entities/quickbooks/hooks/useQuickBooksConnect";
 import { useQuickBooksDataSummary } from "@entities/quickbooks/hooks/useQuickBooksData";
@@ -9,14 +15,12 @@ const { Title, Text } = Typography;
 
 export const QuickBooksConnect = () => {
   const { data: status, isLoading: statusLoading, refetch: refetchStatus } = useQuickBooksStatus();
-  const { data: summary, isLoading: summaryLoading } = useQuickBooksDataSummary(
-    status?.status === 'CONNECTED'
-  );
+  const { data: summary, isLoading: summaryLoading } = useQuickBooksDataSummary(status?.status === "CONNECTED");
   const connectMutation = useQuickBooksConnect();
   const disconnectMutation = useQuickBooksDisconnect();
 
-  const isConnected = status?.status === 'CONNECTED';
-  const isTokenExpired = status?.status === 'TOKEN_EXPIRED';
+  const isConnected = status?.status === "CONNECTED";
+  const isTokenExpired = status?.status === "TOKEN_EXPIRED";
 
   const handleConnect = () => {
     connectMutation.mutate();
@@ -28,14 +32,26 @@ export const QuickBooksConnect = () => {
 
   const getStatusTag = () => {
     if (!status) return <Tag>Not Connected</Tag>;
-    
+
     switch (status.status) {
-      case 'CONNECTED':
-        return <Tag color="success" icon={<CheckCircleOutlined />}>Connected</Tag>;
-      case 'TOKEN_EXPIRED':
-        return <Tag color="warning" icon={<CloseCircleOutlined />}>Token Expired</Tag>;
-      case 'ERROR':
-        return <Tag color="error" icon={<CloseCircleOutlined />}>Error</Tag>;
+      case "CONNECTED":
+        return (
+          <Tag color="success" icon={<CheckCircleOutlined />}>
+            Connected
+          </Tag>
+        );
+      case "TOKEN_EXPIRED":
+        return (
+          <Tag color="warning" icon={<CloseCircleOutlined />}>
+            Token Expired
+          </Tag>
+        );
+      case "ERROR":
+        return (
+          <Tag color="error" icon={<CloseCircleOutlined />}>
+            Error
+          </Tag>
+        );
       default:
         return <Tag>Disconnected</Tag>;
     }
@@ -53,21 +69,17 @@ export const QuickBooksConnect = () => {
     <Card className="quickbooks-connect-card">
       <div className="quickbooks-header">
         <div className="quickbooks-logo">
-          <img 
-            src="https://quickbooks.intuit.com/oidam/intuit/sbseg/en_us/quickbooks/QBO_Logo_FullColor.png" 
-            alt="QuickBooks Logo" 
+          <img
+            src="https://quickbooks.intuit.com/oidam/intuit/sbseg/en_us/quickbooks/QBO_Logo_FullColor.png"
+            alt="QuickBooks Logo"
             style={{ height: 40 }}
           />
         </div>
-        <div className="quickbooks-status">
-          {getStatusTag()}
-        </div>
+        <div className="quickbooks-status">{getStatusTag()}</div>
       </div>
 
       <Title level={4}>QuickBooks Online Integration</Title>
-      <Text type="secondary">
-        Connect your QuickBooks Online account to sync customers, invoices, and items.
-      </Text>
+      <Text type="secondary">Connect your QuickBooks Online account to sync customers, invoices, and items.</Text>
 
       {isTokenExpired && (
         <Alert
@@ -86,25 +98,19 @@ export const QuickBooksConnect = () => {
             icon={<LinkOutlined />}
             onClick={handleConnect}
             loading={connectMutation.isPending}
-            size="large"
-          >
+            size="large">
             Connect to QuickBooks
           </Button>
         ) : (
           <Space>
-            <Button
-              icon={<SyncOutlined />}
-              onClick={() => refetchStatus()}
-              loading={statusLoading}
-            >
+            <Button icon={<SyncOutlined />} onClick={() => refetchStatus()} loading={statusLoading}>
               Refresh Status
             </Button>
             <Button
               danger
               icon={<DisconnectOutlined />}
               onClick={handleDisconnect}
-              loading={disconnectMutation.isPending}
-            >
+              loading={disconnectMutation.isPending}>
               Disconnect
             </Button>
           </Space>
@@ -119,7 +125,7 @@ export const QuickBooksConnect = () => {
               {new Date(status.connectedAt).toLocaleDateString()}
             </Descriptions.Item>
             <Descriptions.Item label="Last Sync">
-              {status.lastSyncAt ? new Date(status.lastSyncAt).toLocaleString() : 'Never'}
+              {status.lastSyncAt ? new Date(status.lastSyncAt).toLocaleString() : "Never"}
             </Descriptions.Item>
             <Descriptions.Item label="Token Expires">
               {new Date(status.tokenExpiresAt).toLocaleString()}
@@ -175,4 +181,3 @@ export const QuickBooksConnect = () => {
 };
 
 export default QuickBooksConnect;
-

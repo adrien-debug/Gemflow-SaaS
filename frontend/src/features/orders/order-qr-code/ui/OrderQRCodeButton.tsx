@@ -16,15 +16,9 @@ const OrderQRCodeButton = ({ orderId, orderName }: OrderQRCodeButtonProps) => {
       <Button icon={<QrcodeOutlined />} onClick={() => setIsOpen(true)}>
         QR Code
       </Button>
-      <OrderQRCodeModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        orderId={orderId}
-        orderName={orderName}
-      />
+      <OrderQRCodeModal isOpen={isOpen} onClose={() => setIsOpen(false)} orderId={orderId} orderName={orderName} />
     </>
   );
 };
 
 export default OrderQRCodeButton;
-

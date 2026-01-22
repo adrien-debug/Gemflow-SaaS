@@ -51,25 +51,25 @@ const QuickBooksApi = {
 
   getCustomers: async (startPosition?: number, maxResults?: number): Promise<QuickBooksCustomer[]> => {
     const params = new URLSearchParams();
-    if (startPosition !== undefined) params.append('startPosition', startPosition.toString());
-    if (maxResults !== undefined) params.append('maxResults', maxResults.toString());
-    const query = params.toString() ? `?${params.toString()}` : '';
+    if (startPosition !== undefined) params.append("startPosition", startPosition.toString());
+    if (maxResults !== undefined) params.append("maxResults", maxResults.toString());
+    const query = params.toString() ? `?${params.toString()}` : "";
     return api.get(`${BASE_URL}/customers${query}`);
   },
 
   getInvoices: async (startPosition?: number, maxResults?: number): Promise<QuickBooksInvoice[]> => {
     const params = new URLSearchParams();
-    if (startPosition !== undefined) params.append('startPosition', startPosition.toString());
-    if (maxResults !== undefined) params.append('maxResults', maxResults.toString());
-    const query = params.toString() ? `?${params.toString()}` : '';
+    if (startPosition !== undefined) params.append("startPosition", startPosition.toString());
+    if (maxResults !== undefined) params.append("maxResults", maxResults.toString());
+    const query = params.toString() ? `?${params.toString()}` : "";
     return api.get(`${BASE_URL}/invoices${query}`);
   },
 
   getItems: async (startPosition?: number, maxResults?: number): Promise<QuickBooksItem[]> => {
     const params = new URLSearchParams();
-    if (startPosition !== undefined) params.append('startPosition', startPosition.toString());
-    if (maxResults !== undefined) params.append('maxResults', maxResults.toString());
-    const query = params.toString() ? `?${params.toString()}` : '';
+    if (startPosition !== undefined) params.append("startPosition", startPosition.toString());
+    if (maxResults !== undefined) params.append("maxResults", maxResults.toString());
+    const query = params.toString() ? `?${params.toString()}` : "";
     return api.get(`${BASE_URL}/items${query}`);
   },
 
@@ -80,4 +80,3 @@ const QuickBooksApi = {
 };
 
 export default QuickBooksApi;
-

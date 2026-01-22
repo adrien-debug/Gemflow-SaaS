@@ -7,5 +7,3 @@ export interface UpdateRolePermissionsDto {
   roleId: number;
   permissions: PermissionUpdate[];
 }
-
-

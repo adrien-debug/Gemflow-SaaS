@@ -5,4 +5,3 @@ export const CRM_CONTACT_QUERY_KEYS = {
   details: () => [...CRM_CONTACT_QUERY_KEYS.all, "detail"] as const,
   detail: (id: number) => [...CRM_CONTACT_QUERY_KEYS.details(), id] as const,
 };
-

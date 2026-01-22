@@ -16,5 +16,3 @@ export const BillingCancelPage = () => {
 };
 
 export default BillingCancelPage;
-
-

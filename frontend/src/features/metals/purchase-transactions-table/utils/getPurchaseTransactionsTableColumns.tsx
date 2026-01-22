@@ -6,7 +6,17 @@ import { ColumnsType } from "antd/es/table";
 import Typography from "antd/es/typography";
 import dayjs from "dayjs";
 
-export const getPurchaseTransactionsTableColumns = (): ColumnsType<any> => [
+interface PurchaseTransactionsRow {
+  date: string;
+  usageType: string;
+  description: string;
+  orderNumber: number[];
+  weight: number;
+  cost: number;
+  batchValue: number;
+}
+
+export const getPurchaseTransactionsTableColumns = (): ColumnsType<PurchaseTransactionsRow> => [
   {
     dataIndex: "date",
     title: "Date",

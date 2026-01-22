@@ -20,11 +20,7 @@ export const useQuickBooksDataSummary = (enabled: boolean = true) => {
   });
 };
 
-export const useQuickBooksCustomers = (
-  startPosition?: number,
-  maxResults?: number,
-  enabled: boolean = true
-) => {
+export const useQuickBooksCustomers = (startPosition?: number, maxResults?: number, enabled: boolean = true) => {
   return useQuery({
     queryKey: [...QUICKBOOKS_QUERY_KEYS.customers, startPosition, maxResults],
     queryFn: () => QuickBooksApi.getCustomers(startPosition, maxResults),
@@ -33,11 +29,7 @@ export const useQuickBooksCustomers = (
   });
 };
 
-export const useQuickBooksInvoices = (
-  startPosition?: number,
-  maxResults?: number,
-  enabled: boolean = true
-) => {
+export const useQuickBooksInvoices = (startPosition?: number, maxResults?: number, enabled: boolean = true) => {
   return useQuery({
     queryKey: [...QUICKBOOKS_QUERY_KEYS.invoices, startPosition, maxResults],
     queryFn: () => QuickBooksApi.getInvoices(startPosition, maxResults),
@@ -46,11 +38,7 @@ export const useQuickBooksInvoices = (
   });
 };
 
-export const useQuickBooksItems = (
-  startPosition?: number,
-  maxResults?: number,
-  enabled: boolean = true
-) => {
+export const useQuickBooksItems = (startPosition?: number, maxResults?: number, enabled: boolean = true) => {
   return useQuery({
     queryKey: [...QUICKBOOKS_QUERY_KEYS.items, startPosition, maxResults],
     queryFn: () => QuickBooksApi.getItems(startPosition, maxResults),
@@ -58,4 +46,3 @@ export const useQuickBooksItems = (
     staleTime: 5 * 60 * 1000,
   });
 };
-

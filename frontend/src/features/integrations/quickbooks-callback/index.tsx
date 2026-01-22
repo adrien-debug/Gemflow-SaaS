@@ -14,25 +14,25 @@ export const QuickBooksCallback = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const code = searchParams.get('code');
-    const realmId = searchParams.get('realmId');
-    const state = searchParams.get('state');
-    const errorParam = searchParams.get('error');
+    const code = searchParams.get("code");
+    const realmId = searchParams.get("realmId");
+    const state = searchParams.get("state");
+    const errorParam = searchParams.get("error");
 
     if (errorParam) {
-      setError(`Authorization denied: ${searchParams.get('error_description') || errorParam}`);
+      setError(`Authorization denied: ${searchParams.get("error_description") || errorParam}`);
       return;
     }
 
     if (!code || !realmId) {
-      setError('Missing authorization code or realm ID');
+      setError("Missing authorization code or realm ID");
       return;
     }
 
     // Verify state matches (security)
-    const storedState = localStorage.getItem('quickbooks_oauth_state');
+    const storedState = localStorage.getItem("quickbooks_oauth_state");
     if (storedState && state !== storedState) {
-      setError('State mismatch - possible security issue');
+      setError("State mismatch - possible security issue");
       return;
     }
 
@@ -43,13 +43,13 @@ export const QuickBooksCallback = () => {
         onSuccess: () => {
           // Redirect to integrations page after 2 seconds
           setTimeout(() => {
-            navigate('/settings/integrations', { replace: true });
+            navigate("/settings/integrations", { replace: true });
           }, 2000);
         },
         onError: (err: ApiError) => {
-          setError(err?.data?.friendlyMessage || err?.data?.developerMessage || 'Failed to connect to QuickBooks');
+          setError(err?.data?.friendlyMessage || err?.data?.developerMessage || "Failed to connect to QuickBooks");
         },
-      }
+      },
     );
   }, [searchParams]);
 
@@ -61,9 +61,7 @@ export const QuickBooksCallback = () => {
             status="error"
             title="Connection Failed"
             subTitle={error}
-            extra={
-              <a href="/settings/integrations">Return to Integrations</a>
-            }
+            extra={<a href="/settings/integrations">Return to Integrations</a>}
           />
         </Card>
       </div>
@@ -97,4 +95,3 @@ export const QuickBooksCallback = () => {
 };
 
 export default QuickBooksCallback;
-

@@ -8,4 +8,3 @@ export interface CrmContactDto {
   notes?: string;
   tags?: string;
 }
-

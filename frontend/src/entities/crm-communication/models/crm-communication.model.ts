@@ -25,4 +25,3 @@ export interface SendEmailDto {
   body: string;
   templateId?: number;
 }
-

@@ -8,12 +8,12 @@ const MetalsUsageApi = {
     return api.get(`/api/v1/orders/${orderId}/metal-productions/summaries`);
   },
 
-  addMaterialUsage: async (orderId: number, dto: AddMaterialUsageDto): Promise<any> => {
-    return api.post<any>(`/api/v1/orders/${orderId}/usage`, dto);
+  addMaterialUsage: async (orderId: number, dto: AddMaterialUsageDto): Promise<void> => {
+    return api.post<void>(`/api/v1/orders/${orderId}/usage`, dto);
   },
 
-  returnMaterialToInventory: async (orderId: number, dto: ReturnMaterialToInventoryDto): Promise<any> => {
-    return api.post(`/api/v1/orders/${orderId}/return`, dto);
+  returnMaterialToInventory: async (orderId: number, dto: ReturnMaterialToInventoryDto): Promise<void> => {
+    return api.post<void>(`/api/v1/orders/${orderId}/return`, dto);
   },
 };
 

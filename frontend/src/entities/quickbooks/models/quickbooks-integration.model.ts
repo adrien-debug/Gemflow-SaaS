@@ -1,5 +1,5 @@
-export type AccountingProvider = 'QUICKBOOKS' | 'XERO';
-export type IntegrationStatus = 'DISCONNECTED' | 'CONNECTED' | 'TOKEN_EXPIRED' | 'ERROR';
+export type AccountingProvider = "QUICKBOOKS" | "XERO";
+export type IntegrationStatus = "DISCONNECTED" | "CONNECTED" | "TOKEN_EXPIRED" | "ERROR";
 
 export interface QuickBooksIntegration {
   id: number;
@@ -88,8 +88,7 @@ export interface QuickBooksSyncLog {
   entityId: number | null;
   externalId: string | null;
   action: string;
-  status: 'SUCCESS' | 'FAILED' | 'PENDING';
+  status: "SUCCESS" | "FAILED" | "PENDING";
   errorMessage: string | null;
   syncedAt: string;
 }
-

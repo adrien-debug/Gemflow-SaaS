@@ -1,8 +1,8 @@
-import api from '@shared/api';
-import type { Permission, RolePermissionsMatrix } from '../models/permission.model';
-import type { UpdateRolePermissionsDto } from '../dto/update-role-permissions.dto';
+import api from "@shared/api";
+import type { Permission, RolePermissionsMatrix } from "../models/permission.model";
+import type { UpdateRolePermissionsDto } from "../dto/update-role-permissions.dto";
 
-const BASE_URL = '/api/v1/permissions';
+const BASE_URL = "/api/v1/permissions";
 
 export const PermissionApi = {
   /**
@@ -22,10 +22,7 @@ export const PermissionApi = {
   /**
    * Update permissions for a specific role
    */
-  updateRolePermissions: async (
-    dto: UpdateRolePermissionsDto,
-    tenantId: number = 1
-  ): Promise<void> => {
+  updateRolePermissions: async (dto: UpdateRolePermissionsDto, tenantId: number = 1): Promise<void> => {
     return api.put(`${BASE_URL}/role`, dto, { params: { tenantId } });
   },
 
@@ -43,5 +40,3 @@ export const PermissionApi = {
     return api.get(`${BASE_URL}/user/${userId}`);
   },
 };
-
-

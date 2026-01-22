@@ -27,4 +27,3 @@ const CrmContactApi = {
 };
 
 export default CrmContactApi;
-

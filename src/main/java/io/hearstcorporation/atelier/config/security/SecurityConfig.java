@@ -48,7 +48,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 public class SecurityConfig {
 
     private final static String ALL_REGEX = "/**";
-    private final static String ACTUATOR_HEALTH = "/actuator/health";
+    private final static String ACTUATOR_HEALTH = "/actuator/health/**";
     private final static String API_DOCS_v3 = "/v3/api-docs" + ALL_REGEX;
     private final static String SWAGGER_UI = "/swagger-ui" + ALL_REGEX;
 

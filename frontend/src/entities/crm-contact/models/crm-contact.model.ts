@@ -13,4 +13,3 @@ export interface CrmContact {
   createdAt: string;
   updatedAt: string;
 }
-

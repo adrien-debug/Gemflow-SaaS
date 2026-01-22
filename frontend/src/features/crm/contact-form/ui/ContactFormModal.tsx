@@ -61,8 +61,7 @@ const ContactFormModal = ({ isOpen, onClose, contact }: ContactFormModalProps) =
       onOk={handleSubmit}
       okText={isEditing ? "Update" : "Create"}
       confirmLoading={createMutation.isPending || updateMutation.isPending}
-      destroyOnHidden
-    >
+      destroyOnHidden>
       <Form form={form} layout="vertical">
         <Form.Item
           name="email"
@@ -70,8 +69,7 @@ const ContactFormModal = ({ isOpen, onClose, contact }: ContactFormModalProps) =
           rules={[
             { required: true, message: "Email is required" },
             { type: "email", message: "Please enter a valid email" },
-          ]}
-        >
+          ]}>
           <Input placeholder="email@example.com" />
         </Form.Item>
 
@@ -104,4 +102,3 @@ const ContactFormModal = ({ isOpen, onClose, contact }: ContactFormModalProps) =
 };
 
 export default ContactFormModal;
-

@@ -3,4 +3,3 @@ export const CRM_COMMUNICATION_QUERY_KEYS = {
   byContact: (contactId: number) => [...CRM_COMMUNICATION_QUERY_KEYS.all, "contact", contactId] as const,
   byClient: (clientId: number) => [...CRM_COMMUNICATION_QUERY_KEYS.all, "client", clientId] as const,
 };
-

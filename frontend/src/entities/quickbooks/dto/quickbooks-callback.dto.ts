@@ -3,4 +3,3 @@ export interface QuickBooksCallbackDto {
   realmId: string;
   state?: string;
 }
-

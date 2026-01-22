@@ -15,4 +15,3 @@ const useSendEmail = () => {
 };
 
 export default useSendEmail;
-

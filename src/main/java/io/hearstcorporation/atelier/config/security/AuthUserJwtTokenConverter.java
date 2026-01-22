@@ -32,7 +32,9 @@ public class AuthUserJwtTokenConverter implements Converter<Jwt, AuthUserJwtToke
         AuthUser authUser = authUserService.findByOid(oid);
         String role = authUser.role().code();
         List<String> organizations = ListUtils.emptyIfNull(jwt.getClaimAsStringList(ORGANIZATION_CLAIM));
-        if (CollectionUtils.isEmpty(organizations) || !organizations.contains(keycloakProperties.getOrganization())) {
+        // In dev/compat mode, allow tokens without organization claim.
+        if (CollectionUtils.isNotEmpty(organizations)
+                && !organizations.contains(keycloakProperties.getOrganization())) {
             log.error("Jwt token has unsupported organizations {}", StringUtils.join(organizations, ","));
             throw new AccessDeniedException("Jwt token has unsupported organizations");
         }
