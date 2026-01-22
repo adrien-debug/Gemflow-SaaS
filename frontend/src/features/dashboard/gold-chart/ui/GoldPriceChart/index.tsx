@@ -22,11 +22,13 @@ interface TradingViewWidgetConfig {
   enable_publishing: boolean;
   hide_top_toolbar: boolean;
   hide_legend: boolean;
+  hide_volume?: boolean;
   save_image: boolean;
   container_id: string;
   hide_side_toolbar: boolean;
   allow_symbol_change: boolean;
   studies: string[];
+  overrides?: Record<string, string>;
 }
 
 const GoldPriceChart: FC = () => {
@@ -52,15 +54,32 @@ const GoldPriceChart: FC = () => {
           theme: "light",
           style: "1",
           locale: "fr",
-          toolbar_bg: "#f1f3f6",
+          toolbar_bg: "#ffffff",
           enable_publishing: false,
-          hide_top_toolbar: false,
-          hide_legend: false,
+          hide_top_toolbar: true,
+          hide_legend: true,
           save_image: false,
           container_id: containerId,
           hide_side_toolbar: true,
           allow_symbol_change: false,
-          studies: ["MASimple@tv-basicstudies"],
+          hide_volume: true,
+          studies: [],
+          overrides: {
+            // Candles UP = Gold
+            "mainSeriesProperties.candleStyle.upColor": "#C39A71",
+            "mainSeriesProperties.candleStyle.borderUpColor": "#C39A71",
+            "mainSeriesProperties.candleStyle.wickUpColor": "#C39A71",
+            // Candles DOWN = Black
+            "mainSeriesProperties.candleStyle.downColor": "#1a1a1a",
+            "mainSeriesProperties.candleStyle.borderDownColor": "#222222",
+            "mainSeriesProperties.candleStyle.wickDownColor": "#222222",
+            // White background
+            "paneProperties.background": "#ffffff",
+            "paneProperties.vertGridProperties.color": "#f0f0f0",
+            "paneProperties.horzGridProperties.color": "#f0f0f0",
+            // Hide volume
+            "volumePaneSize": "tiny",
+          },
         });
       }
     };

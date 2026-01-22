@@ -7,14 +7,17 @@ $sider-bg: #131C30;
   padding: 0;
 
   .dashboard-welcome {
-    background: linear-gradient(135deg, $sider-bg 0%, lighten($sider-bg, 10%) 100%);
+    background: 
+      linear-gradient(135deg, rgba(19, 28, 48, 0.88) 0%, rgba(19, 28, 48, 0.75) 100%),
+      url('/images/backgrounds/diamond-sparkle-bg.jpg') center/cover no-repeat;
     border-radius: 12px;
-    padding: 32px;
+    padding: 40px 32px;
     margin-bottom: 24px;
     color: white;
     border: 1px solid $gold-line;
     position: relative;
     overflow: hidden;
+    min-height: 140px;
 
     &::before {
       content: '';
@@ -26,27 +29,42 @@ $sider-bg: #131C30;
       background: linear-gradient(90deg, transparent 0%, $gold 50%, transparent 100%);
     }
 
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, $gold-line 50%, transparent 100%);
+    }
+
     .welcome-content {
       display: flex;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
     .welcome-icon {
-      font-size: 48px;
+      font-size: 52px;
       color: $gold;
-      opacity: 0.9;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     }
 
     .welcome-title {
       color: white !important;
       margin: 0 !important;
       font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      letter-spacing: 0.5px;
     }
 
     .welcome-subtitle {
-      color: $gold-muted !important;
-      margin: 4px 0 0 0 !important;
-      font-size: 16px;
+      color: $gold !important;
+      margin: 6px 0 0 0 !important;
+      font-size: 15px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
   }
 

@@ -1,67 +1,161 @@
 $gold: #C39A71;
 $gold-line: rgba(195, 154, 113, 0.35);
 $sider-bg: #131C30;
-$text-secondary: #777;
 
-.metal-prices-widget {
-  .ant-card {
-    border-radius: 12px;
-    border: 1px solid $gold-line;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+.metal-prices-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  height: 100%;
+  border: 1px solid $gold-line;
 
-    .ant-card-head {
-      background: $sider-bg;
-      border-bottom: 1px solid $gold-line;
-      border-radius: 12px 12px 0 0;
+  .ant-card-head {
+    background: $sider-bg;
+    border-bottom: 1px solid $gold-line;
+    border-radius: 12px 12px 0 0;
+    padding: 0 16px;
+    min-height: 48px;
 
-      .ant-card-head-title {
-        color: white;
-        font-weight: 600;
-
-        .anticon {
-          color: $gold;
-        }
-      }
-
-      .ant-card-extra .ant-btn {
-        color: rgba(255, 255, 255, 0.8);
-        border-color: $gold-line;
-
-        &:hover {
-          color: $gold;
-          border-color: $gold;
-        }
+    .ant-card-head-wrapper {
+      .ant-card-extra {
+        padding: 0;
       }
     }
   }
 
-  .metal-card {
-    text-align: center;
-    border: 1px solid $gold-line;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+  .card-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+
+    .anticon {
+      color: $gold;
+      font-size: 16px;
+    }
+  }
+
+  .refresh-btn {
+    color: rgba(255, 255, 255, 0.7);
 
     &:hover {
-      border-color: $gold;
-      box-shadow: 0 2px 8px rgba(195, 154, 113, 0.15);
-    }
-
-    .metal-icon {
-      font-size: 28px;
-      margin-bottom: 6px;
-    }
-
-    .metal-source {
-      margin-top: 6px;
-      font-size: 11px;
-      color: $text-secondary;
+      color: $gold;
+      background: rgba(255, 255, 255, 0.1);
     }
   }
 
-  .prices-updated {
-    margin-top: 12px;
-    text-align: center;
-    color: $text-secondary;
+  .ant-card-body {
+    padding: 16px;
+  }
+
+  .loading-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .metals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .metal-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $gold-line;
+      background: #fff;
+    }
+  }
+
+  .metal-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .metal-icon {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .metal-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metal-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  .metal-symbol {
     font-size: 11px;
+    color: rgba(0, 0, 0, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .metal-price-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .metal-price {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.85);
+
+    .unit {
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.45);
+      margin-left: 1px;
+    }
+  }
+
+  .metal-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 4px;
+
+    .anticon {
+      font-size: 10px;
+    }
+
+    &.positive {
+      color: #52c41a;
+      background: rgba(82, 196, 26, 0.1);
+    }
+
+    &.negative {
+      color: #ff4d4f;
+      background: rgba(255, 77, 79, 0.1);
+    }
+  }
+
+  .prices-footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.45);
   }
 }

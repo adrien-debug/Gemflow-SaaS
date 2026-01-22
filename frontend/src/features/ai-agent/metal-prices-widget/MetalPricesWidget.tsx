@@ -1,118 +1,131 @@
-import { Card, Statistic, Row, Col, Spin, Alert, Button, Space } from "antd";
+import { Card, Spin, Alert, Button, Space, Tooltip } from "antd";
 import {
   ArrowUpOutlined,
   ArrowDownOutlined,
   SyncOutlined,
-  DollarOutlined,
+  GoldOutlined,
 } from "@ant-design/icons";
 import { useMetalPrices } from "@entities/ai-agent/hooks/useMetalPrices";
 import "./styles.scss";
+
+interface MetalConfig {
+  name: string;
+  symbol: string;
+  icon: string;
+}
+
+const metalConfigs: Record<string, MetalConfig> = {
+  GOLD: { name: "Or", symbol: "XAU", icon: "🥇" },
+  SILVER: { name: "Argent", symbol: "XAG", icon: "🥈" },
+  PLATINUM: { name: "Platine", symbol: "XPT", icon: "💎" },
+  PALLADIUM: { name: "Palladium", symbol: "XPD", icon: "⚫" },
+};
 
 export const MetalPricesWidget = () => {
   const { data: prices, isLoading, isError, refetch, isFetching } = useMetalPrices();
 
   if (isLoading) {
     return (
-      <div className="metal-prices-widget">
-        <Card title="Prix des Métaux">
-          <div style={{ textAlign: "center", padding: 32 }}>
-            <Spin size="large" />
-          </div>
-        </Card>
-      </div>
+      <Card 
+        className="metal-prices-card"
+        title={
+          <span className="card-title">
+            <GoldOutlined />
+            Prix des Métaux
+          </span>
+        }
+      >
+        <div className="loading-state">
+          <Spin size="large" />
+        </div>
+      </Card>
     );
   }
 
   if (isError || !prices) {
     return (
-      <div className="metal-prices-widget">
-        <Card title="Prix des Métaux">
-          <Alert
-            message="Erreur de chargement"
-            description="Impossible de charger les prix des métaux"
-            type="error"
-            showIcon
-          />
-        </Card>
-      </div>
+      <Card 
+        className="metal-prices-card"
+        title={
+          <span className="card-title">
+            <GoldOutlined />
+            Prix des Métaux
+          </span>
+        }
+      >
+        <Alert message="Erreur de chargement" type="error" showIcon />
+      </Card>
     );
   }
 
-  const getMetalIcon = (metal: string) => {
-    const icons: Record<string, string> = {
-      GOLD: "🥇",
-      SILVER: "🥈",
-      PLATINUM: "⚪",
-      PALLADIUM: "⚫",
-    };
-    return icons[metal] || "💎";
-  };
-
   return (
-    <div className="metal-prices-widget">
-      <Card
-        title={
-          <Space>
-            <DollarOutlined />
-            <span>Prix des Métaux</span>
-          </Space>
-        }
-        extra={
+    <Card
+      className="metal-prices-card"
+      title={
+        <span className="card-title">
+          <GoldOutlined />
+          Prix des Métaux
+        </span>
+      }
+      extra={
+        <Tooltip title="Actualiser les prix">
           <Button
+            type="text"
+            className="refresh-btn"
             icon={<SyncOutlined spin={isFetching} />}
             onClick={() => refetch()}
-            loading={isFetching}
             size="small"
-          >
-            Actualiser
-          </Button>
-        }
-      >
-        <Row gutter={[16, 16]}>
-          {prices.map((price) => {
-            const isPositive = price.change24h ? price.change24h > 0 : null;
-            const changeColor = isPositive ? "#3f8600" : isPositive === false ? "#cf1322" : undefined;
+          />
+        </Tooltip>
+      }
+    >
+      <div className="metals-list">
+        {prices.map((price) => {
+          const config = metalConfigs[price.metal] || {
+            name: price.metal,
+            symbol: price.metal,
+            icon: "💎",
+          };
+          
+          const isPositive = price.change24h ? price.change24h > 0 : null;
+          const changeValue = price.change24h ? Math.abs(price.change24h) : 0;
 
-            return (
-              <Col xs={24} sm={12} lg={6} key={price.metal}>
-                <Card size="small" className="metal-card">
-                  <div className="metal-icon">{getMetalIcon(price.metal)}</div>
-                  <Statistic
-                    title={price.metal}
-                    value={price.price}
-                    precision={2}
-                    prefix="$"
-                    suffix={`/${price.unit}`}
-                    valueStyle={{ fontSize: 18 }}
-                  />
-                  {price.change24h !== undefined && price.change24h !== null && (
-                    <div style={{ marginTop: 8 }}>
-                      <Statistic
-                        value={Math.abs(price.change24h)}
-                        precision={2}
-                        valueStyle={{
-                          color: changeColor,
-                          fontSize: 14,
-                        }}
-                        prefix={
-                          isPositive ? <ArrowUpOutlined /> : <ArrowDownOutlined />
-                        }
-                        suffix="%"
-                      />
-                    </div>
-                  )}
-                  <div className="metal-source">
-                    Source: {price.source}
-                  </div>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-        <div className="prices-updated">
-          Mis à jour : {prices[0] ? new Date(prices[0].timestamp).toLocaleString("fr-FR") : "N/A"}
-        </div>
-      </Card>
-    </div>
+          return (
+            <div key={price.metal} className="metal-row">
+              <div className="metal-info">
+                <span className="metal-icon">{config.icon}</span>
+                <div className="metal-details">
+                  <span className="metal-name">{config.name}</span>
+                  <span className="metal-symbol">{config.symbol}</span>
+                </div>
+              </div>
+              
+              <div className="metal-price-section">
+                <span className="metal-price">
+                  ${price.price.toLocaleString("en-US", { 
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2 
+                  })}
+                  <span className="unit">/oz</span>
+                </span>
+                {price.change24h !== undefined && price.change24h !== null && (
+                  <span className={`metal-change ${isPositive ? 'positive' : 'negative'}`}>
+                    {isPositive ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+                    {changeValue.toFixed(2)}%
+                  </span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      
+      <div className="prices-footer">
+        Mis à jour : {prices[0] ? new Date(prices[0].timestamp).toLocaleTimeString("fr-FR", {
+          hour: "2-digit",
+          minute: "2-digit"
+        }) : "N/A"}
+      </div>
+    </Card>
   );
 };
