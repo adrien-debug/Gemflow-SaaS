@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_LABOUR_SETTING_CREATE" author="${author}">
+        <createTable tableName="labour_setting">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="hourly_rate" type="numeric(6, 2)"/>
+            <column name="cut_down_pave_cost" type="numeric(6, 2)"/>
+            <column name="claw_cost" type="numeric(6, 2)"/>
+            <column name="center_cost" type="numeric(6, 2)"/>
+            <column name="shoulder_cost" type="numeric(6, 2)"/>
+            <column name="rubover_cost" type="numeric(6, 2)"/>
+            <column name="channel_cost" type="numeric(6, 2)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

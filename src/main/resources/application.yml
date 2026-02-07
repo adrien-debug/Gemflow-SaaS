@@ -1,0 +1,128 @@
+server:
+  # Railway fournit la variable d'env PORT. En local on garde 8000 par défaut.
+  port: ${PORT:${SERVER_PORT:8000}}
+
+spring:
+  application:
+    name: ${APP_NAME:Gemsflow}
+  profiles:
+    active: ${APP_ACTIVE_PROFILE:prod}
+  docker:
+    compose:
+      enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${APP_JWT_ISSUER_URI:https://placeholder-keycloak.com/realms/atelier}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    show-sql: ${APP_SHOW_SQL:false}
+    properties:
+      hibernate:
+        query:
+          fail_on_pagination_over_collection_fetch: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${APP_DATABASE_URL}
+    username: ${APP_DATABASE_USERNAME}
+    password: ${APP_DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: 16
+      connection-timeout: 60000
+      validation-timeout: 60000
+      max-lifetime: 900000
+  liquibase:
+    change-log: db/changelog/root.xml
+  servlet:
+    multipart:
+      max-file-size: 5MB
+
+email:
+  enable: ${APP_EMAIL_ENABLE:false}
+  properties:
+    host: ${APP_EMAIL_HOST:smtp.gmail.com}
+    port: ${APP_EMAIL_PORT:587}
+    username: ${APP_EMAIL_USERNAME:}
+    password: ${APP_EMAIL_PASSWORD:}
+    protocol: ${APP_EMAIL_PROTOCOL:smtp}
+    sender: ${APP_EMAIL_SENDER:noreply@gemsflow.com}
+
+organization:
+  name: ${APP_KEYCLOAK_ORGANIZATION:Gemsflow}
+
+keycloak:
+  url: ${APP_KEYCLOAK_URL:https://placeholder-keycloak.com}
+  realm: ${APP_KEYCLOAK_REALM:atelier}
+  organization: ${APP_KEYCLOAK_ORGANIZATION:Gemsflow}
+  client-id: ${APP_KEYCLOAK_CLIENT_ID:atelier-client}
+  client-secret: ${APP_KEYCLOAK_CLIENT_SECRET:}
+
+cors:
+  # Comma-separated list supported via APP_CORS_ALLOWED_ORIGINS.
+  # Defaults include Vercel (prod + previews) + local dev.
+  allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:https://gemflow-saas.vercel.app,https://*.vercel.app,http://localhost:7101}
+  allowed-methods:
+    - '*'
+  allowed-headers:
+    - '*'
+
+frontend:
+  url: ${APP_FRONTEND_URL:http://localhost:7101}
+  new-password-path: ${APP_FRONTEND_NEW_PASSWORD_PATH:/new-password}
+  restore-password-path: ${APP_FRONTEND_RESTORE_PASSWORD_PATH:/restore-password}
+  timezone: ${APP_FRONTEND_TIMEZONE:America/New_York}
+
+springdoc:
+  api-docs:
+    enabled: ${APP_SWAGGER_ENABLE:true}
+  swagger-ui:
+    enabled: ${APP_SWAGGER_ENABLE:true}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      group:
+        railway:
+          include: ping
+
+file:
+  source: ${APP_FILE_SOURCE:LOCAL}
+  s3:
+    region: ${APP_S3_REGION:us-east-1}
+    access-key: ${APP_S3_ACCESS_KEY:}
+    secret-key: ${APP_S3_SECRET_KEY:}
+    bucket: ${APP_S3_BUCKET:}
+
+# QuickBooks Integration
+quickbooks:
+  client-id: ${QUICKBOOKS_CLIENT_ID:}
+  client-secret: ${QUICKBOOKS_CLIENT_SECRET:}
+  redirect-uri: ${QUICKBOOKS_REDIRECT_URI:http://localhost:7101/integrations/quickbooks/callback}
+  environment: ${QUICKBOOKS_ENV:sandbox}
+
+# Stripe Billing / Checkout (SaaS)
+stripe:
+  api-key: ${STRIPE_API_KEY:}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+  prices:
+    # Standard plan (per-seat) with tiered unit price
+    standard-25-monthly: ${STRIPE_PRICE_STANDARD_25_MONTHLY:}
+    standard-25-yearly: ${STRIPE_PRICE_STANDARD_25_YEARLY:}
+    standard-20-monthly: ${STRIPE_PRICE_STANDARD_20_MONTHLY:}
+    standard-20-yearly: ${STRIPE_PRICE_STANDARD_20_YEARLY:}
+
+    basic-monthly: ${STRIPE_PRICE_BASIC_MONTHLY:}
+    basic-yearly: ${STRIPE_PRICE_BASIC_YEARLY:}
+    pro-monthly: ${STRIPE_PRICE_PRO_MONTHLY:}
+    pro-yearly: ${STRIPE_PRICE_PRO_YEARLY:}
+    enterprise-monthly: ${STRIPE_PRICE_ENTERPRISE_MONTHLY:}
+    enterprise-yearly: ${STRIPE_PRICE_ENTERPRISE_YEARLY:}

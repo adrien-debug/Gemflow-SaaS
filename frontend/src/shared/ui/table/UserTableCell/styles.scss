@@ -1,0 +1,14 @@
+.user-table-cell {
+  .avatar {
+    flex-shrink: 0;
+  }
+
+  .user-name {
+    white-space: nowrap;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .user-description {}
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="008_GEMSTONE_CHANGE" author="${author}">
+        <addColumn tableName="gemstone">
+            <column name="order_id" type="BIGINT"/>
+        </addColumn>
+
+        <addForeignKeyConstraint constraintName="fk_gemstone__atelier_order"
+                                 baseTableName="gemstone" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="009_GEMSTONE_CHANGE" author="${author}">
+        <update tableName="gemstone">
+            <column name="status" value="ASSIGNED"/>
+            <where>order_id IS NOT NULL</where>
+        </update>
+    </changeSet>
+</databaseChangeLog>

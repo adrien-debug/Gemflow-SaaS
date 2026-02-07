@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_RENAME_SEQUENCES" author="${author}">
+        <renameSequence oldSequenceName="cylinder_setting_id_seq" newSequenceName="cylinder_id_seq"/>
+        <renameSequence oldSequenceName="atelier_order_id_seq" newSequenceName="order_task_id_seq"/>
+        <renameSequence oldSequenceName="order_file_id_seq" newSequenceName="order_task_file_id_seq"/>
+        <renameSequence oldSequenceName="project_id_seq" newSequenceName="atelier_order_id_seq"/>
+        <renameSequence oldSequenceName="project_image_id_seq" newSequenceName="order_image_id_seq"/>
+        <renameSequence oldSequenceName="order_file_id_seq1" newSequenceName="order_file_id_seq"/>
+        <renameSequence oldSequenceName="supplier_id_seq1" newSequenceName="supplier_id_seq"/>
+        <renameSequence oldSequenceName="price_id_seq" newSequenceName="price_metal_name_id_seq"/>
+        <renameSequence oldSequenceName="category_piece_id_seq" newSequenceName="segment_id_seq"/>
+    </changeSet>
+</databaseChangeLog>

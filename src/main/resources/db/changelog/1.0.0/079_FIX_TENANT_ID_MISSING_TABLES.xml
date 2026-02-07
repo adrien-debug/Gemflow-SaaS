@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- 
+    FIX: Migration 078 referenced old table names that were renamed in earlier migrations.
+    This migration adds tenant_id to the correct (renamed) tables.
+    -->
+
+    <!-- STEP 1: Add tenant_id column to renamed tables (nullable for migration) -->
+    <changeSet id="001_ADD_TENANT_ID_RENAMED_TABLES" author="${author}">
+        <comment>Add tenant_id to tables that were renamed after migration 078 was created</comment>
+        
+        <!-- project was renamed to atelier_order in 033_ORDER_V2.xml -->
+        <addColumn tableName="atelier_order">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        
+        <!-- project_image was renamed to order_image in 033_ORDER_V2.xml -->
+        <addColumn tableName="order_image">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        
+        <!-- cylinder_setting was renamed to cylinder in 006_CYLINDER_SETTING.xml -->
+        <addColumn tableName="cylinder">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+        
+        <!-- category_piece was renamed to segment in 031_SEGMENT.xml -->
+        <addColumn tableName="segment">
+            <column name="tenant_id" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+    <!-- STEP 2: Populate tenant_id with default value (1) -->
+    <changeSet id="002_POPULATE_TENANT_ID_RENAMED_TABLES" author="${author}">
+        <comment>Set default tenant_id for existing data in renamed tables</comment>
+        
+        <update tableName="atelier_order">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        
+        <update tableName="order_image">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        
+        <update tableName="cylinder">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+        
+        <update tableName="segment">
+            <column name="tenant_id" valueNumeric="1"/>
+            <where>tenant_id IS NULL</where>
+        </update>
+    </changeSet>
+
+    <!-- STEP 3: Make tenant_id NOT NULL -->
+    <changeSet id="003_MAKE_TENANT_ID_NOT_NULL_RENAMED_TABLES" author="${author}">
+        <comment>Make tenant_id NOT NULL on renamed tables</comment>
+        
+        <addNotNullConstraint tableName="atelier_order" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="order_image" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="cylinder" columnName="tenant_id" columnDataType="BIGINT"/>
+        <addNotNullConstraint tableName="segment" columnName="tenant_id" columnDataType="BIGINT"/>
+    </changeSet>
+
+    <!-- STEP 4: Add foreign key constraints -->
+    <changeSet id="004_ADD_TENANT_FK_RENAMED_TABLES" author="${author}">
+        <comment>Add foreign key constraints to tenant table for renamed tables</comment>
+        
+        <addForeignKeyConstraint constraintName="fk_atelier_order__tenant"
+                                 baseTableName="atelier_order" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        
+        <addForeignKeyConstraint constraintName="fk_order_image__tenant"
+                                 baseTableName="order_image" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        
+        <addForeignKeyConstraint constraintName="fk_cylinder__tenant"
+                                 baseTableName="cylinder" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+        
+        <addForeignKeyConstraint constraintName="fk_segment__tenant"
+                                 baseTableName="segment" baseColumnNames="tenant_id"
+                                 referencedTableName="tenant" referencedColumnNames="id"/>
+    </changeSet>
+
+    <!-- STEP 5: Add indexes for query performance -->
+    <changeSet id="005_ADD_TENANT_ID_INDEXES_RENAMED_TABLES" author="${author}">
+        <comment>Add indexes on tenant_id for query performance on renamed tables</comment>
+        
+        <createIndex tableName="atelier_order" indexName="idx_atelier_order_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        
+        <createIndex tableName="order_image" indexName="idx_order_image_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        
+        <createIndex tableName="cylinder" indexName="idx_cylinder_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+        
+        <createIndex tableName="segment" indexName="idx_segment_tenant_id">
+            <column name="tenant_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
+

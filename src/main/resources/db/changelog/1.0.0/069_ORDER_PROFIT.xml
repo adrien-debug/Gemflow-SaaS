@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+        <changeSet id="001_ORDER_PROFIT_CREATE" author="${author}">
+            <createTable tableName="order_profit">
+                <column name="id" type="BIGINT" autoIncrement="true">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+                <column name="diamond_profit_percentage" type="SMALLINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="gemstone_profit_percentage" type="SMALLINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="labour_profit_percentage" type="SMALLINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="metal_profit_percentage" type="SMALLINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="order_id" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+
+            <addForeignKeyConstraint constraintName="fk_order_profit__order"
+                                     baseTableName="order_profit" baseColumnNames="order_id"
+                                     referencedTableName="atelier_order" referencedColumnNames="id"
+                                     onDelete="CASCADE"/>
+        </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_CURRENCY_CREATE" author="${author}">
+        <createTable tableName="currency">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="symbol" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="decimal_digits" type="int"/>
+            <column name="rounding" type="numeric(2, 2)"/>
+            <column name="code" type="varchar(10)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name_plural" type="varchar(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002_CURRENCY_CREATE" author="${author}">
+        <insert tableName="currency">
+            <column name="symbol" value="$"/>
+            <column name="name" value="US Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="USD"/>
+            <column name="name_plural" value="US dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="CA$"/>
+            <column name="name" value="Canadian Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="CAD"/>
+            <column name="name_plural" value="Canadian dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="€"/>
+            <column name="name" value="Euro"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="EUR"/>
+            <column name="name_plural" value="euros"/>
+        </insert>
+
+
+        <insert tableName="currency">
+            <column name="symbol" value="AED"/>
+            <column name="name" value="United Arab Emirates Dirham"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="AED"/>
+            <column name="name_plural" value="UAE dirhams"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Af"/>
+            <column name="name" value="Afghan Afghani"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="AFN"/>
+            <column name="name_plural" value="Afghan Afghanis"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="ALL"/>
+            <column name="name" value="Albanian Lek"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="ALL"/>
+            <column name="name_plural" value="Albanian lekë"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="AMD"/>
+            <column name="name" value="Armenian Dram"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="AMD"/>
+            <column name="name_plural" value="Armenian drams"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="AR$"/>
+            <column name="name" value="Argentine Peso"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="ARS"/>
+            <column name="name_plural" value="Argentine pesos"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="AU$"/>
+            <column name="name" value="Australian Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="AUD"/>
+            <column name="name_plural" value="Australian dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="man."/>
+            <column name="name" value="Azerbaijani Manat"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="AZN"/>
+            <column name="name_plural" value="Azerbaijani manats"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="KM"/>
+            <column name="name" value="Bosnia-Herzegovina Convertible Mark"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BAM"/>
+            <column name="name_plural" value="Bosnia-Herzegovina convertible marks"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Tk"/>
+            <column name="name" value="Bangladeshi Taka"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BDT"/>
+            <column name="name_plural" value="Bangladeshi takas"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="BGN"/>
+            <column name="name" value="Bulgarian Lev"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BGN"/>
+            <column name="name_plural" value="Bulgarian leva"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="BD"/>
+            <column name="name" value="Bahraini Dinar"/>
+            <column name="decimal_digits" value="3"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BHD"/>
+            <column name="name_plural" value="Bahraini dinars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="FBu"/>
+            <column name="name" value="Burundian Franc"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BIF"/>
+            <column name="name_plural" value="Burundian francs"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="BN$"/>
+            <column name="name" value="Brunei Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BND"/>
+            <column name="name_plural" value="Brunei dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Bs"/>
+            <column name="name" value="Bolivian Boliviano"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BOB"/>
+            <column name="name_plural" value="Bolivian bolivianos"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="R$"/>
+            <column name="name" value="Brazilian Real"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BRL"/>
+            <column name="name_plural" value="Brazilian reals"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="BWP"/>
+            <column name="name" value="Botswanan Pula"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BWP"/>
+            <column name="name_plural" value="Botswanan pulas"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="BYR"/>
+            <column name="name" value="Belarusian Ruble"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BYR"/>
+            <column name="name_plural" value="Belarusian rubles"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="BZ$"/>
+            <column name="name" value="Belize Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="BZD"/>
+            <column name="name_plural" value="Belize dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="CDF"/>
+            <column name="name" value="Congolese Franc"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="CDF"/>
+            <column name="name_plural" value="Congolese francs"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="CHF"/>
+            <column name="name" value="Swiss Franc"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0.05"/>
+            <column name="code" value="CHF"/>
+            <column name="name_plural" value="Swiss francs"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="CL$"/>
+            <column name="name" value="Chilean Peso"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="CLP"/>
+            <column name="name_plural" value="Chilean pesos"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="CN¥"/>
+            <column name="name" value="Chinese Yuan"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="CNY"/>
+            <column name="name_plural" value="Chinese yuan"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="CO$"/>
+            <column name="name" value="Colombian Peso"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="COP"/>
+            <column name="name_plural" value="Colombian pesos"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="₡"/>
+            <column name="name" value="Costa Rican Colón"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="CRC"/>
+            <column name="name_plural" value="Costa Rican colóns"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="CV$"/>
+            <column name="name" value="Cape Verdean Escudo"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="CVE"/>
+            <column name="name_plural" value="Cape Verdean escudos"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Kč"/>
+            <column name="name" value="Czech Republic Koruna"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="CZK"/>
+            <column name="name_plural" value="Czech Republic korunas"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Fdj"/>
+            <column name="name" value="Djiboutian Franc"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="DJF"/>
+            <column name="name_plural" value="Djiboutian francs"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Dkr"/>
+            <column name="name" value="Danish Krone"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="DKK"/>
+            <column name="name_plural" value="Danish kroner"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="RD$"/>
+            <column name="name" value="Dominican Peso"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="DOP"/>
+            <column name="name_plural" value="Dominican pesos"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="DA"/>
+            <column name="name" value="Algerian Dinar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="DZD"/>
+            <column name="name_plural" value="Algerian dinars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Ekr"/>
+            <column name="name" value="Estonian Kroon"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="EEK"/>
+            <column name="name_plural" value="Estonian kroons"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="EGP"/>
+            <column name="name" value="Egyptian Pound"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="EGP"/>
+            <column name="name_plural" value="Egyptian pounds"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Nfk"/>
+            <column name="name" value="Eritrean Nakfa"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="ERN"/>
+            <column name="name_plural" value="Eritrean nakfas"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Br"/>
+            <column name="name" value="Ethiopian Birr"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="ETB"/>
+            <column name="name_plural" value="Ethiopian birrs"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="£"/>
+            <column name="name" value="British Pound Sterling"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="GBP"/>
+            <column name="name_plural" value="British pounds sterling"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="GEL"/>
+            <column name="name" value="Georgian Lari"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="GEL"/>
+            <column name="name_plural" value="Georgian laris"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="GH₵"/>
+            <column name="name" value="Ghanaian Cedi"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="GHS"/>
+            <column name="name_plural" value="Ghanaian cedis"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="FG"/>
+            <column name="name" value="Guinean Franc"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="GNF"/>
+            <column name="name_plural" value="Guinean francs"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="GTQ"/>
+            <column name="name" value="Guatemalan Quetzal"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="GTQ"/>
+            <column name="name_plural" value="Guatemalan quetzals"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="HK$"/>
+            <column name="name" value="Hong Kong Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="HKD"/>
+            <column name="name_plural" value="Hong Kong dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="HNL"/>
+            <column name="name" value="Honduran Lempira"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="HNL"/>
+            <column name="name_plural" value="Honduran lempiras"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="kn"/>
+            <column name="name" value="Croatian Kuna"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="HRK"/>
+            <column name="name_plural" value="Croatian kunas"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Ft"/>
+            <column name="name" value="Hungarian Forint"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="HUF"/>
+            <column name="name_plural" value="Hungarian forints"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Rp"/>
+            <column name="name" value="Indonesian Rupiah"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="IDR"/>
+            <column name="name_plural" value="Indonesian rupiahs"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="₪"/>
+            <column name="name" value="Israeli New Sheqel"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="ILS"/>
+            <column name="name_plural" value="Israeli new sheqels"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Rs"/>
+            <column name="name" value="Indian Rupee"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="INR"/>
+            <column name="name_plural" value="Indian rupees"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="IQD"/>
+            <column name="name" value="Iraqi Dinar"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="IQD"/>
+            <column name="name_plural" value="Iraqi dinars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="IRR"/>
+            <column name="name" value="Iranian Rial"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="IRR"/>
+            <column name="name_plural" value="Iranian rials"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Ikr"/>
+            <column name="name" value="Icelandic Króna"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="ISK"/>
+            <column name="name_plural" value="Icelandic krónur"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="J$"/>
+            <column name="name" value="Jamaican Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="JMD"/>
+            <column name="name_plural" value="Jamaican dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="JD"/>
+            <column name="name" value="Jordanian Dinar"/>
+            <column name="decimal_digits" value="3"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="JOD"/>
+            <column name="name_plural" value="Jordanian dinars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="¥"/>
+            <column name="name" value="Japanese Yen"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="JPY"/>
+            <column name="name_plural" value="Japanese yen"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Ksh"/>
+            <column name="name" value="Kenyan Shilling"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="KES"/>
+            <column name="name_plural" value="Kenyan shillings"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="KHR"/>
+            <column name="name" value="Cambodian Riel"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="KHR"/>
+            <column name="name_plural" value="Cambodian riels"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="CF"/>
+            <column name="name" value="Comorian Franc"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="KMF"/>
+            <column name="name_plural" value="Comorian francs"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="₩"/>
+            <column name="name" value="South Korean Won"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="KRW"/>
+            <column name="name_plural" value="South Korean won"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="KD"/>
+            <column name="name" value="Kuwaiti Dinar"/>
+            <column name="decimal_digits" value="3"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="KWD"/>
+            <column name="name_plural" value="Kuwaiti dinars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="KZT"/>
+            <column name="name" value="Kazakhstani Tenge"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="KZT"/>
+            <column name="name_plural" value="Kazakhstani tenges"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="LB£"/>
+            <column name="name" value="Lebanese Pound"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="LBP"/>
+            <column name="name_plural" value="Lebanese pounds"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="SLRs"/>
+            <column name="name" value="Sri Lankan Rupee"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="LKR"/>
+            <column name="name_plural" value="Sri Lankan rupees"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Lt"/>
+            <column name="name" value="Lithuanian Litas"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="LTL"/>
+            <column name="name_plural" value="Lithuanian litai"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Ls"/>
+            <column name="name" value="Latvian Lats"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="LVL"/>
+            <column name="name_plural" value="Latvian lati"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="LD"/>
+            <column name="name" value="Libyan Dinar"/>
+            <column name="decimal_digits" value="3"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="LYD"/>
+            <column name="name_plural" value="Libyan dinars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="MAD"/>
+            <column name="name" value="Moroccan Dirham"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MAD"/>
+            <column name="name_plural" value="Moroccan dirhams"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="MDL"/>
+            <column name="name" value="Moldovan Leu"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MDL"/>
+            <column name="name_plural" value="Moldovan lei"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="MGA"/>
+            <column name="name" value="Malagasy Ariary"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MGA"/>
+            <column name="name_plural" value="Malagasy Ariaries"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="MKD"/>
+            <column name="name" value="Macedonian Denar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MKD"/>
+            <column name="name_plural" value="Macedonian denari"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="MMK"/>
+            <column name="name" value="Myanma Kyat"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MMK"/>
+            <column name="name_plural" value="Myanma kyats"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="MOP$"/>
+            <column name="name" value="Macanese Pataca"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MOP"/>
+            <column name="name_plural" value="Macanese patacas"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="MURs"/>
+            <column name="name" value="Mauritian Rupee"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MUR"/>
+            <column name="name_plural" value="Mauritian rupees"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="MX$"/>
+            <column name="name" value="Mexican Peso"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MXN"/>
+            <column name="name_plural" value="Mexican pesos"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="RM"/>
+            <column name="name" value="Malaysian Ringgit"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MYR"/>
+            <column name="name_plural" value="Malaysian ringgits"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="MTn"/>
+            <column name="name" value="Mozambican Metical"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="MZN"/>
+            <column name="name_plural" value="Mozambican meticals"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="N$"/>
+            <column name="name" value="Namibian Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="NAD"/>
+            <column name="name_plural" value="Namibian dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="₦"/>
+            <column name="name" value="Nigerian Naira"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="NGN"/>
+            <column name="name_plural" value="Nigerian nairas"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="C$"/>
+            <column name="name" value="Nicaraguan Córdoba"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="NIO"/>
+            <column name="name_plural" value="Nicaraguan córdobas"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Nkr"/>
+            <column name="name" value="Norwegian Krone"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="NOK"/>
+            <column name="name_plural" value="Norwegian kroner"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="NPRs"/>
+            <column name="name" value="Nepalese Rupee"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="NPR"/>
+            <column name="name_plural" value="Nepalese rupees"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="NZ$"/>
+            <column name="name" value="New Zealand Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="NZD"/>
+            <column name="name_plural" value="New Zealand dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="OMR"/>
+            <column name="name" value="Omani Rial"/>
+            <column name="decimal_digits" value="3"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="OMR"/>
+            <column name="name_plural" value="Omani rials"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="B/."/>
+            <column name="name" value="Panamanian Balboa"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="PAB"/>
+            <column name="name_plural" value="Panamanian balboas"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="S/."/>
+            <column name="name" value="Peruvian Nuevo Sol"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="PEN"/>
+            <column name="name_plural" value="Peruvian nuevos soles"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="₱"/>
+            <column name="name" value="Philippine Peso"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="PHP"/>
+            <column name="name_plural" value="Philippine pesos"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="PKRs"/>
+            <column name="name" value="Pakistani Rupee"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="PKR"/>
+            <column name="name_plural" value="Pakistani rupees"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="zł"/>
+            <column name="name" value="Polish Zloty"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="PLN"/>
+            <column name="name_plural" value="Polish zlotys"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="₲"/>
+            <column name="name" value="Paraguayan Guarani"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="PYG"/>
+            <column name="name_plural" value="Paraguayan guaranis"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="QR"/>
+            <column name="name" value="Qatari Rial"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="QAR"/>
+            <column name="name_plural" value="Qatari rials"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="RON"/>
+            <column name="name" value="Romanian Leu"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="RON"/>
+            <column name="name_plural" value="Romanian lei"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="din."/>
+            <column name="name" value="Serbian Dinar"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="RSD"/>
+            <column name="name_plural" value="Serbian dinars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="RUB"/>
+            <column name="name" value="Russian Ruble"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="RUB"/>
+            <column name="name_plural" value="Russian rubles"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="RWF"/>
+            <column name="name" value="Rwandan Franc"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="RWF"/>
+            <column name="name_plural" value="Rwandan francs"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="SR"/>
+            <column name="name" value="Saudi Riyal"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="SAR"/>
+            <column name="name_plural" value="Saudi riyals"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="SDG"/>
+            <column name="name" value="Sudanese Pound"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="SDG"/>
+            <column name="name_plural" value="Sudanese pounds"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Skr"/>
+            <column name="name" value="Swedish Krona"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="SEK"/>
+            <column name="name_plural" value="Swedish kronor"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="S$"/>
+            <column name="name" value="Singapore Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="SGD"/>
+            <column name="name_plural" value="Singapore dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Ssh"/>
+            <column name="name" value="Somali Shilling"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="SOS"/>
+            <column name="name_plural" value="Somali shillings"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="SY£"/>
+            <column name="name" value="Syrian Pound"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="SYP"/>
+            <column name="name_plural" value="Syrian pounds"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="฿"/>
+            <column name="name" value="Thai Baht"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="THB"/>
+            <column name="name_plural" value="Thai baht"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="DT"/>
+            <column name="name" value="Tunisian Dinar"/>
+            <column name="decimal_digits" value="3"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="TND"/>
+            <column name="name_plural" value="Tunisian dinars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="T$"/>
+            <column name="name" value="Tongan Paʻanga"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="TOP"/>
+            <column name="name_plural" value="Tongan paʻanga"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="TL"/>
+            <column name="name" value="Turkish Lira"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="TRY"/>
+            <column name="name_plural" value="Turkish Lira"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="TT$"/>
+            <column name="name" value="Trinidad and Tobago Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="TTD"/>
+            <column name="name_plural" value="Trinidad and Tobago dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="NT$"/>
+            <column name="name" value="New Taiwan Dollar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="TWD"/>
+            <column name="name_plural" value="New Taiwan dollars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="TSh"/>
+            <column name="name" value="Tanzanian Shilling"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="TZS"/>
+            <column name="name_plural" value="Tanzanian shillings"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="₴"/>
+            <column name="name" value="Ukrainian Hryvnia"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="UAH"/>
+            <column name="name_plural" value="Ukrainian hryvnias"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="USh"/>
+            <column name="name" value="Ugandan Shilling"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="UGX"/>
+            <column name="name_plural" value="Ugandan shillings"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="$U"/>
+            <column name="name" value="Uruguayan Peso"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="UYU"/>
+            <column name="name_plural" value="Uruguayan pesos"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="UZS"/>
+            <column name="name" value="Uzbekistan Som"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="UZS"/>
+            <column name="name_plural" value="Uzbekistan som"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="Bs.F."/>
+            <column name="name" value="Venezuelan Bolívar"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="VEF"/>
+            <column name="name_plural" value="Venezuelan bolívars"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="₫"/>
+            <column name="name" value="Vietnamese Dong"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="VND"/>
+            <column name="name_plural" value="Vietnamese dong"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="FCFA"/>
+            <column name="name" value="CFA Franc BEAC"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="XAF"/>
+            <column name="name_plural" value="CFA francs BEAC"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="CFA"/>
+            <column name="name" value="CFA Franc BCEAO"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="XOF"/>
+            <column name="name_plural" value="CFA francs BCEAO"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="YR"/>
+            <column name="name" value="Yemeni Rial"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="YER"/>
+            <column name="name_plural" value="Yemeni rials"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="R"/>
+            <column name="name" value="South African Rand"/>
+            <column name="decimal_digits" value="2"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="ZAR"/>
+            <column name="name_plural" value="South African rand"/>
+        </insert>
+        <insert tableName="currency">
+            <column name="symbol" value="ZK"/>
+            <column name="name" value="Zambian Kwacha"/>
+            <column name="decimal_digits" value="0"/>
+            <column name="rounding" value="0"/>
+            <column name="code" value="ZMK"/>
+            <column name="name_plural" value="Zambian kwachas"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="003_CURRENCY_UPDATE" author="${author}">
+        <addColumn tableName="currency">
+            <column name="is_active" type="boolean"/>
+        </addColumn>
+        <update tableName="currency">
+            <column name="is_active" value="false"/>
+        </update>
+        <update tableName="currency">
+            <column name="is_active" value="true"/>
+            <where>code IN ('AED', 'USD', 'EUR', 'GBP')</where>
+        </update>
+        <addNotNullConstraint tableName="currency" columnName="is_active"/>
+        <addNotNullConstraint tableName="currency" columnName="decimal_digits"/>
+        <addNotNullConstraint tableName="currency" columnName="rounding"/>
+        <addNotNullConstraint tableName="currency" columnName="name_plural"/>
+    </changeSet>
+</databaseChangeLog>

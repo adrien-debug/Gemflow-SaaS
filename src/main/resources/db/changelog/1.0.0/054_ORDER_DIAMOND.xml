@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_DIAMOND_CREATE" author="${author}">
+        <createTable tableName="order_diamond">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="diamond_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employee_id" type="bigint"/>
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_order_diamond__diamond"
+                                 baseTableName="order_diamond" baseColumnNames="diamond_id"
+                                 referencedTableName="diamond" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_order_diamond__employee"
+                                 baseTableName="order_diamond" baseColumnNames="employee_id"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_order_diamond__order"
+                                 baseTableName="order_diamond" baseColumnNames="order_id"
+                                 referencedTableName="atelier_order" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="002_ORDER_DIAMOND_CHANGE" author="${author}">
+        <renameColumn tableName="supplier" oldColumnName="markup" newColumnName="markup_percentage"/>
+        <sql dbms="${dbms}">
+            ALTER TABLE supplier
+                ADD markup_percentage_value numeric GENERATED ALWAYS AS (1 + markup_percentage * 0.01) STORED;
+        </sql>
+    </changeSet>
+
+    <changeSet id="003_ORDER_DIAMOND_CHANGE" author="${author}">
+        <sqlFile path="054_PERCENTAGE_VALUE_FUNCTIONS.sql" relativeToChangelogFile="true" dbms="${dbms}"/>
+        <addColumn tableName="order_diamond">
+            <column name="markup_percentage" type="numeric(5, 2)"/>
+        </addColumn>
+        <sql dbms="${dbms}">
+            ALTER TABLE supplier DROP COLUMN markup_percentage_value;
+            ALTER TABLE supplier
+                ADD markup_percentage_value numeric GENERATED ALWAYS AS (markup_percentage_value(markup_percentage)) STORED;
+            ALTER TABLE order_diamond
+                ADD markup_percentage_value numeric GENERATED ALWAYS AS (markup_percentage_value(markup_percentage)) STORED;
+
+            UPDATE order_diamond od
+            SET markup_percentage = s.markup_percentage FROM diamond d
+                INNER JOIN supplier s
+            ON d.supplier_id = s.id
+            WHERE od.diamond_id = d.id
+        </sql>
+    </changeSet>
+</databaseChangeLog>

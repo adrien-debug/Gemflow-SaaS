@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ATELIER_USER_ROLE_CREATE" author="${author}">
+        <createTable tableName="atelier_user_role">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="atelier_user_role__user_id"
+                                 baseTableName="atelier_user_role" baseColumnNames="user_id"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="atelier_user_role__role_id"
+                                 baseTableName="atelier_user_role" baseColumnNames="role_id"
+                                 referencedTableName="atelier_role" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="atelier_user_role__user_role_unique"
+                             tableName="atelier_user_role"
+                             columnNames="user_id, role_id"/>
+    </changeSet>
+
+    <changeSet id="002_ATELIER_USER_ROLE_DELETE" author="${author}">
+        <addColumn tableName="atelier_user">
+            <column name="role_id" type="bigint"/>
+        </addColumn>
+        <sql dbms="${dbms}">
+            UPDATE atelier_user
+            SET role_id = atelier_user_role.role_id FROM atelier_user_role
+            WHERE atelier_user_role.user_id = atelier_user.id
+        </sql>
+        <addNotNullConstraint tableName="atelier_user" columnName="role_id"/>
+        <dropTable tableName="atelier_user_role"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,6 @@
+export enum TabKeys {
+  PURE_METALS = "PURE_METALS",
+  ALLOYS = "ALLOYS",
+  ALLOYED_METALS = "ALLOYED_METALS",
+  OTHER = "OTHER",
+}

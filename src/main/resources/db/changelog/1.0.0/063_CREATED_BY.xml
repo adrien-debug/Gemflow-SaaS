@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ADD_CREATED_BY" author="${author}">
+        <addColumn tableName="atelier_order">
+            <column name="created_by_id" type="bigint"/>
+        </addColumn>
+        <update tableName="atelier_order">
+            <column name="created_by_id" valueComputed="(SELECT id FROM atelier_user ORDER BY id ASC LIMIT 1)"/>
+        </update>
+        <addNotNullConstraint tableName="atelier_order" columnName="created_by_id"/>
+        <addForeignKeyConstraint constraintName="fk_atelier_order__created_by"
+                                 baseTableName="atelier_order" baseColumnNames="created_by_id"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+
+        <addColumn tableName="gemstone">
+            <column name="created_by_id" type="bigint"/>
+        </addColumn>
+        <update tableName="gemstone">
+            <column name="created_by_id" valueComputed="(SELECT id FROM atelier_user ORDER BY id ASC LIMIT 1)"/>
+        </update>
+        <addNotNullConstraint tableName="gemstone" columnName="created_by_id"/>
+        <addForeignKeyConstraint constraintName="fk_gemstone__created_by"
+                                 baseTableName="gemstone" baseColumnNames="created_by_id"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

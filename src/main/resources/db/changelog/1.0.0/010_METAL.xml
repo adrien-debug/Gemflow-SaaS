@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_METAL_CREATE" author="${author}">
+        <createTable tableName="metal">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metal_caratage_id" type="bigint"/>
+            <column name="metal_casting_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_metal_casting_metal"
+                                 baseColumnNames="metal_casting_id"
+                                 baseTableName="metal"
+                                 referencedColumnNames="id"
+                                 referencedTableName="metal_casting"
+                                 onDelete="SET NULL"
+                                 onUpdate="NO ACTION"/>
+
+        <addForeignKeyConstraint constraintName="fk_metal_caratage_metal"
+                                 baseColumnNames="metal_caratage_id"
+                                 baseTableName="metal"
+                                 referencedColumnNames="id"
+                                 referencedTableName="metal_caratage"
+                                 onDelete="SET NULL"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+
+
+    <changeSet id="002_METAL_CHANGE" author="${author}">
+        <dropForeignKeyConstraint baseTableName="metal" constraintName="fk_metal_casting_metal"/>
+        <dropColumn tableName="metal" columnName="metal_casting_id"/>
+    </changeSet>
+</databaseChangeLog>

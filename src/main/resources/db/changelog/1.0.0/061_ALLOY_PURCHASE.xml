@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ALLOY_PURCHASE_CREATE" author="${author}">
+        <createTable tableName="alloy_purchase">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="BIGINT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price_gram" type="NUMERIC(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="batch_weight" type="NUMERIC(11, 5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remaining_weight" type="NUMERIC(11, 5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alloy_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="supplier_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atelier_file_id" type="BIGINT"/>
+        </createTable>
+
+        <sql>
+            ALTER TABLE alloy_purchase
+                ADD COLUMN batch_price NUMERIC GENERATED ALWAYS AS (price_gram * batch_weight) STORED;
+            ALTER TABLE alloy_purchase
+                ADD COLUMN remaining_price NUMERIC GENERATED ALWAYS AS (price_gram * remaining_weight) STORED;
+        </sql>
+
+        <addForeignKeyConstraint constraintName="fk_alloy_purchase__alloy"
+                                 baseTableName="alloy_purchase" baseColumnNames="alloy_id"
+                                 referencedTableName="alloy" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_alloy_purchase__supplier"
+                                 baseTableName="alloy_purchase" baseColumnNames="supplier_id"
+                                 referencedTableName="supplier" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_alloy_purchase__atelier_file"
+                                 baseTableName="alloy_purchase" baseColumnNames="atelier_file_id"
+                                 referencedTableName="atelier_file" referencedColumnNames="id"/>
+
+        <createIndex tableName="alloy_purchase" indexName="idx_alloy_purchase_alloy_id">
+            <column name="alloy_id"/>
+        </createIndex>
+        <createIndex tableName="alloy_purchase" indexName="idx_alloy_purchase_supplier_id">
+            <column name="supplier_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="002_ALLOY_PURCHASE_CREATE" author="${author}">
+        <sqlFile path="061_CREATE_UPDATE_ALLOY_FUNCTION.sql" relativeToChangelogFile="true" dbms="${dbms}"/>
+    </changeSet>
+
+    <changeSet id="003_ALLOY_PURCHASE_CREATE" author="${author}">
+        <sql dbms="${dbms}">
+            CREATE TRIGGER tr_alloy_purchase_insert
+                AFTER INSERT
+                ON public.alloy_purchase
+                FOR EACH ROW
+                EXECUTE FUNCTION update_alloy_summary();
+
+            CREATE TRIGGER tr_alloy_purchase_update
+                AFTER UPDATE
+                ON public.alloy_purchase
+                FOR EACH ROW
+                EXECUTE FUNCTION update_alloy_summary();
+
+            CREATE TRIGGER tr_alloy_purchase_delete
+                AFTER DELETE
+                ON public.alloy_purchase
+                FOR EACH ROW
+                EXECUTE FUNCTION update_alloy_summary();
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

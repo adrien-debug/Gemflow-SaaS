@@ -1,0 +1,7 @@
+.metal-purchases-header {
+  --ant-border-radius: 20px;
+
+  .ant-picker {
+    border-radius: var(--ant-border-radius);
+  }
+}

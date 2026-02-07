@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="001_ATELIER_ROLE.xml" relativeToChangelogFile="true"/>
+    <include file="002_ATELIER_USER.xml" relativeToChangelogFile="true"/>
+    <include file="003_ATELIER_USER_ROLE.xml" relativeToChangelogFile="true"/>
+    <include file="004_ATELIER_TOKEN.xml" relativeToChangelogFile="true"/>
+    <include file="005_PRICE_SETTING.xml" relativeToChangelogFile="true"/>
+    <include file="006_CYLINDER_SETTING.xml" relativeToChangelogFile="true"/>
+    <include file="007_PRICE_METAL.xml" relativeToChangelogFile="true"/>
+    <include file="008_METAL_CASTING.xml" relativeToChangelogFile="true"/>
+    <include file="009_METAL_CARATAGE.xml" relativeToChangelogFile="true"/>
+    <include file="010_METAL.xml" relativeToChangelogFile="true"/>
+    <include file="011_LABOUR_SETTING.xml" relativeToChangelogFile="true"/>
+    <include file="012_METAL_CASTING_DROP.xml" relativeToChangelogFile="true"/>
+    <include file="013_PRICE.xml" relativeToChangelogFile="true"/>
+    <include file="014_ITEM_CATEGORY.xml" relativeToChangelogFile="true"/>
+    <include file="015_COLLECTION.xml" relativeToChangelogFile="true"/>
+    <include file="016_CATEGORY_PIECE.xml" relativeToChangelogFile="true"/>
+    <include file="017_CLIENT_CATEGORY.xml" relativeToChangelogFile="true"/>
+    <include file="018_BUSINESS_LOCATION.xml" relativeToChangelogFile="true"/>
+    <include file="019_CLIENT.xml" relativeToChangelogFile="true"/>
+    <include file="020_ATELIER_FILE.xml" relativeToChangelogFile="true"/>
+    <include file="021_PROJECT.xml" relativeToChangelogFile="true"/>
+    <include file="022_PROJECT_IMAGE.xml" relativeToChangelogFile="true"/>
+    <include file="023_DIAMOND_SHAPE.xml" relativeToChangelogFile="true"/>
+    <include file="024_GEMS_PAYMENT.xml" relativeToChangelogFile="true"/>
+    <include file="025_SUPPLIER.xml" relativeToChangelogFile="true"/>
+    <include file="026_STONE.xml" relativeToChangelogFile="true"/>
+    <include file="027_ORDER.xml" relativeToChangelogFile="true"/>
+    <include file="028_ORDER_FILE.xml" relativeToChangelogFile="true"/>
+    <include file="029_CLIENT.xml" relativeToChangelogFile="true"/>
+    <include file="030_ATELIER_USER_IMAGE.xml" relativeToChangelogFile="true"/>
+    <include file="031_SEGMENT.xml" relativeToChangelogFile="true"/>
+    <include file="032_ORDER_TASK.xml" relativeToChangelogFile="true"/>
+    <include file="033_ORDER_V2.xml" relativeToChangelogFile="true"/>
+    <include file="034_ORDER_FILE_V2.xml" relativeToChangelogFile="true"/>
+    <include file="035_COUNTRY.xml" relativeToChangelogFile="true"/>
+    <include file="036_CURRENCY.xml" relativeToChangelogFile="true"/>
+    <include file="037_SUPPLY_TYPE.xml" relativeToChangelogFile="true"/>
+    <include file="038_SUPPLIER_V2.xml" relativeToChangelogFile="true"/>
+    <include file="039_CLIENT_V2.xml" relativeToChangelogFile="true"/>
+    <include file="040_ITEM_CATEGORY_V2.xml" relativeToChangelogFile="true"/>
+    <include file="041_SUPPLY_TYPE_V2.xml" relativeToChangelogFile="true"/>
+    <include file="042_RENAME_SEQUENCES.xml" relativeToChangelogFile="true"/>
+    <include file="043_GEMSTONE.xml" relativeToChangelogFile="true"/>
+    <include file="044_DIAMOND.xml" relativeToChangelogFile="true"/>
+    <include file="045_ORDER_MATERIAL.xml" relativeToChangelogFile="true"/>
+    <include file="046_ORDER_V3.xml" relativeToChangelogFile="true"/>
+    <include file="047_LOCATION.xml" relativeToChangelogFile="true"/>
+    <include file="048_GEMSTONE_V2.xml" relativeToChangelogFile="true"/>
+    <include file="049_ORDER_TASK_V2.xml" relativeToChangelogFile="true"/>
+    <include file="050_ORDER_V4.xml" relativeToChangelogFile="true"/>
+    <include file="051_GEMSTONE_v3.xml" relativeToChangelogFile="true"/>
+    <include file="052_ORDER_LABOUR.xml" relativeToChangelogFile="true"/>
+    <include file="053_CUSTOM_FUNCTIONS_AND_SCHEDULER.xml" relativeToChangelogFile="true"/>
+    <include file="054_ORDER_DIAMOND.xml" relativeToChangelogFile="true"/>
+    <include file="055_CARAT_TO_GRAM_FUNCTION.xml" relativeToChangelogFile="true"/>
+    <include file="056_PURE_METAL_SUMMARY.xml" relativeToChangelogFile="true"/>
+    <include file="057_PURE_METAL_PURCHASE.xml" relativeToChangelogFile="true"/>
+    <include file="058_METAL_PURITY.xml" relativeToChangelogFile="true"/>
+    <include file="059_ORDER_STOCK.xml" relativeToChangelogFile="true"/>
+    <include file="060_ALLOY.xml" relativeToChangelogFile="true"/>
+    <include file="061_ALLOY_PURCHASE.xml" relativeToChangelogFile="true"/>
+    <include file="062_ALLOYED_METAL.xml" relativeToChangelogFile="true"/>
+    <include file="063_CREATED_BY.xml" relativeToChangelogFile="true"/>
+    <include file="064_ALLOYED_METAL_PURCHASE.xml" relativeToChangelogFile="true"/>
+    <include file="065_OTHER_MATERIAL.xml" relativeToChangelogFile="true"/>
+    <include file="066_OTHER_METAL_TRANSACTION.xml" relativeToChangelogFile="true"/>
+    <include file="067_CASTING.xml" relativeToChangelogFile="true"/>
+    <include file="068_ORDER_METAL_CASTING.xml" relativeToChangelogFile="true"/>
+    <include file="069_ORDER_PROFIT.xml" relativeToChangelogFile="true"/>
+    <include file="070_ORDER_METAL_TOTAL.xml" relativeToChangelogFile="true"/>
+    <include file="071_ORDER_METAL_PRODUCTION.xml" relativeToChangelogFile="true"/>
+    <include file="072_ORDER_TECHNICAL_SHEET.xml" relativeToChangelogFile="true"/>
+    <include file="073_ORDER_TECHNICAL_SHEET_IMAGE.xml" relativeToChangelogFile="true"/>
+    <include file="074_ORDER_LABOUR_TRACKER.xml" relativeToChangelogFile="true"/>
+    <include file="075_ADD_DIAMOND_COLUMNS.xml" relativeToChangelogFile="true"/>
+    <include file="076_ADD_GEMSTONE_COLUMNS.xml" relativeToChangelogFile="true"/>
+    <!-- Multi-tenant migrations disabled for now (user requested no multi-tenant) -->
+    <!-- <include file="077_ADD_TENANT.xml" relativeToChangelogFile="true"/> -->
+    <!-- <include file="078_ADD_TENANT_ID_TO_TABLES.xml" relativeToChangelogFile="true"/> -->
+    <!-- <include file="079_FIX_TENANT_ID_MISSING_TABLES.xml" relativeToChangelogFile="true"/> -->
+    <include file="080_CRM_CONTACT.xml" relativeToChangelogFile="true"/>
+    <include file="081_CRM_COMMUNICATION.xml" relativeToChangelogFile="true"/>
+    <include file="082_EMAIL_TEMPLATE.xml" relativeToChangelogFile="true"/>
+    <include file="083_ACCOUNTING_INTEGRATION.xml" relativeToChangelogFile="true"/>
+    <include file="084_PERMISSION.xml" relativeToChangelogFile="true"/>
+    <include file="085_BILLING_SUBSCRIPTION.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

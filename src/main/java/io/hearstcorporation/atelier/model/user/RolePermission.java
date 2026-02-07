@@ -1,0 +1,31 @@
+package io.hearstcorporation.atelier.model.user;
+
+import io.hearstcorporation.atelier.model.BaseModel;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+@Table(
+    name = "role_permission",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"tenant_id", "role_id", "permission_id"})
+)
+public class RolePermission extends BaseModel {
+
+    @Column(name = "tenant_id", nullable = false)
+    private Long tenantId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "permission_id", nullable = false)
+    private Permission permission;
+
+    @Column(name = "granted", nullable = false)
+    private Boolean granted = true;
+}
+

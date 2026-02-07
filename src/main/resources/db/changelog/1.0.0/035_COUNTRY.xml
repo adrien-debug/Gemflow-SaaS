@@ -1,0 +1,1276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_COUNTRY_CREATE" author="${author}">
+        <createTable tableName="country">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="country_code" type="varchar(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_name" type="varchar(70)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002_COUNTRY_CREATE" author="${author}">
+        <insert tableName="country">
+            <column name="country_code" value="DZ"/>
+            <column name="country_name" value="Algeria"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AO"/>
+            <column name="country_name" value="Angola"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BJ"/>
+            <column name="country_name" value="Benin"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BW"/>
+            <column name="country_name" value="Botswana"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BF"/>
+            <column name="country_name" value="Burkina Faso"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BI"/>
+            <column name="country_name" value="Burundi"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CV"/>
+            <column name="country_name" value="Cabo Verde"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CM"/>
+            <column name="country_name" value="Cameroon"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CF"/>
+            <column name="country_name" value="Central African Republic (the)"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TD"/>
+            <column name="country_name" value="Chad"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KM"/>
+            <column name="country_name" value="Comoros (the)"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CD"/>
+            <column name="country_name" value="Congo (the Democratic Republic of the)"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CG"/>
+            <column name="country_name" value="Congo (the)"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CI"/>
+            <column name="country_name" value="Côte d'Ivoire"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="DJ"/>
+            <column name="country_name" value="Djibouti"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="EG"/>
+            <column name="country_name" value="Egypt"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GQ"/>
+            <column name="country_name" value="Equatorial Guinea"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ER"/>
+            <column name="country_name" value="Eritrea"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SZ"/>
+            <column name="country_name" value="Eswatini"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ET"/>
+            <column name="country_name" value="Ethiopia"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GA"/>
+            <column name="country_name" value="Gabon"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GM"/>
+            <column name="country_name" value="Gambia (the)"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GH"/>
+            <column name="country_name" value="Ghana"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GN"/>
+            <column name="country_name" value="Guinea"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GW"/>
+            <column name="country_name" value="Guinea-Bissau"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KE"/>
+            <column name="country_name" value="Kenya"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LS"/>
+            <column name="country_name" value="Lesotho"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LR"/>
+            <column name="country_name" value="Liberia"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LY"/>
+            <column name="country_name" value="Libya"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MG"/>
+            <column name="country_name" value="Madagascar"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MW"/>
+            <column name="country_name" value="Malawi"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ML"/>
+            <column name="country_name" value="Mali"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MR"/>
+            <column name="country_name" value="Mauritania"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MU"/>
+            <column name="country_name" value="Mauritius"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="YT"/>
+            <column name="country_name" value="Mayotte"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MA"/>
+            <column name="country_name" value="Morocco"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MZ"/>
+            <column name="country_name" value="Mozambique"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NA"/>
+            <column name="country_name" value="Namibia"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NE"/>
+            <column name="country_name" value="Niger (the)"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NG"/>
+            <column name="country_name" value="Nigeria"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="RE"/>
+            <column name="country_name" value="Réunion"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="RW"/>
+            <column name="country_name" value="Rwanda"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SH"/>
+            <column name="country_name" value="Saint Helena, Ascension and Tristan da Cunha"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ST"/>
+            <column name="country_name" value="Sao Tome and Principe"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SN"/>
+            <column name="country_name" value="Senegal"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SC"/>
+            <column name="country_name" value="Seychelles"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SL"/>
+            <column name="country_name" value="Sierra Leone"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SO"/>
+            <column name="country_name" value="Somalia"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ZA"/>
+            <column name="country_name" value="South Africa"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SS"/>
+            <column name="country_name" value="South Sudan"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SD"/>
+            <column name="country_name" value="Sudan (the)"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TZ"/>
+            <column name="country_name" value="Tanzania, the United Republic of"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TG"/>
+            <column name="country_name" value="Togo"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TN"/>
+            <column name="country_name" value="Tunisia"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="UG"/>
+            <column name="country_name" value="Uganda"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="EH"/>
+            <column name="country_name" value="Western Sahara*"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ZM"/>
+            <column name="country_name" value="Zambia"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ZW"/>
+            <column name="country_name" value="Zimbabwe"/>
+            <column name="region" value="Africa"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AQ"/>
+            <column name="country_name" value="Antarctica"/>
+            <column name="region" value="Antarctic"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BV"/>
+            <column name="country_name" value="Bouvet Island"/>
+            <column name="region" value="Antarctic"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TF"/>
+            <column name="country_name" value="French Southern Territories (the)"/>
+            <column name="region" value="Antarctic"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="HM"/>
+            <column name="country_name" value="Heard Island and McDonald Islands"/>
+            <column name="region" value="Antarctic"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GS"/>
+            <column name="country_name" value="South Georgia and the South Sandwich Islands"/>
+            <column name="region" value="Antarctic"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AF"/>
+            <column name="country_name" value="Afghanistan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AM"/>
+            <column name="country_name" value="Armenia"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AZ"/>
+            <column name="country_name" value="Azerbaijan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BD"/>
+            <column name="country_name" value="Bangladesh"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BT"/>
+            <column name="country_name" value="Bhutan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="IO"/>
+            <column name="country_name" value="British Indian Ocean Territory (the)"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BN"/>
+            <column name="country_name" value="Brunei Darussalam"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KH"/>
+            <column name="country_name" value="Cambodia"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CN"/>
+            <column name="country_name" value="China"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GE"/>
+            <column name="country_name" value="Georgia"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="HK"/>
+            <column name="country_name" value="Hong Kong"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="IN"/>
+            <column name="country_name" value="India"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ID"/>
+            <column name="country_name" value="Indonesia"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="JP"/>
+            <column name="country_name" value="Japan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KZ"/>
+            <column name="country_name" value="Kazakhstan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KP"/>
+            <column name="country_name" value="Korea (the Democratic People's Republic of)"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KR"/>
+            <column name="country_name" value="Korea (the Republic of)"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KG"/>
+            <column name="country_name" value="Kyrgyzstan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LA"/>
+            <column name="country_name" value="Lao People's Democratic Republic (the)"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MO"/>
+            <column name="country_name" value="Macao"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MY"/>
+            <column name="country_name" value="Malaysia"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MV"/>
+            <column name="country_name" value="Maldives"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MN"/>
+            <column name="country_name" value="Mongolia"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MM"/>
+            <column name="country_name" value="Myanmar"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NP"/>
+            <column name="country_name" value="Nepal"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PK"/>
+            <column name="country_name" value="Pakistan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PH"/>
+            <column name="country_name" value="Philippines (the)"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SG"/>
+            <column name="country_name" value="Singapore"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LK"/>
+            <column name="country_name" value="Sri Lanka"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TW"/>
+            <column name="country_name" value="Taiwan (Province of China)"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TJ"/>
+            <column name="country_name" value="Tajikistan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TH"/>
+            <column name="country_name" value="Thailand"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TL"/>
+            <column name="country_name" value="Timor-Leste"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TM"/>
+            <column name="country_name" value="Turkmenistan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="UZ"/>
+            <column name="country_name" value="Uzbekistan"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="VN"/>
+            <column name="country_name" value="Viet Nam"/>
+            <column name="region" value="Asia"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BZ"/>
+            <column name="country_name" value="Belize"/>
+            <column name="region" value="Central America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CR"/>
+            <column name="country_name" value="Costa Rica"/>
+            <column name="region" value="Central America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SV"/>
+            <column name="country_name" value="El Salvador"/>
+            <column name="region" value="Central America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GT"/>
+            <column name="country_name" value="Guatemala"/>
+            <column name="region" value="Central America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="HN"/>
+            <column name="country_name" value="Honduras"/>
+            <column name="region" value="Central America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MX"/>
+            <column name="country_name" value="Mexico"/>
+            <column name="region" value="Central America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NI"/>
+            <column name="country_name" value="Nicaragua"/>
+            <column name="region" value="Central America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PA"/>
+            <column name="country_name" value="Panama"/>
+            <column name="region" value="Central America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AX"/>
+            <column name="country_name" value="Åland Islands"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AL"/>
+            <column name="country_name" value="Albania"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AD"/>
+            <column name="country_name" value="Andorra"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AT"/>
+            <column name="country_name" value="Austria"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BY"/>
+            <column name="country_name" value="Belarus"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BE"/>
+            <column name="country_name" value="Belgium"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BA"/>
+            <column name="country_name" value="Bosnia and Herzegovina"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BG"/>
+            <column name="country_name" value="Bulgaria"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="HR"/>
+            <column name="country_name" value="Croatia"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CY"/>
+            <column name="country_name" value="Cyprus"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CZ"/>
+            <column name="country_name" value="Czechia"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="DK"/>
+            <column name="country_name" value="Denmark"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="EE"/>
+            <column name="country_name" value="Estonia"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="FO"/>
+            <column name="country_name" value="Faroe Islands (the)"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="FI"/>
+            <column name="country_name" value="Finland"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="FR"/>
+            <column name="country_name" value="France"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="DE"/>
+            <column name="country_name" value="Germany"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GI"/>
+            <column name="country_name" value="Gibraltar"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GR"/>
+            <column name="country_name" value="Greece"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GG"/>
+            <column name="country_name" value="Guernsey"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="VA"/>
+            <column name="country_name" value="Holy See (the)"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="HU"/>
+            <column name="country_name" value="Hungary"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="IS"/>
+            <column name="country_name" value="Iceland"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="IE"/>
+            <column name="country_name" value="Ireland"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="IM"/>
+            <column name="country_name" value="Isle of Man"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="IT"/>
+            <column name="country_name" value="Italy"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="JE"/>
+            <column name="country_name" value="Jersey"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LV"/>
+            <column name="country_name" value="Latvia"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LI"/>
+            <column name="country_name" value="Liechtenstein"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LT"/>
+            <column name="country_name" value="Lithuania"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LU"/>
+            <column name="country_name" value="Luxembourg"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MT"/>
+            <column name="country_name" value="Malta"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MD"/>
+            <column name="country_name" value="Moldova (the Republic of)"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MC"/>
+            <column name="country_name" value="Monaco"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ME"/>
+            <column name="country_name" value="Montenegro"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NL"/>
+            <column name="country_name" value="Netherlands (the)"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MK"/>
+            <column name="country_name" value="North Macedonia"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NO"/>
+            <column name="country_name" value="Norway"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PL"/>
+            <column name="country_name" value="Poland"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PT"/>
+            <column name="country_name" value="Portugal"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="RO"/>
+            <column name="country_name" value="Romania"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="RU"/>
+            <column name="country_name" value="Russian Federation (the)"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SM"/>
+            <column name="country_name" value="San Marino"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="RS"/>
+            <column name="country_name" value="Serbia"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SK"/>
+            <column name="country_name" value="Slovakia"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SI"/>
+            <column name="country_name" value="Slovenia"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="ES"/>
+            <column name="country_name" value="Spain"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SJ"/>
+            <column name="country_name" value="Svalbard and Jan Mayen"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SE"/>
+            <column name="country_name" value="Sweden"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CH"/>
+            <column name="country_name" value="Switzerland"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TR"/>
+            <column name="country_name" value="Turkey"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="UA"/>
+            <column name="country_name" value="Ukraine"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GB"/>
+            <column name="country_name" value="United Kingdom of Great Britain and Northern Ireland (the)"/>
+            <column name="region" value="Europe"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BH"/>
+            <column name="country_name" value="Bahrain"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="IR"/>
+            <column name="country_name" value="Iran (Islamic Republic of)"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="IQ"/>
+            <column name="country_name" value="Iraq"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="IL"/>
+            <column name="country_name" value="Israel"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="JO"/>
+            <column name="country_name" value="Jordan"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KW"/>
+            <column name="country_name" value="Kuwait"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LB"/>
+            <column name="country_name" value="Lebanon"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="OM"/>
+            <column name="country_name" value="Oman"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PS"/>
+            <column name="country_name" value="Palestine, State of"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="QA"/>
+            <column name="country_name" value="Qatar"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SA"/>
+            <column name="country_name" value="Saudi Arabia"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SY"/>
+            <column name="country_name" value="Syrian Arab Republic (the)"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AE"/>
+            <column name="country_name" value="United Arab Emirates (the)"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="YE"/>
+            <column name="country_name" value="Yemen"/>
+            <column name="region" value="Middle East"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BM"/>
+            <column name="country_name" value="Bermuda"/>
+            <column name="region" value="North America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CA"/>
+            <column name="country_name" value="Canada"/>
+            <column name="region" value="North America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GL"/>
+            <column name="country_name" value="Greenland"/>
+            <column name="region" value="North America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PM"/>
+            <column name="country_name" value="Saint Pierre and Miquelon"/>
+            <column name="region" value="North America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="US"/>
+            <column name="country_name" value="United States of America (the)"/>
+            <column name="region" value="North America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AS"/>
+            <column name="country_name" value="American Samoa"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AU"/>
+            <column name="country_name" value="Australia"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CX"/>
+            <column name="country_name" value="Christmas Island"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CC"/>
+            <column name="country_name" value="Cocos (Keeling) Islands (the)"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CK"/>
+            <column name="country_name" value="Cook Islands (the)"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="FJ"/>
+            <column name="country_name" value="Fiji"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PF"/>
+            <column name="country_name" value="French Polynesia"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GU"/>
+            <column name="country_name" value="Guam"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KI"/>
+            <column name="country_name" value="Kiribati"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MH"/>
+            <column name="country_name" value="Marshall Islands (the)"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="FM"/>
+            <column name="country_name" value="Micronesia (Federated States of)"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NR"/>
+            <column name="country_name" value="Nauru"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NC"/>
+            <column name="country_name" value="New Caledonia"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NZ"/>
+            <column name="country_name" value="New Zealand"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NU"/>
+            <column name="country_name" value="Niue"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="NF"/>
+            <column name="country_name" value="Norfolk Island"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MP"/>
+            <column name="country_name" value="Northern Mariana Islands (the)"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PW"/>
+            <column name="country_name" value="Palau"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PG"/>
+            <column name="country_name" value="Papua New Guinea"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PN"/>
+            <column name="country_name" value="Pitcairn"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="WS"/>
+            <column name="country_name" value="Samoa"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SB"/>
+            <column name="country_name" value="Solomon Islands"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TK"/>
+            <column name="country_name" value="Tokelau"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TO"/>
+            <column name="country_name" value="Tonga"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TV"/>
+            <column name="country_name" value="Tuvalu"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="UM"/>
+            <column name="country_name" value="United States Minor Outlying Islands (the)"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="VU"/>
+            <column name="country_name" value="Vanuatu"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="WF"/>
+            <column name="country_name" value="Wallis and Futuna"/>
+            <column name="region" value="Oceania"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AR"/>
+            <column name="country_name" value="Argentina"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BO"/>
+            <column name="country_name" value="Bolivia (Plurinational State of)"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BR"/>
+            <column name="country_name" value="Brazil"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CL"/>
+            <column name="country_name" value="Chile"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CO"/>
+            <column name="country_name" value="Colombia"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="EC"/>
+            <column name="country_name" value="Ecuador"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="FK"/>
+            <column name="country_name" value="Falkland Islands (the) [Malvinas]"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GF"/>
+            <column name="country_name" value="French Guiana"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GY"/>
+            <column name="country_name" value="Guyana"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PY"/>
+            <column name="country_name" value="Paraguay"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PE"/>
+            <column name="country_name" value="Peru"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SR"/>
+            <column name="country_name" value="Suriname"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="UY"/>
+            <column name="country_name" value="Uruguay"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="VE"/>
+            <column name="country_name" value="Venezuela (Bolivarian Republic of)"/>
+            <column name="region" value="South America"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AI"/>
+            <column name="country_name" value="Anguilla"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AG"/>
+            <column name="country_name" value="Antigua and Barbuda"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="AW"/>
+            <column name="country_name" value="Aruba"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BS"/>
+            <column name="country_name" value="Bahamas (the)"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BB"/>
+            <column name="country_name" value="Barbados"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BQ"/>
+            <column name="country_name" value="Bonaire, Sint Eustatius and Saba"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KY"/>
+            <column name="country_name" value="Cayman Islands (the)"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CU"/>
+            <column name="country_name" value="Cuba"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="CW"/>
+            <column name="country_name" value="Curaçao"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="DM"/>
+            <column name="country_name" value="Dominica"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="DO"/>
+            <column name="country_name" value="Dominican Republic (the)"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GD"/>
+            <column name="country_name" value="Grenada"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="GP"/>
+            <column name="country_name" value="Guadeloupe"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="HT"/>
+            <column name="country_name" value="Haiti"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="JM"/>
+            <column name="country_name" value="Jamaica"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MQ"/>
+            <column name="country_name" value="Martinique"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MS"/>
+            <column name="country_name" value="Montserrat"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="PR"/>
+            <column name="country_name" value="Puerto Rico"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="BL"/>
+            <column name="country_name" value="Saint Barthélemy"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="KN"/>
+            <column name="country_name" value="Saint Kitts and Nevis"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="LC"/>
+            <column name="country_name" value="Saint Lucia"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="MF"/>
+            <column name="country_name" value="Saint Martin (French part)"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="VC"/>
+            <column name="country_name" value="Saint Vincent and the Grenadines"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="SX"/>
+            <column name="country_name" value="Sint Maarten (Dutch part)"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TT"/>
+            <column name="country_name" value="Trinidad and Tobago"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="TC"/>
+            <column name="country_name" value="Turks and Caicos Islands (the)"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="VG"/>
+            <column name="country_name" value="Virgin Islands (British)"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+        <insert tableName="country">
+            <column name="country_code" value="VI"/>
+            <column name="country_name" value="Virgin Islands (U.S.)"/>
+            <column name="region" value="The Caribbean"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="003_COUNTRY_UPDATE" author="${author}">
+        <renameColumn tableName="country" oldColumnName="country_code" newColumnName="code"/>
+        <renameColumn tableName="country" oldColumnName="country_name" newColumnName="name"/>
+    </changeSet>
+</databaseChangeLog>

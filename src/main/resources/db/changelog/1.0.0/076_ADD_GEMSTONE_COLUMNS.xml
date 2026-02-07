@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="001-GEMSTONE-UPDATE" author="${author}">
+        <addColumn tableName="gemstone">
+            <column name="gemstone_type" type="VARCHAR(16)" defaultValue="GEMSTONE">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="gemstone">
+            <column name="owner_type" type="VARCHAR(16)" defaultValue="SUPPLIER">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="gemstone">
+            <column name="invoice_date" type="DATE"/>
+        </addColumn>
+        <addColumn tableName="gemstone">
+            <column name="atelier_file_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_gemstone__atelier_file"
+                                 baseTableName="gemstone" baseColumnNames="atelier_file_id"
+                                 referencedTableName="atelier_file" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

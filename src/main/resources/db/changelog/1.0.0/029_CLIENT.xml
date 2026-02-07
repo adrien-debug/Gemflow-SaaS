@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_HALLMARK_LOGO_CREATE" author="${author}">
+        <createTable tableName="hallmark_logo">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addColumn tableName="atelier_order">
+            <column name="hallmark_logo_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_order_hallmark_logo"
+                                 baseColumnNames="hallmark_logo_id"
+                                 baseTableName="atelier_order"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hallmark_logo"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+</databaseChangeLog>

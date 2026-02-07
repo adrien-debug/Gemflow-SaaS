@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ROW_REFERENCED_FUNCTION" author="${author}">
+        <sqlFile path="053_IS_ROW_REFERENCED_FUNCTION.sql" relativeToChangelogFile="true" dbms="${dbms}"/>
+    </changeSet>
+
+    <changeSet id="002_CREATE_SHEDLOCK" author="${author}">
+        <createTable tableName="shedlock">
+            <column name="name" type="varchar(64)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="lock_until" type="timestamp(3)"/>
+            <column name="locked_at" type="timestamp(3)"/>
+            <column name="locked_by" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,40 @@
+╔══════════════════════════════════════════════════════════════╗
+║                   GEMFLOW BACKEND - QUICK START              ║
+╚══════════════════════════════════════════════════════════════╝
+
+❌ PROBLÈME ACTUEL
+──────────────────
+La connexion à Supabase échoue : "Tenant or user not found"
+
+🎯 SOLUTION RAPIDE (2 minutes)
+──────────────────────────────
+
+1️⃣  Ouvrir Supabase Dashboard
+   https://supabase.com/dashboard/project/xlvlcnrkrqstfoadoamk/settings/database
+
+2️⃣  Copier la "Connection string" (Transaction mode, port 6543)
+   Format : postgresql://USER:PASSWORD@HOST:6543/postgres
+
+3️⃣  Exécuter le script de configuration
+   cd gemflow-backend
+   ./configure-supabase.sh
+   
+   → Coller la connection string quand demandé
+   → Le script teste et configure automatiquement
+
+4️⃣  Démarrer le backend
+   export $(cat .env.local | grep -v '^#' | xargs)
+   ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+
+✅ VÉRIFICATION
+───────────────
+Backend accessible sur : http://localhost:7001
+
+📚 DOCUMENTATION COMPLÈTE
+─────────────────────────
+- RESUME_CONFIGURATION.md
+- CONNEXION_SUPABASE_INSTRUCTIONS.md
+
+🆘 BESOIN D'AIDE ?
+──────────────────
+Lire CONNEXION_SUPABASE_INSTRUCTIONS.md pour plus de détails

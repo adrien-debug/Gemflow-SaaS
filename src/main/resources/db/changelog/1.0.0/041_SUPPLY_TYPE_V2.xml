@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_SUPPLY_TYPE_V2_CREATE" author="${author}">
+        <dropNotNullConstraint tableName="supplier" columnName="supply_type_id"/>
+        <update tableName="supplier">
+            <column name="supply_type_id" value="null"/>
+        </update>
+
+        <delete tableName="supply_type"/>
+        <addColumn tableName="supply_type">
+            <column name="immutable" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <insert tableName="supply_type">
+            <column name="id" value="1"/>
+            <column name="name" value="metals"/>
+            <column name="immutable" value="true"/>
+        </insert>
+        <insert tableName="supply_type">
+            <column name="id" value="2"/>
+            <column name="name" value="gemstones"/>
+            <column name="immutable" value="true"/>
+        </insert>
+        <renameSequence oldSequenceName="supplier_id_seq" newSequenceName="supply_type_id_seq"/>
+        <sql dbms="${dbms}">
+            ALTER SEQUENCE supply_type_id_seq RESTART WITH 10001
+        </sql>
+
+        <update tableName="supplier">
+            <column name="supply_type_id" value="1"/>
+        </update>
+        <addNotNullConstraint tableName="supplier" columnName="supply_type_id"/>
+    </changeSet>
+
+    <changeSet id="002_SUPPLY_TYPE_V2_VALUES_UPDATE" author="${author}">
+        <update tableName="supply_type">
+            <column name="name" value="Metals"/>
+            <where>id = 1</where>
+        </update>
+        <update tableName="supply_type">
+            <column name="name" value="Gemstones"/>
+            <where>id = 2</where>
+        </update>
+    </changeSet>
+</databaseChangeLog>

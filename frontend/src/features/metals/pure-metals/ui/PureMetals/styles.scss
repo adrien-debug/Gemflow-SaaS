@@ -1,0 +1,9 @@
+.pure-metals {
+  overflow: hidden;
+  max-height: calc(100vh - 170px);
+
+  .metal-total-value {
+    font-size: 16px;
+    color: var(--ant-color-primary);
+  }
+}

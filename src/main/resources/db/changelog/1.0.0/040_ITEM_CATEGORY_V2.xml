@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="002_ITEM_CATEGORY_V2_CREATE" author="${author}">
+        <dropNotNullConstraint tableName="atelier_order" columnName="item_category_id"/>
+        <update tableName="atelier_order">
+            <column name="item_category_id" value="null"/>
+        </update>
+
+        <delete tableName="item_category"/>
+        <addColumn tableName="item_category">
+            <column name="immutable" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <insert tableName="item_category">
+            <column name="id" value="1"/>
+            <column name="name" value="Ring"/>
+            <column name="immutable" value="true"/>
+        </insert>
+        <insert tableName="item_category">
+            <column name="id" value="2"/>
+            <column name="name" value="Earrings"/>
+            <column name="immutable" value="true"/>
+        </insert>
+        <insert tableName="item_category">
+            <column name="id" value="3"/>
+            <column name="name" value="Bracelet"/>
+            <column name="immutable" value="true"/>
+        </insert>
+        <sql dbms="${dbms}">
+            ALTER SEQUENCE item_category_id_seq RESTART WITH 10001
+        </sql>
+
+        <update tableName="atelier_order">
+            <column name="item_category_id" value="1"/>
+        </update>
+        <addNotNullConstraint tableName="atelier_order" columnName="item_category_id"/>
+    </changeSet>
+</databaseChangeLog>

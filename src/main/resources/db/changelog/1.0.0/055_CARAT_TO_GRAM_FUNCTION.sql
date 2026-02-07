@@ -1,0 +1,7 @@
+CREATE
+OR REPLACE FUNCTION carat_to_gram(carat_weight numeric)
+    RETURNS numeric
+LANGUAGE SQL
+IMMUTABLE
+RETURNS NULL ON NULL INPUT
+RETURN carat_weight * 0.2;

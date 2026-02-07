@@ -1,0 +1,1 @@
+export const SEGMENTS_KEY = "SEGMENTS_QUERY_KEY";

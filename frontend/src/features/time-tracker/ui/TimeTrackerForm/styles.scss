@@ -1,0 +1,21 @@
+.time-tracker-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .title {
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .field-work-type {
+    margin-top: 24px;
+    margin-bottom: 0;
+  }
+
+  .action-button {
+    margin-bottom: 24px;
+    height: 48px;
+    border-radius: 8px;
+  }
+}

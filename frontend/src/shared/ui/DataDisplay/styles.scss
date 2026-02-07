@@ -1,0 +1,53 @@
+.labeled-tag {
+  article {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--ant-color-text-description);
+
+    @media print {
+      color: #0a0a0a;
+      font-size: 16px !important;
+    }
+  }
+
+  .ant-tag {
+    margin: 0;
+    padding: 6px 12px;
+    border-radius: 28px;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    .inner-tag-content {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .children {
+    font-weight: 600;
+    font-size: 14px;
+    word-break: break-word;
+  }
+
+  &.large {
+    .ant-tag {
+      min-width: 40px;
+      height: 40px;
+      max-width: 100%;
+    }
+  }
+
+  &.small {
+    article {
+      font-size: 12px;
+    }
+
+    .ant-tag {
+      font-size: 14px;
+    }
+  }
+}

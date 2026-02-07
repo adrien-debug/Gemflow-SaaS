@@ -1,0 +1,24 @@
+.labour-summary-container {
+  .table-head {
+    margin-bottom: 30px;
+    opacity: 0.5;
+  }
+
+  .title {
+    margin-top: 0;
+    margin-bottom: 16px;
+    opacity: 0.5;
+    font-weight: 400;
+  }
+
+  .centralize-item {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .centralize-label {
+    display: flex;
+    align-items: center;
+  }
+}

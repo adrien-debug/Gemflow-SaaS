@@ -1,0 +1,12 @@
+.image {
+  border-radius: 6px;
+  border: 1px solid var(--ant-color-border);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.image-icon { font-size: 48px; max-width: 50%; max-height: 50%; opacity: 0.5 }
+
+.ant-image-img {
+  object-fit: cover;
+}

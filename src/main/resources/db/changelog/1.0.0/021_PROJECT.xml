@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_PROJECT_CREATE" author="${author}">
+        <createTable tableName="project">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manufacturing_size" type="integer"/>
+            <column name="gem_count" type="integer"/>
+            <column name="manufacturing_note" type="varchar(512)"/>
+            <column name="stones" type="varchar(512)"/>
+            <column name="post_working_note" type="varchar(512)"/>
+            <column name="stl_count" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cad_project_details" type="varchar(512)"/>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_category_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_category_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="project__client_id"
+                                 baseTableName="project" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="project__client_category_id"
+                                 baseTableName="project" baseColumnNames="client_category_id"
+                                 referencedTableName="client_category" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="project__item_category_id"
+                                 baseTableName="project" baseColumnNames="item_category_id"
+                                 referencedTableName="item_category" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="002_PROJECT_UPDATE" author="${author}">
+        <modifyDataType tableName="project" columnName="name" newDataType="varchar(128)"/>
+        <modifyDataType tableName="project" columnName="manufacturing_note" newDataType="varchar(1000)"/>
+        <modifyDataType tableName="project" columnName="post_working_note" newDataType="varchar(1000)"/>
+        <modifyDataType tableName="project" columnName="cad_project_details" newDataType="varchar(1000)"/>
+        <modifyDataType tableName="project" columnName="stones" newDataType="varchar(1000)"/>
+        <addColumn tableName="project">
+            <column name="status" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="003_PROJECT_REMOVE_COLUMNS" author="${author}">
+        <dropColumn tableName="project" columnName="client_category_id"/>
+        <dropColumn tableName="project" columnName="manufacturing_size"/>
+    </changeSet>
+
+    <changeSet id="004_PROJECT_ADD_START_ID_VALUE" author="${author}">
+        <sql dbms="${dbms}">
+            ALTER SEQUENCE project_id_seq RESTART WITH 10001
+        </sql>
+    </changeSet>
+
+    <changeSet id="005_PROJECT_ADD_COLUMN" author="${author}">
+        <addColumn tableName="project">
+            <column name="created_at" type="timestamp"/>
+        </addColumn>
+        <update tableName="project">
+            <column name="created_at" valueComputed="current_timestamp"/>
+        </update>
+        <addNotNullConstraint tableName="project" columnName="created_at"/>
+    </changeSet>
+    
+    <changeSet id="006_PROJECT_DROP_STL_COUNT_NOT_NULL" author="${author}">
+        <dropNotNullConstraint tableName="project" columnName="stl_count"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,86 @@
+$gold: #C39A71;
+$gold-line: rgba(195, 154, 113, 0.35);
+$sider-bg: #131C30;
+
+.kpi-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.kpi-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border: 1px solid $gold-line;
+  background: white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: $gold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &.kpi-card-clickable {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 6px 20px rgba(195, 154, 113, 0.2);
+      transform: translateY(-4px);
+      border-color: $gold;
+
+      &::before {
+        opacity: 1;
+      }
+
+      .kpi-card-icon {
+        transform: scale(1.1);
+      }
+    }
+
+    &:active {
+      transform: translateY(-2px);
+    }
+  }
+
+  &:not(.kpi-card-clickable):hover {
+    box-shadow: 0 4px 16px rgba(195, 154, 113, 0.15);
+    transform: translateY(-2px);
+    border-color: $gold;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  .kpi-card-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .kpi-card-icon {
+    font-size: 32px;
+    opacity: 0.9;
+    transition: transform 0.3s ease;
+  }
+
+  .ant-statistic-title {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.65);
+    font-weight: 500;
+  }
+
+  .ant-statistic-content {
+    font-size: 28px;
+    font-weight: 600;
+  }
+}

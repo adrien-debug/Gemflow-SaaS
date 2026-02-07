@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ATELIER_USER_IMAGE" author="${author}">
+        <createTable tableName="atelier_user_image">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="size_type" type="varchar(24)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atelier_file_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="atelier_user_image__atelier_user_id"
+                                 baseTableName="atelier_user_image" baseColumnNames="user_id"
+                                 referencedTableName="atelier_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="atelier_user_image__atelier_file_id"
+                                 baseTableName="atelier_user_image" baseColumnNames="atelier_file_id"
+                                 referencedTableName="atelier_file" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

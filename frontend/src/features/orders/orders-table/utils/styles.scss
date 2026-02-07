@@ -1,0 +1,31 @@
+.order-table {
+  .ant-select {
+    .ant-select-selector {
+      padding-left: 0;
+    }
+
+    &.LOW {
+      .ant-select-selector, .ant-select-arrow {
+        color: var(--ant-color-text-description);
+      }
+    }
+
+    &.NORM {
+      .ant-select-selector, .ant-select-arrow {
+        color: var(--ant-blue-5);
+      }
+    }
+
+    &.HIGH {
+      .ant-select-selector, .ant-select-arrow {
+        color: var(--ant-orange-6);
+      }
+    }
+
+    &.TOP {
+      .ant-select-selector, .ant-select-arrow {
+        color: var(--ant-red-6);
+      }
+    }
+  }
+}

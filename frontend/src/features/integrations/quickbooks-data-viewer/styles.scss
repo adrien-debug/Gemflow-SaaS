@@ -1,0 +1,17 @@
+.quickbooks-data-viewer {
+  margin-top: 24px;
+
+  .viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .ant-table {
+    .ant-table-thead > tr > th {
+      background: #fafafa;
+    }
+  }
+}
+

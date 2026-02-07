@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="003_GEMSTONE_CREATE" author="${author}">
+        <delete tableName="order_gemstone"/>
+        <delete tableName="gemstone"/>
+
+        <addColumn tableName="gemstone">
+            <column name="description" type="varchar(1500)"/>
+            <column name="number_of_gems" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_weight" type="numeric(8, 5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="varchar(1500)"/>
+            <column name="method_type" type="varchar(8)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stone_price" type="numeric(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price_per_carat" type="numeric(13, 3)"/>
+            <column name="customs_duty_price_active" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customs_duty_price" type="numeric(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vat_price_active" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vat_price" type="numeric(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ten_percents_price_active" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ten_percents_price" type="numeric(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="certificate_cost" type="numeric(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shipment" type="numeric(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gems_payment_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="supplier_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint constraintName="fk_gemstone__gems_payment"
+                                 baseTableName="gemstone" baseColumnNames="gems_payment_id"
+                                 referencedTableName="gems_payment" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_gemstone__supplier"
+                                 baseTableName="gemstone" baseColumnNames="supplier_id"
+                                 referencedTableName="supplier" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_gemstone__location"
+                                 baseTableName="gemstone" baseColumnNames="location_id"
+                                 referencedTableName="location" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="004_GEMSTONE_CREATE" author="${author}">
+        <sql dbms="${dbms}">
+            ALTER TABLE gemstone
+                ADD total_cost numeric GENERATED ALWAYS AS (stone_price + customs_duty_price + vat_price +
+                                                            ten_percents_price + certificate_cost +
+                                                            shipment) STORED NOT NULL;
+        </sql>
+    </changeSet>
+
+    <changeSet id="005_GEMSTONE_IMAGE_CREATE" author="${author}">
+        <createTable tableName="gemstone_image">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="size_type" type="varchar(24)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gemstone_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atelier_file_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_gemstone_image__gemstone"
+                                 baseTableName="gemstone_image" baseColumnNames="gemstone_id"
+                                 referencedTableName="gemstone" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_gemstone_image__atelier_file"
+                                 baseTableName="gemstone_image" baseColumnNames="atelier_file_id"
+                                 referencedTableName="atelier_file" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="005_GEMSTONE_CHANGE" author="${author}">
+        <dropNotNullConstraint tableName="gemstone" columnName="gems_payment_id"/>
+    </changeSet>
+
+    <changeSet id="006_GEMSTONE_CHANGE" author="${author}">
+        <dropForeignKeyConstraint baseTableName="gemstone_image" constraintName="fk_gemstone_image__gemstone"/>
+        <addForeignKeyConstraint constraintName="fk_gemstone_image__gemstone"
+                                 baseTableName="gemstone_image" baseColumnNames="gemstone_id"
+                                 referencedTableName="gemstone" referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="007_GEMSTONE_CHANGE" author="${author}">
+        <addColumn tableName="gemstone">
+            <column name="created_at" type="timestamp"/>
+        </addColumn>
+        <update tableName="gemstone">
+            <column name="created_at" valueComputed="current_timestamp"/>
+        </update>
+        <addNotNullConstraint tableName="gemstone" columnName="created_at"/>
+    </changeSet>
+</databaseChangeLog>

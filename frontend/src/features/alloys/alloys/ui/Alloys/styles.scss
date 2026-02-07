@@ -1,0 +1,18 @@
+.alloys {
+  overflow: hidden;
+
+  .ant-select-lg {
+    .ant-select-selector {
+      border-radius: 35px;
+    }
+  }
+
+  .alloy-total-value {
+    font-size: 16px;
+    color: var(--ant-color-primary);
+
+    span {
+      font-weight: 600;
+    }
+  }
+}

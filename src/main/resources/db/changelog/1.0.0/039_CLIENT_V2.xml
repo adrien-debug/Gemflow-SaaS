@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="002_CLIENT_UPDATE" author="${author}">
+        <addColumn tableName="client">
+            <column name="email" type="varchar(256)"/>
+            <column name="address" type="varchar(256)"/>
+            <column name="city" type="varchar(128)"/>
+            <column name="postal_code" type="varchar(16)"/>
+            <column name="vat_number" type="varchar(16)"/>
+            <column name="country_id" type="bigint"/>
+            <column name="currency_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_client__country"
+                                 baseTableName="client" baseColumnNames="country_id"
+                                 referencedTableName="country" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_client__currency"
+                                 baseTableName="client" baseColumnNames="currency_id"
+                                 referencedTableName="currency" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

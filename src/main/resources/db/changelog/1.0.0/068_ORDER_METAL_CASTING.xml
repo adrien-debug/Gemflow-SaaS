@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_METAL_CASTING_CREATE" author="${author}">
+        <createTable tableName="order_metal_casting">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cost" type="NUMERIC(13, 3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="casting_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_task_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_order_metal_casting__casting"
+                                 baseTableName="order_metal_casting" baseColumnNames="casting_id"
+                                 referencedTableName="casting" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order_metal_casting__order_task"
+                                 baseTableName="order_metal_casting" baseColumnNames="order_task_id"
+                                 referencedTableName="order_task" referencedColumnNames="id"/>
+
+        <createIndex tableName="order_metal_casting" indexName="idx_order_metal_casting_casting_id">
+            <column name="casting_id"/>
+        </createIndex>
+        <createIndex tableName="order_metal_casting" indexName="idx_order_metal_casting_order_task_id">
+            <column name="order_task_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

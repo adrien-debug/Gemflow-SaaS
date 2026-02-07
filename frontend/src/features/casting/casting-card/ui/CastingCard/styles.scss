@@ -1,0 +1,14 @@
+.casting-card {
+  border-color: var(--ant-color-primary-border);
+
+  .card-metadata {
+    min-width: 0;
+  }
+
+  .card-title {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

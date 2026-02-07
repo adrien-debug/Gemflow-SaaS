@@ -1,0 +1,12 @@
+.cad-details-form {
+  .ant-btn {
+    --ant-border-radius-lg: 8px;
+  }
+  .full-width {
+    width: 100%;
+
+    .ant-upload {
+      width: 100%;
+    }
+  }
+}

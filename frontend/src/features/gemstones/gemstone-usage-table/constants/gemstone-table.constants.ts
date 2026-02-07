@@ -1,0 +1,1 @@
+export const GEMSTONE_TABLE_PAGE_SIZE = 100;

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_BILLING_SUBSCRIPTION_CREATE" author="${author}">
+        <comment>Create billing subscription table (Stripe SaaS), independent from tenant table migration</comment>
+
+        <createTable tableName="billing_subscription">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="tenant_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="stripe_customer_id" type="VARCHAR(128)"/>
+            <column name="stripe_subscription_id" type="VARCHAR(128)"/>
+
+            <column name="plan" type="VARCHAR(32)"/>
+            <column name="status" type="VARCHAR(32)"/>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="billing_subscription"
+                             columnNames="tenant_id"
+                             constraintName="uk_billing_subscription_tenant"/>
+
+        <addUniqueConstraint tableName="billing_subscription"
+                             columnNames="stripe_subscription_id"
+                             constraintName="uk_billing_subscription_stripe_subscription"/>
+
+        <createIndex tableName="billing_subscription" indexName="idx_billing_subscription_tenant">
+            <column name="tenant_id"/>
+        </createIndex>
+        <createIndex tableName="billing_subscription" indexName="idx_billing_subscription_status">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
+
+

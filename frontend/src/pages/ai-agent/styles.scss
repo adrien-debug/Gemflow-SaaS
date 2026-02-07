@@ -1,0 +1,60 @@
+$gold: #C39A71;
+$sider-bg: #131C30;
+$border: #e8e8e8;
+
+.ai-agent-page {
+  padding: 24px;
+
+  .page-header {
+    margin-bottom: 24px;
+
+    .anticon {
+      color: $gold;
+    }
+  }
+
+  .ant-card {
+    border-radius: 8px;
+
+    .ant-card-head {
+      background: $sider-bg;
+      border-radius: 8px 8px 0 0;
+
+      .ant-card-head-title {
+        color: $gold;
+
+        .anticon {
+          color: $gold;
+        }
+      }
+    }
+  }
+
+  .ant-list-item {
+    border: none;
+  }
+
+  .ant-list-item > div {
+    &[style*="background: rgb(24, 144, 255)"],
+    &[style*="background:#1890ff"] {
+      background: $sider-bg !important;
+    }
+  }
+
+  .ant-btn-primary {
+    background: $sider-bg;
+    border-color: $sider-bg;
+
+    .anticon {
+      color: $gold;
+    }
+
+    &:hover:not(:disabled) {
+      background: lighten($sider-bg, 8%);
+    }
+  }
+
+  .anticon-robot {
+    color: $gold !important;
+  }
+}

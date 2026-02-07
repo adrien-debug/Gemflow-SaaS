@@ -1,0 +1,19 @@
+.widget-billing {
+  .billing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .billing-controls {
+    margin-top: 12px;
+  }
+
+  @media (max-width: 1100px) {
+    .billing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+

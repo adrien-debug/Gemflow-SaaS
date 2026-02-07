@@ -1,0 +1,26 @@
+.create-order-form {
+  h4 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    opacity: 0.5;
+    font-weight: 400;
+  }
+  .ant-picker, .ant-input-number {
+    width: 100%;
+  }
+
+  textarea {
+    min-height: 200px;
+  }
+
+  .material-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ant-color-primary);
+    margin-bottom: 8px;
+  }
+
+  .anticon-delete {
+    color: var(--ant-color-error);
+  }
+}

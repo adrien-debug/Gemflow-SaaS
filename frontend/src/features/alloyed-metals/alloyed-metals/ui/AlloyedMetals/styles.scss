@@ -1,0 +1,16 @@
+.alloyed-metals {
+  .ant-select-lg {
+    .ant-select-selector {
+      border-radius: 35px;
+    }
+  }
+
+  .alloyed-metals-total-value {
+    font-size: 16px;
+    color: var(--ant-color-primary);
+
+    span {
+      font-weight: 600;
+    }
+  }
+}

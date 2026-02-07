@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001_ORDER_TASK_CREATE" author="${author}">
+        <renameTable oldTableName="atelier_order" newTableName="order_task"/>
+        <renameColumn tableName="order_task" oldColumnName="order_status" newColumnName="status"/>
+        <dropForeignKeyConstraint baseTableName="order_task" constraintName="fk_order_client"/>
+        <addForeignKeyConstraint constraintName="fk_order_task__client"
+                                 baseTableName="order_task" baseColumnNames="client_id"
+                                 referencedTableName="client" referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="order_task" constraintName="fk_order_hallmark_logo"/>
+        <addForeignKeyConstraint constraintName="fk_order_task__hallmark_logo"
+                                 baseTableName="order_task" baseColumnNames="hallmark_logo_id"
+                                 referencedTableName="hallmark_logo" referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="order_task" constraintName="fk_order_project"/>
+        <addForeignKeyConstraint constraintName="fk_order_task__project"
+                                 baseTableName="order_task" baseColumnNames="project_id"
+                                 referencedTableName="project"  referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="order_task" constraintName="fk_order_segment"/>
+        <addForeignKeyConstraint constraintName="fk_order_task__segment"
+                                 baseTableName="order_task" baseColumnNames="segment_id"
+                                 referencedTableName="segment" referencedColumnNames="id"/>
+
+        <renameTable oldTableName="order_file" newTableName="order_task_file"/>
+        <dropForeignKeyConstraint baseTableName="order_task_file" constraintName="fk_order_file_order_id"/>
+        <renameColumn tableName="order_task_file" oldColumnName="order_id" newColumnName="order_task_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_file__order_task"
+                                 baseTableName="order_task_file" baseColumnNames="order_task_id"
+                                 referencedTableName="order_task" referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="order_task_file" constraintName="fk_order_file_atelier_file_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_file__atelier_file"
+                                 baseTableName="order_task_file" baseColumnNames="atelier_file_id"
+                                 referencedTableName="atelier_file" referencedColumnNames="id"/>
+
+        <renameTable oldTableName="order_metal" newTableName="order_task_metal"/>
+        <dropForeignKeyConstraint baseTableName="order_task_metal" constraintName="fk_order_metal_order_id"/>
+        <dropUniqueConstraint tableName="order_task_metal" constraintName="uk_order_metal_unique"/>
+        <renameColumn tableName="order_task_metal" oldColumnName="order_id" newColumnName="order_task_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_metal__order_task"
+                                 baseTableName="order_task_metal" baseColumnNames="order_task_id"
+                                 referencedTableName="order_task" referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="order_task_metal" constraintName="fk_order_metal_metal_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_metal__metal"
+                                 baseTableName="order_task_metal" baseColumnNames="metal_id"
+                                 referencedTableName="metal" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="uk_order_task_metal_unique"
+                             tableName="order_task_metal"
+                             columnNames="order_task_id, metal_id"/>
+
+        <renameTable oldTableName="order_stone" newTableName="order_task_stone"/>
+        <dropForeignKeyConstraint baseTableName="order_task_stone" constraintName="fk_order_stone_order_id"/>
+        <dropUniqueConstraint tableName="order_task_stone" constraintName="uk_order_stone_unique"/>
+        <renameColumn tableName="order_task_stone" oldColumnName="order_id" newColumnName="order_task_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_stone__order_task"
+                                 baseTableName="order_task_stone" baseColumnNames="order_task_id"
+                                 referencedTableName="order_task" referencedColumnNames="id"/>
+        <dropForeignKeyConstraint baseTableName="order_task_stone" constraintName="fk_order_stone_stone_id"/>
+        <addForeignKeyConstraint constraintName="fk_order_task_stone__stone"
+                                 baseTableName="order_task_stone" baseColumnNames="stone_id"
+                                 referencedTableName="stone" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="uk_order_task_stone_unique"
+                             tableName="order_task_stone"
+                             columnNames="order_task_id, stone_id"/>
+    </changeSet>
+
+    <changeSet id="002_ORDER_TASK_UPDATE" author="${author}">
+        <sql dbms="${dbms}">
+            alter table order_task
+                rename constraint atelier_order_pkey to order_task_pkey;
+
+            alter table order_task_file
+                rename constraint order_file_pkey to order_task_file_pkey;
+        </sql>
+    </changeSet>
+
+    <changeSet id="003_ORDER_TASK_UPDATE" author="${author}">
+        <modifyDataType tableName="order_task" columnName="status" newDataType="varchar(24)"/>
+    </changeSet>
+</databaseChangeLog>
