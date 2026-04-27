@@ -35,7 +35,6 @@ export const mockDevAuthData: AuthData = {
   access_token: "dev-mock-token",
   refresh_token: "dev-mock-refresh-token",
   expires_in: 3600,
-  refresh_expires_in: 7200,
   token_type: "Bearer",
 };
 

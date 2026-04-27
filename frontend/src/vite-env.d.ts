@@ -2,11 +2,8 @@
 
 interface ImportMetaEnv {
   readonly VITE_BACKEND_HOST: string;
-  readonly VITE_AUTH_HOST: string;
-  readonly VITE_AUTH_REALM: string;
-  readonly VITE_AUTH_CLIENT_ID: string;
-  readonly VITE_AUTH_CLIENT_SECRET?: string;
-  readonly VITE_AUTH_CLIENT_SCOPE: string;
+  readonly VITE_SUPABASE_URL: string;
+  readonly VITE_SUPABASE_ANON_KEY: string;
 }
 
 interface ImportMeta {
