@@ -11,10 +11,11 @@
   flex-direction: column;
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
-  transition: width 0.5s var(--m-ease-fold);
+  transition: width 0.5s var(--m-ease-fold), transform 0.3s var(--m-ease-fold, ease);
   flex: 0 0 auto;
+  z-index: 50;
 
   &.is-collapsed {
     --sider-w: 72px;
@@ -270,5 +271,20 @@
     .gf-maison-sider__group-children {
       display: none;
     }
+  }
+}
+
+@media (max-width: 1023px) {
+  .gf-maison-sider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    transform: translateX(-100%);
+    box-shadow: 18px 0 48px rgba(19, 28, 48, 0.35);
+  }
+
+  .dashboard-layout.is-drawer-open .gf-maison-sider {
+    transform: translateX(0);
   }
 }

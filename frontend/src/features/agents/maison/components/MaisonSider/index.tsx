@@ -1,4 +1,4 @@
-import { FC, ReactNode, useMemo, useState } from "react";
+import { FC, ReactNode, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router";
 import { MenuItem } from "@shared/ui/layouts/DashboardLayout/models/menu-item.model.ts";
 import "./styles.scss";
@@ -126,8 +126,11 @@ interface MaisonSiderGroupProps {
 const MaisonSiderGroup: FC<MaisonSiderGroupProps> = ({ item, itemKey, depth, collapsed, selectedKey, renderItem }) => {
   const children = (item.children ?? []) as MenuItem[];
   const containsActive = children.some((c) => String(c.key) === selectedKey);
-  const [open, setOpen] = useState<boolean>(true);
-  const isOpen = collapsed ? false : open || containsActive;
+  const [open, setOpen] = useState<boolean>(containsActive);
+  useEffect(() => {
+    if (containsActive) setOpen(true);
+  }, [containsActive]);
+  const isOpen = collapsed ? false : open;
 
   return (
     <div

@@ -1,0 +1,18 @@
+.gf-verdict-hero {
+  padding: 32px;
+  background: var(--m-paper, #FFFCF5);
+  border: 0.5px solid rgba(10, 12, 16, 0.06);
+  border-radius: 4px;
+  box-shadow: var(--sh-2);
+}
+
+.gf-verdict-hero__text {
+  margin: 0;
+  font-family: var(--ff-serif, "Instrument Serif", Georgia, serif);
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--m-ink-900, #1A1A1A);
+  letter-spacing: -0.005em;
+}
