@@ -13,6 +13,14 @@ import {
 } from "../types";
 import { ArtifactLocale, ArtifactLocaleContext } from "../hooks/useArtifactNumberFormat";
 import "../styles/artifacts.scss";
+import {
+  MaisonAiBanner,
+  MaisonAiPanel,
+  MaisonInsightCard,
+  MaisonKpiStrip,
+  MaisonPageHeader,
+  type MaisonKpi,
+} from "../../maison";
 
 import pricingCompleteRaw from "../__fixtures__/pricing-complete.json?raw";
 import simpleQuestionRaw from "../__fixtures__/simple-question.json?raw";
@@ -95,14 +103,8 @@ const isolatedSamples: Array<{ name: string; artifact: Artifact }> = [
           "Comparables Estate 24 mois : médiane 19 600 USD",
           "Sertissage pavé 18.5 h vs 14 h moyenne collection",
         ],
-        risks: [
-          "Or spot +2.3% sur 24h — coût matière à 7 008 USD si livraison > 30j",
-        ],
-        sources: [
-          "get_order_cost_breakdown",
-          "get_similar_orders_pricing",
-          "get_metal_live_prices",
-        ],
+        risks: ["Or spot +2.3% sur 24h — coût matière à 7 008 USD si livraison > 30j"],
+        sources: ["get_order_cost_breakdown", "get_similar_orders_pricing", "get_metal_live_prices"],
       } satisfies PriceRecommendationPayload,
     },
   },
@@ -235,6 +237,13 @@ const localeBtnStyle = (active: boolean) => ({
   borderRadius: "3px",
 });
 
+const liveKpis: MaisonKpi[] = [
+  { label: "Commandes Actives", value: "37" },
+  { label: "Valeur Portfolio", value: "14.8", unit: "M €", unitPosition: "after" },
+  { label: "Risques Détectés", value: "02", tone: "danger" },
+  { label: "Contrôle Qualité", value: "98.2", unit: "%", unitPosition: "after", tone: "success" },
+];
+
 const ArtifactsPreviewPage: FC = () => {
   const [locale, setLocale] = useState<ArtifactLocale>("fr-FR");
 
@@ -243,31 +252,69 @@ const ArtifactsPreviewPage: FC = () => {
     [],
   );
 
+  const liveResponse = useMemo(() => parse(pricingCompleteRaw), []);
+
   return (
     <ArtifactLocaleContext.Provider value={locale}>
-      <div style={pageStyle}>
+      <div style={pageStyle} className="gf-maison">
         <header style={{ display: "flex", alignItems: "end", gap: "24px" }}>
           <div>
             <div style={eyebrowStyle}>Dev preview</div>
             <h1 style={headStyle}>Agent artifacts — rendu Maison</h1>
           </div>
           <div style={{ marginLeft: "auto", display: "flex", gap: "8px" }}>
-            <button
-              type="button"
-              style={localeBtnStyle(locale === "fr-FR")}
-              onClick={() => setLocale("fr-FR")}
-            >
+            <button type="button" style={localeBtnStyle(locale === "fr-FR")} onClick={() => setLocale("fr-FR")}>
               fr-FR
             </button>
-            <button
-              type="button"
-              style={localeBtnStyle(locale === "en-US")}
-              onClick={() => setLocale("en-US")}
-            >
+            <button type="button" style={localeBtnStyle(locale === "en-US")} onClick={() => setLocale("en-US")}>
               en-US
             </button>
           </div>
         </header>
+
+        <section style={sectionStyle}>
+          <p style={subheadStyle}>Section 0 — Live composition (page /ai-agent)</p>
+          <MaisonPageHeader
+            eyebrow="Atelier Intelligence · v5.0 · Place Vendôme"
+            title="Assistant"
+            emphasized="d'Atelier"
+            coordinates={{ lat: "48.8675", lon: "2.3287" }}
+          />
+          <MaisonKpiStrip items={liveKpis} />
+          <MaisonAiBanner
+            title="Optimisation de production détectée"
+            body={
+              <>
+                Le groupage des commandes <em>Joséphine</em> et <em>Persian Lily</em> libère 1.2 jours de four.
+              </>
+            }
+            ctaLabel="Appliquer Plan"
+          />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1fr) 360px",
+              gap: "32px",
+              alignItems: "start",
+            }}>
+            <AgentResponseView response={liveResponse} />
+            <MaisonAiPanel
+              title="Insights"
+              emphasized="Actionnables"
+              body={
+                <>
+                  <MaisonInsightCard title="Optimisation Casting">
+                    Le groupage des commandes <strong>ATL-1147</strong> et <strong>ATL-1148</strong> permet d'économiser
+                    18% du temps de four.
+                  </MaisonInsightCard>
+                  <MaisonInsightCard title="Alerte Stock Diamants">
+                    Stock critique sur 0.5ct DEF/VVS pour la production de demain.
+                  </MaisonInsightCard>
+                </>
+              }
+            />
+          </div>
+        </section>
 
         <section style={sectionStyle}>
           <p style={subheadStyle}>Section 1 — Réponses complètes (AgentResponseView)</p>
@@ -319,9 +366,7 @@ const ArtifactsPreviewPage: FC = () => {
         </section>
 
         <section style={sectionStyle}>
-          <p style={subheadStyle}>
-            Section 3 — Devises (EUR · USD · CHF, locale {locale})
-          </p>
+          <p style={subheadStyle}>Section 3 — Devises (EUR · USD · CHF, locale {locale})</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             {(["EUR", "USD", "CHF"] as const).map((currency) => (
               <AgentResponseView

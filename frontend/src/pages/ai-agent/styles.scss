@@ -1,60 +1,85 @@
-$gold: #C39A71;
-$sider-bg: #131C30;
-$border: #e8e8e8;
-
 .ai-agent-page {
-  padding: 24px;
+  background: var(--m-ivory);
+  min-height: 100%;
+  padding: 56px 48px;
+  position: relative;
+  overflow: hidden;
 
-  .page-header {
-    margin-bottom: 24px;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(
+      circle,
+      rgba(195, 154, 113, 0.08),
+      transparent 60%
+    );
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    .anticon {
-      color: $gold;
+  &__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 32px;
+    align-items: start;
+  }
+
+  &__main {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__aside {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: sticky;
+    top: 24px;
+
+    &-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--m-ink-500);
+      margin: 0 0 16px;
     }
   }
 
-  .ant-card {
-    border-radius: 8px;
-
-    .ant-card-head {
-      background: $sider-bg;
-      border-radius: 8px 8px 0 0;
-
-      .ant-card-head-title {
-        color: $gold;
-
-        .anticon {
-          color: $gold;
-        }
-      }
+  &__metals {
+    .metal-prices-card,
+    .ant-card {
+      border-radius: 4px;
+      border: 0.5px solid rgba(10, 12, 16, 0.08);
+      box-shadow: var(--sh-2);
     }
   }
+}
 
-  .ant-list-item {
-    border: none;
-  }
+@media (max-width: 1180px) {
+  .ai-agent-page {
+    padding: 40px 32px;
 
-  .ant-list-item > div {
-    &[style*="background: rgb(24, 144, 255)"],
-    &[style*="background:#1890ff"] {
-      background: $sider-bg !important;
-    }
-  }
-
-  .ant-btn-primary {
-    background: $sider-bg;
-    border-color: $sider-bg;
-
-    .anticon {
-      color: $gold;
+    &__grid {
+      grid-template-columns: 1fr;
     }
 
-    &:hover:not(:disabled) {
-      background: lighten($sider-bg, 8%);
+    &__aside {
+      position: static;
     }
-  }
-
-  .anticon-robot {
-    color: $gold !important;
   }
 }

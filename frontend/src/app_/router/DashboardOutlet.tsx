@@ -1,6 +1,6 @@
 import { FC, useContext } from "react";
 import DashboardLayout from "@shared/ui/layouts/DashboardLayout";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { dashboardBottomMenuItems, dashboardTopMenuItems } from "@app/constants/dashboard-menu.tsx";
 import { dashboardTheme } from "@app/theme/dashboard-theme.ts";
 import { useMessage } from "@shared/hooks/useMessage.ts";
@@ -28,8 +28,10 @@ const DashboardOutlet: FC = () => {
     rolesMap: RolesMap,
   });
 
-  // Show AI widget only for ADMIN and SUPER_ADMIN
+  // Show AI widget only for ADMIN and SUPER_ADMIN, and hide it on the dedicated /ai-agent page
+  const location = useLocation();
   const canUseAiAgent = user?.role.code === UserRoleEnum.ADMIN || user?.role.code === UserRoleEnum.SUPER_ADMIN;
+  const showFloatingWidget = canUseAiAgent && !location.pathname.startsWith("/ai-agent");
 
   return (
     <ConfigProvider theme={dashboardTheme}>
@@ -38,7 +40,7 @@ const DashboardOutlet: FC = () => {
       <DashboardLayout topItems={filteredTopMenuItems} bottomItems={filteredBottomMenuItems}>
         <Outlet />
       </DashboardLayout>
-      {canUseAiAgent && <AiAgentFloatingWidget />}
+      {showFloatingWidget && <AiAgentFloatingWidget />}
     </ConfigProvider>
   );
 };

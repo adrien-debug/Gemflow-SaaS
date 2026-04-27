@@ -1,153 +1,172 @@
 import { FC } from "react";
+import { Link } from "react-router";
 import Col from "antd/es/col";
 import Row from "antd/es/row";
-import Typography from "antd/es/typography";
-import Statistic from "antd/es/statistic";
-import { Card, Space } from "antd";
-import {
-  RobotOutlined,
-  CrownOutlined,
-  ThunderboltOutlined,
-  RiseOutlined,
-  GoldOutlined,
-  AppstoreOutlined,
-  WarningOutlined,
-  FieldTimeOutlined,
-  TrophyOutlined,
-} from "@ant-design/icons";
 import CommonLayout from "@shared/ui/layouts/CommonLayout";
 import { useDashboardStats } from "@entities/dashboard";
 import { GoldPriceChart } from "@features/dashboard/gold-chart";
 import { AlertsList } from "@features/dashboard/alerts";
 import { StatusDistributionChart } from "@features/dashboard/status-chart";
-import { AiChat } from "@features/ai-agent/ai-chat/AiChat";
 import { MetalPricesWidget } from "@features/ai-agent/metal-prices-widget/MetalPricesWidget";
 import { JewelryGalleryWidget } from "@features/dashboard/jewelry-gallery";
+import {
+  MaisonAiBanner,
+  MaisonAiPanel,
+  MaisonInsightCard,
+  MaisonKpiStrip,
+  MaisonPageHeader,
+  type MaisonKpi,
+} from "@features/agents/maison";
 import "./styles.scss";
 
-const { Text } = Typography;
+const formatCount = (n?: number) => (n ?? 0).toLocaleString("fr-FR");
 
 const DashboardPage: FC = () => {
   const { data: stats, isLoading } = useDashboardStats();
 
-  const total = stats?.totalOrders ?? 0;
+  const totalOrders = stats?.totalOrders ?? 0;
+  const inProgress = stats?.ordersInProgress ?? 0;
   const finished = stats?.ordersFinished ?? 0;
-  const deliveryRate = total > 0 ? Math.round((finished / total) * 100) : 0;
+  const overdue = stats?.ordersOverdue ?? 0;
+  const averageDelay = stats?.averageDelayDays ?? 0;
+  const alertsCount = stats?.alerts?.length ?? 0;
+  const deliveryRate = totalOrders > 0 ? Math.round((finished / totalOrders) * 100) : 0;
+
+  const kpis: MaisonKpi[] = [
+    { label: "Commandes Actives", value: formatCount(inProgress) },
+    { label: "Total Commandes", value: formatCount(totalOrders) },
+    {
+      label: "En Retard",
+      value: formatCount(overdue),
+      tone: overdue > 0 ? "danger" : "default",
+    },
+    {
+      label: "Taux Livraison",
+      value: deliveryRate.toString(),
+      unit: "%",
+      unitPosition: "after",
+      tone: deliveryRate >= 80 ? "success" : "default",
+    },
+  ];
 
   return (
     <CommonLayout>
       <div className="dashboard-page">
-        {/* ===== HERO PREMIUM AVEC KPIs INTÉGRÉS ===== */}
-        <div className="dash-hero-premium">
-          <div className="dash-hero-premium__top">
-            <div className="dash-hero-premium__left">
-              <div className="dash-hero-premium__badge">
-                <CrownOutlined />
-                <span>Haute Joaillerie</span>
-              </div>
-              <h1 className="dash-hero-premium__title">Gemsflow</h1>
-              <p className="dash-hero-premium__sub">Gestion intelligente de bijouterie haut de gamme</p>
-            </div>
-            <div className="dash-hero-premium__quick-stats">
-              <div className="dash-hero-premium__quick-stat">
-                <ThunderboltOutlined />
-                <Text className="dash-hero-premium__quick-val">{stats?.ordersInProgress ?? 0}</Text>
-                <Text className="dash-hero-premium__quick-lbl">En cours</Text>
-              </div>
-              <div className="dash-hero-premium__divider" />
-              <div className="dash-hero-premium__quick-stat">
-                <RiseOutlined />
-                <Text className="dash-hero-premium__quick-val">{stats?.ordersFinished ?? 0}</Text>
-                <Text className="dash-hero-premium__quick-lbl">Terminées</Text>
-              </div>
-              <div className="dash-hero-premium__divider" />
-              <div className="dash-hero-premium__quick-stat">
-                <GoldOutlined />
-                <Text className="dash-hero-premium__quick-val">{stats?.ordersInvoiced ?? 0}</Text>
-                <Text className="dash-hero-premium__quick-lbl">Facturées</Text>
-              </div>
-            </div>
-          </div>
+        <div className="dashboard-page__inner">
+          <MaisonPageHeader
+            eyebrow="Atelier Intelligence · v5.0 · Place Vendôme"
+            title="Carnet"
+            emphasized="d'Atelier"
+            coordinates={{ lat: "48.8675", lon: "2.3287" }}
+          />
 
-          <div className="dash-hero-premium__kpis">
-            <div className="dash-hero-premium__kpi">
-              <div className="dash-hero-premium__kpi-icon">
-                <AppstoreOutlined />
-              </div>
-              <div className="dash-hero-premium__kpi-content">
-                <Statistic title="Total commandes" value={total} loading={isLoading} />
-              </div>
+          <MaisonKpiStrip items={kpis} />
+
+          {overdue > 0 ? (
+            <MaisonAiBanner
+              title="Attention aux délais"
+              body={
+                <>
+                  <strong>{formatCount(overdue)}</strong> commande
+                  {overdue > 1 ? "s" : ""} en retard. Demande à l'agent un <em>point client par client</em> avant la
+                  prochaine revue.
+                </>
+              }
+            />
+          ) : (
+            <MaisonAiBanner
+              title="Atelier fluide"
+              body={
+                <>
+                  Aucun retard significatif. Profite de la fenêtre pour interroger l'agent sur les{" "}
+                  <em>opportunités de pricing</em>.
+                </>
+              }
+            />
+          )}
+
+          <div className="dashboard-page__grid">
+            <div className="dashboard-page__main">
+              <section className="dashboard-page__section">
+                <Row gutter={[24, 24]}>
+                  <Col xs={24} xl={14}>
+                    <GoldPriceChart />
+                  </Col>
+                  <Col xs={24} xl={10}>
+                    <StatusDistributionChart ordersByStatus={stats?.ordersByStatus} loading={isLoading} />
+                  </Col>
+                </Row>
+              </section>
+
+              <section className="dashboard-page__section">
+                <AlertsList alerts={stats?.alerts} loading={isLoading} />
+              </section>
+
+              <section className="dashboard-page__section">
+                <JewelryGalleryWidget />
+              </section>
             </div>
-            <div className="dash-hero-premium__kpi dash-hero-premium__kpi--warning">
-              <div className="dash-hero-premium__kpi-icon">
-                <WarningOutlined />
+
+            <aside className="dashboard-page__aside">
+              <MaisonAiPanel
+                title="Insights"
+                emphasized="Atelier"
+                subtitle="Neural Engine Active"
+                body={
+                  <>
+                    <p className="dashboard-page__aside-eyebrow">Pistes du jour</p>
+
+                    <MaisonInsightCard title="Charge atelier">
+                      {inProgress > 0 ? (
+                        <>
+                          <strong>{formatCount(inProgress)}</strong> commande
+                          {inProgress > 1 ? "s" : ""} en cours · taux livraison <strong>{deliveryRate}%</strong>.
+                        </>
+                      ) : (
+                        <>Pas de commande en production. Bonne fenêtre pour la qualité.</>
+                      )}
+                    </MaisonInsightCard>
+
+                    {alertsCount > 0 || overdue > 0 ? (
+                      <MaisonInsightCard title="Alertes">
+                        {overdue > 0 ? (
+                          <>
+                            <strong>{formatCount(overdue)}</strong> en retard · retard moyen{" "}
+                            <strong>{averageDelay.toFixed(1)} j</strong>.
+                          </>
+                        ) : (
+                          <>
+                            <strong>{formatCount(alertsCount)}</strong> alerte
+                            {alertsCount > 1 ? "s" : ""} active
+                            {alertsCount > 1 ? "s" : ""} dans la liste.
+                          </>
+                        )}
+                      </MaisonInsightCard>
+                    ) : (
+                      <MaisonInsightCard title="Alertes">
+                        Aucune alerte critique. Tableau dégagé pour la semaine.
+                      </MaisonInsightCard>
+                    )}
+
+                    <MaisonInsightCard title="Volatilité métal">
+                      Avant de figer un prix client, compare le coût matière courant aux{" "}
+                      <strong>comparables Estate 24 mois</strong>.
+                    </MaisonInsightCard>
+
+                    <Link to="/ai-agent" className="dashboard-page__chat-cta">
+                      Ouvrir le chat complet
+                      <span aria-hidden>→</span>
+                    </Link>
+                  </>
+                }
+              />
+
+              <div className="dashboard-page__metals">
+                <MetalPricesWidget />
               </div>
-              <div className="dash-hero-premium__kpi-content">
-                <Statistic title="En retard" value={stats?.ordersOverdue ?? 0} loading={isLoading} />
-              </div>
-            </div>
-            <div className="dash-hero-premium__kpi">
-              <div className="dash-hero-premium__kpi-icon">
-                <FieldTimeOutlined />
-              </div>
-              <div className="dash-hero-premium__kpi-content">
-                <Statistic title="Retard moyen" value={stats?.averageDelayDays ?? 0} suffix="jours" precision={1} loading={isLoading} />
-              </div>
-            </div>
-            <div className="dash-hero-premium__kpi dash-hero-premium__kpi--success">
-              <div className="dash-hero-premium__kpi-icon">
-                <TrophyOutlined />
-              </div>
-              <div className="dash-hero-premium__kpi-content">
-                <Statistic title="Taux de livraison" value={deliveryRate} suffix="%" loading={isLoading} />
-              </div>
-            </div>
+            </aside>
           </div>
         </div>
-
-        {/* Charts Row - Gold Price + Status Distribution + Metal Prices */}
-        <section className="dashboard-section">
-          <Row gutter={[24, 24]}>
-            <Col xs={24} xl={10}>
-              <GoldPriceChart />
-            </Col>
-            <Col xs={24} xl={8}>
-              <StatusDistributionChart ordersByStatus={stats?.ordersByStatus} loading={isLoading} />
-            </Col>
-            <Col xs={24} xl={6}>
-              <MetalPricesWidget />
-            </Col>
-          </Row>
-        </section>
-
-        {/* Alerts + AI Chat Section */}
-        <section className="dashboard-section">
-          <Row gutter={[24, 24]}>
-            <Col xs={24} xl={10}>
-              <AlertsList alerts={stats?.alerts} loading={isLoading} />
-            </Col>
-            <Col xs={24} xl={14}>
-              <Card
-                className="ai-chat-wrapper"
-                title={
-                  <Space>
-                    <RobotOutlined style={{ fontSize: 20 }} />
-                    <span style={{ fontSize: 18, fontWeight: 600 }}>
-                      Assistant IA - Posez vos questions
-                    </span>
-                  </Space>
-                }
-              >
-                <AiChat />
-              </Card>
-            </Col>
-          </Row>
-        </section>
-
-        {/* Jewelry Gallery Section */}
-        <section className="dashboard-section">
-          <JewelryGalleryWidget />
-        </section>
       </div>
     </CommonLayout>
   );

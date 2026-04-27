@@ -26,7 +26,7 @@ const mockMetalPrices: ExternalPrice[] = [
   {
     metal: "PLATINUM",
     unit: "oz",
-    price: 1023.40,
+    price: 1023.4,
     currency: "USD",
     timestamp: new Date().toISOString(),
     source: "mock",
@@ -46,9 +46,7 @@ const mockMetalPrices: ExternalPrice[] = [
 export const useMetalPrices = () => {
   return useQuery({
     queryKey: [AI_AGENT_PRICES_KEY],
-    queryFn: isDevMode
-      ? () => Promise.resolve(mockMetalPrices)
-      : AiAgentApi.getMetalPrices,
+    queryFn: isDevMode ? () => Promise.resolve(mockMetalPrices) : AiAgentApi.getMetalPrices,
     staleTime: isDevMode ? Infinity : 3600000,
     refetchInterval: isDevMode ? false : 3600000,
   });

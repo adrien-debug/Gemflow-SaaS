@@ -3,6 +3,13 @@ export interface AiAgentQuery {
   context?: string;
 }
 
+export interface AgentChatRequest {
+  message: string;
+  conversationId?: string;
+  agent?: string;
+  model?: string;
+}
+
 export interface AiAgentResponse {
   response: string;
   type: "info" | "suggestion" | "alert" | "data";

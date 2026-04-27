@@ -1,171 +1,162 @@
-import { useState } from "react";
-import { Input, Button, List, Typography, Tag, Spin, Space } from "antd";
-import { SendOutlined, RobotOutlined } from "@ant-design/icons";
-import { useAiAgentQuery } from "@entities/ai-agent/hooks/useAiAgentQuery";
-import type { AiAgentResponse } from "@entities/ai-agent/models/ai-agent.model";
+import { FC, useState } from "react";
+import { useAgentChatV2 } from "@entities/ai-agent/hooks/useAgentChatV2";
+import {
+  AgentResponseView,
+  ArtifactLocaleContext,
+  type AgentChatResponse,
+  type ArtifactLocale,
+} from "@features/agents/artifacts";
+import MaisonComposer from "@features/agents/maison/components/MaisonComposer";
 import "./styles.scss";
 
-const { TextArea } = Input;
-const { Text, Paragraph } = Typography;
-
-interface ChatMessage {
+interface ChatTurn {
   id: string;
-  type: "user" | "agent";
-  content: string;
-  response?: AiAgentResponse;
-  timestamp: Date;
+  role: "user" | "agent";
+  userText?: string;
+  response?: AgentChatResponse;
+  errorText?: string;
 }
 
-export const AiChat = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+interface AiChatProps {
+  locale?: ArtifactLocale;
+}
+
+const SUGGESTIONS = [
+  "Statistiques des commandes en cours",
+  "Prix actuels des métaux précieux",
+  "Recommandation de prix pour une commande",
+  "Importer une commande externe",
+];
+
+export const AiChat: FC<AiChatProps> = ({ locale = "fr-FR" }) => {
+  const [turns, setTurns] = useState<ChatTurn[]>([]);
   const [inputValue, setInputValue] = useState("");
-  const aiQuery = useAiAgentQuery();
+  const [conversationId, setConversationId] = useState<string | undefined>(undefined);
+  const chat = useAgentChatV2();
 
   const handleSend = async () => {
-    if (!inputValue.trim()) return;
+    const message = inputValue.trim();
+    if (!message) return;
 
-    const userMessage: ChatMessage = {
-      id: Date.now().toString(),
-      type: "user",
-      content: inputValue,
-      timestamp: new Date(),
+    const userTurn: ChatTurn = {
+      id: `u-${Date.now()}`,
+      role: "user",
+      userText: message,
     };
-
-    setMessages((prev) => [...prev, userMessage]);
+    setTurns((prev) => [...prev, userTurn]);
     setInputValue("");
 
     try {
-      const response = await aiQuery.mutateAsync({ query: inputValue });
-      
-      const agentMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        type: "agent",
-        content: response.response,
-        response,
-        timestamp: new Date(),
-      };
-      
-      setMessages((prev) => [...prev, agentMessage]);
+      const response = await chat.mutateAsync({ message, conversationId });
+      if (response.conversationId) {
+        setConversationId(response.conversationId);
+      }
+      setTurns((prev) => [
+        ...prev,
+        {
+          id: `a-${Date.now()}`,
+          role: "agent",
+          response,
+        },
+      ]);
     } catch (error) {
-      const errorMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        type: "agent",
-        content: "Désolé, une erreur s'est produite. Veuillez réessayer.",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      const fallback =
+        error instanceof Error ? error.message : "Une erreur réseau est survenue. Réessaie ou recharge la page.";
+      setTurns((prev) => [
+        ...prev,
+        {
+          id: `e-${Date.now()}`,
+          role: "agent",
+          errorText: fallback,
+        },
+      ]);
     }
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setInputValue(suggestion);
+  const onSuggestion = (text: string) => {
+    setInputValue(text);
   };
 
   return (
-    <div className="ai-chat" style={{ height: "100%" }}>
-      <div style={{ display: "flex", flexDirection: "column", height: "600px" }}>
-        <div style={{ flex: 1, overflowY: "auto", marginBottom: 16 }}>
-          {messages.length === 0 ? (
-            <div className="ai-chat-empty">
-              <RobotOutlined style={{ fontSize: 48, marginBottom: 16 }} />
-              <Paragraph>
-                Bonjour ! Je suis votre assistant IA pour la plateforme Gemsflow.
-                <br />
-                Je peux vous aider avec :
-              </Paragraph>
-              <List
-                size="small"
-                dataSource={[
-                  "Statistiques des commandes",
-                  "Prix actuels des métaux",
-                  "Informations sur les clients",
-                  "Import de commandes externes",
-                ]}
-                renderItem={(item) => <List.Item>• {item}</List.Item>}
-              />
+    <ArtifactLocaleContext.Provider value={locale}>
+      <section className="gf-maison-chat">
+        <div className="gf-maison-chat__stream">
+          {turns.length === 0 ? (
+            <div className="gf-maison-chat__empty">
+              <p className="gf-maison-chat__empty-eyebrow">Atelier IA · Démarrage</p>
+              <h2 className="gf-maison-chat__empty-title">
+                Comment puis-je vous <em>aider</em> ?
+              </h2>
+              <p className="gf-maison-chat__empty-body">
+                Pose une question sur la production, les pierres, les coûts, ou la facturation. L'agent appelle les
+                outils internes nécessaires et structure la réponse.
+              </p>
+              <ul className="gf-maison-chat__suggestions">
+                {SUGGESTIONS.map((s) => (
+                  <li key={s}>
+                    <button type="button" className="gf-maison-chat__chip" onClick={() => onSuggestion(s)}>
+                      {s}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           ) : (
-            <List
-              dataSource={messages}
-              renderItem={(message) => (
-                <List.Item
-                  style={{
-                    justifyContent: message.type === "user" ? "flex-end" : "flex-start",
-                    border: "none",
-                  }}
-                >
-                  <div className={message.type === "user" ? "user-message" : "agent-message"}>
-                    {message.type === "agent" && message.response?.type && (
-                      <Tag
-                        color={
-                          message.response.type === "alert"
-                            ? "red"
-                            : message.response.type === "data"
-                              ? "blue"
-                              : "green"
-                        }
-                        style={{ marginBottom: 8 }}
-                      >
-                        {message.response.type}
-                      </Tag>
-                    )}
-                    <Paragraph style={{ whiteSpace: "pre-wrap" }}>
-                      {message.content}
-                    </Paragraph>
-                    {message.response?.suggestions && message.response.suggestions.length > 0 && (
-                      <div className="message-suggestions">
-                        <Text type="secondary" style={{ fontSize: 12 }}>
-                          Suggestions :
-                        </Text>
-                        <Space wrap style={{ marginTop: 4 }}>
-                          {message.response.suggestions.map((suggestion, idx) => (
-                            <Button
-                              key={idx}
-                              size="small"
-                              onClick={() => handleSuggestionClick(suggestion)}
-                            >
-                              {suggestion}
-                            </Button>
-                          ))}
-                        </Space>
-                      </div>
-                    )}
-                  </div>
-                </List.Item>
-              )}
-            />
+            <ul className="gf-maison-chat__turns">
+              {turns.map((turn) => (
+                <li key={turn.id} className={`gf-maison-chat__turn is-${turn.role}`}>
+                  {turn.role === "user" ? (
+                    <div className="gf-maison-chat__user-bubble">{turn.userText}</div>
+                  ) : turn.errorText ? (
+                    <AgentResponseView
+                      response={{
+                        conversationId: conversationId ?? "",
+                        agent: "chat",
+                        model: "",
+                        status: "ERROR",
+                        errorMessage: turn.errorText,
+                        message: null,
+                        toolsUsed: [],
+                        artifacts: [],
+                        iterations: 0,
+                        durationMs: 0,
+                        usage: {
+                          inputTokens: 0,
+                          outputTokens: 0,
+                          cacheReadTokens: 0,
+                          cacheCreationTokens: 0,
+                          costMicroUsd: 0,
+                        },
+                      }}
+                    />
+                  ) : turn.response ? (
+                    <AgentResponseView response={turn.response} />
+                  ) : null}
+                </li>
+              ))}
+            </ul>
           )}
-          {aiQuery.isPending && (
-            <div style={{ textAlign: "center", padding: 16 }}>
-              <Spin tip="L'assistant réfléchit..." />
+
+          {chat.isPending ? (
+            <div className="gf-maison-chat__pending">
+              <span className="gf-maison-chat__pending-dot" aria-hidden />
+              <span>L'atelier consulte les outils…</span>
             </div>
-          )}
+          ) : null}
         </div>
-        <Space.Compact className="ai-chat-input" style={{ width: "100%" }}>
-          <TextArea
+
+        <div className="gf-maison-chat__composer">
+          <MaisonComposer
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onPressEnter={(e) => {
-              if (!e.shiftKey) {
-                e.preventDefault();
-                handleSend();
-              }
-            }}
-            placeholder="Posez votre question..."
-            autoSize={{ minRows: 1, maxRows: 4 }}
-            disabled={aiQuery.isPending}
+            onChange={setInputValue}
+            onSubmit={handleSend}
+            loading={chat.isPending}
+            placeholder="Demander une analyse contextuelle…"
+            modelLabel="Atelier · Claude"
+            ctaLabel="Envoyer"
           />
-          <Button
-            type="primary"
-            icon={<SendOutlined />}
-            onClick={handleSend}
-            loading={aiQuery.isPending}
-            disabled={!inputValue.trim()}
-          >
-            Envoyer
-          </Button>
-        </Space.Compact>
-      </div>
-    </div>
+        </div>
+      </section>
+    </ArtifactLocaleContext.Provider>
   );
 };

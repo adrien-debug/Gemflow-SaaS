@@ -1,0 +1,60 @@
+.gf-maison-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 40px;
+
+  &__eyebrow {
+    font-family: var(--ff-mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--m-gold-600);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &::after {
+      content: "";
+      height: 0.5px;
+      flex: 1;
+      background: linear-gradient(90deg, var(--m-gold-line), transparent);
+    }
+  }
+
+  &__coord {
+    font-family: var(--ff-mono);
+    font-size: 9px;
+    color: var(--m-ink-400);
+    letter-spacing: 0.2em;
+    order: 2;
+
+    b {
+      color: var(--m-gold-600);
+      font-weight: 500;
+    }
+  }
+
+  &__title {
+    font-family: var(--ff-display);
+    font-size: 56px;
+    font-weight: 540;
+    letter-spacing: -0.04em;
+    color: var(--m-ink-1000);
+    margin: 0;
+    line-height: 1.05;
+
+    em {
+      font-family: var(--ff-serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--m-gold-600);
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .gf-maison-page-header__title {
+    font-size: 40px;
+  }
+}

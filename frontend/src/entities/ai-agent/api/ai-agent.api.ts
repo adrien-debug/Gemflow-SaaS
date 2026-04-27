@@ -1,5 +1,7 @@
 import api from "@shared/api";
+import type { AgentChatResponse } from "@features/agents/artifacts";
 import type {
+  AgentChatRequest,
   AiAgentQuery,
   AiAgentResponse,
   ExternalOrderImport,
@@ -9,6 +11,10 @@ import type {
 const AiAgentApi = {
   processQuery: async (query: AiAgentQuery): Promise<AiAgentResponse> => {
     return api.post<AiAgentResponse>("/api/v1/ai-agent/query", query);
+  },
+
+  chatV2: async (request: AgentChatRequest): Promise<AgentChatResponse> => {
+    return api.post<AgentChatResponse>("/api/v2/agents/chat", request);
   },
 
   analyzePlatform: async (): Promise<AiAgentResponse> => {
