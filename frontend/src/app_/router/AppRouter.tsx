@@ -29,10 +29,17 @@ const BillingSuccess = lazy(() => import("@pages/billing/BillingSuccessPage"));
 const BillingCancel = lazy(() => import("@pages/billing/BillingCancelPage"));
 const AiAgent = lazy(() => import("@pages/ai-agent"));
 
+const ArtifactsPreviewPage = import.meta.env.DEV
+  ? lazy(() => import("@features/agents/artifacts/preview/ArtifactsPreviewPage"))
+  : null;
+
 const AppRouter = () => (
   <BrowserRouter>
     <Routes>
       <Route path="login/*" element={<Authorization />} />
+      {ArtifactsPreviewPage ? (
+        <Route path="dev/artifacts-preview" element={<ArtifactsPreviewPage />} />
+      ) : null}
 
       <Route
         path="/"

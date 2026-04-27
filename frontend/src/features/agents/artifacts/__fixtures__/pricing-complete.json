@@ -1,0 +1,128 @@
+{
+  "conversationId": "0b8e63c1-3b76-4d3f-9be9-2c9e7db1bf22",
+  "agent": "pricing",
+  "model": "claude-sonnet-4-6",
+  "status": "SUCCESS",
+  "errorMessage": null,
+  "message": "Pour la commande #42, le prix recommandé se situe entre 18 200 et 22 800 USD selon le positionnement souhaité. La marge implicite reste cohérente avec les comparables Collection Estate sur les 24 derniers mois.",
+  "toolsUsed": [
+    "get_order_cost_breakdown",
+    "get_order_labour_breakdown",
+    "get_metal_live_prices",
+    "get_similar_orders_pricing",
+    "emit_artifact"
+  ],
+  "artifacts": [
+    {
+      "type": "price_recommendation",
+      "title": "Recommandation — Order #42",
+      "payload": {
+        "currency": "USD",
+        "low": 18200,
+        "mid": 20500,
+        "high": 22800,
+        "impliedMarginPercent": 42.5,
+        "drivers": [
+          "Coût matière 6 850 USD (or 18k, 14.2 g)",
+          "Comparables Estate 24 mois : médiane 19 600 USD",
+          "Sertissage pavé 18.5 h vs 14 h moyenne collection"
+        ],
+        "risks": [
+          "Or spot +2.3% sur 24h — coût matière à 7 008 USD si livraison > 30j"
+        ],
+        "sources": [
+          "get_order_cost_breakdown",
+          "get_similar_orders_pricing",
+          "get_metal_live_prices"
+        ]
+      }
+    },
+    {
+      "type": "cost_breakdown",
+      "title": "Décomposition des coûts",
+      "payload": {
+        "currency": "USD",
+        "total": 11430,
+        "items": [
+          { "category": "Métal (or 18k)", "amount": 6850, "percentOfTotal": 59.9 },
+          { "category": "Diamants", "amount": 2900, "percentOfTotal": 25.4 },
+          { "category": "Main-d'œuvre", "amount": 1480, "percentOfTotal": 12.9 },
+          { "category": "Gemmes colorées", "amount": 200, "percentOfTotal": 1.8 }
+        ],
+        "sources": ["get_order_cost_breakdown", "get_order_labour_breakdown"]
+      }
+    },
+    {
+      "type": "kpi_grid",
+      "title": "Indicateurs",
+      "payload": {
+        "items": [
+          {
+            "value": 11430,
+            "label": "Coût total",
+            "unit": "USD",
+            "deltaPercent": 2.3,
+            "sublabel": "Calculé depuis order_stock.total_cost"
+          },
+          {
+            "value": 42.5,
+            "label": "Marge implicite",
+            "unit": "%",
+            "deltaPercent": null,
+            "sublabel": "vs 38 % collection"
+          },
+          {
+            "value": 38,
+            "label": "Délai moyen",
+            "unit": "j",
+            "deltaPercent": -10.5,
+            "sublabel": "−4 j vs cible"
+          },
+          {
+            "value": 47,
+            "label": "Comparables",
+            "unit": null,
+            "deltaPercent": null,
+            "sublabel": "Estate · 24 mois"
+          }
+        ]
+      }
+    },
+    {
+      "type": "table",
+      "title": "Comparables Estate · 24 mois",
+      "payload": {
+        "columns": [
+          { "key": "indicator", "label": "Indicateur", "align": "left" },
+          { "key": "value", "label": "Valeur", "align": "right" }
+        ],
+        "rows": [
+          { "indicator": "Nombre de pièces", "value": 47 },
+          { "indicator": "Prix médian (USD)", "value": 19600 },
+          { "indicator": "Prix minimum (USD)", "value": 11200 },
+          { "indicator": "Prix maximum (USD)", "value": 31400 },
+          { "indicator": "Prix moyen (USD)", "value": 20180 }
+        ],
+        "footer": null
+      }
+    },
+    {
+      "type": "callout",
+      "title": "Risque détecté",
+      "payload": {
+        "level": "warning",
+        "title": "Volatilité métal",
+        "body": "L'or a progressé de 2.3 % en 24 h. Si la livraison est repoussée au-delà de 30 jours, recalculer le coût matière avec get_metal_live_prices avant de figer le prix client."
+      }
+    }
+  ],
+  "iterations": 5,
+  "durationMs": 4310,
+  "usage": {
+    "inputTokens": 4820,
+    "outputTokens": 612,
+    "cacheReadTokens": 3200,
+    "cacheCreationTokens": 0,
+    "costMicroUsd": 12450
+  }
+}
