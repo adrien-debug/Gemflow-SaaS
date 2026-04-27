@@ -25,9 +25,12 @@ const DashboardAside: FC<DashboardAsideProps> = ({ insights }) => {
   return (
     <aside className="gf-dashboard-aside">
       <div className="gf-dashboard-aside__cover">
-        <h2 className="gf-dashboard-aside__title">
-          Atelier <em>AI</em>
-        </h2>
+        <span className="gf-dashboard-aside__cover-icon" aria-hidden>AI</span>
+        <h2 className="gf-dashboard-aside__title">Atelier <em>AI</em></h2>
+        <span className="gf-dashboard-aside__status">
+          <span className="gf-dashboard-aside__status-dot" aria-hidden />
+          Conseiller actif
+        </span>
       </div>
 
       {insights.length > 0 && (
