@@ -15,6 +15,9 @@ spring:
           issuer-uri: ${SUPABASE_URL}/auth/v1
           audiences:
             - ${SUPABASE_JWT_AUDIENCE:authenticated}
+          jws-algorithms:
+            - ES256
+            - RS256
   jpa:
     open-in-view: false
     hibernate:

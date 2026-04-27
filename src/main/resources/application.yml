@@ -18,6 +18,9 @@ spring:
           issuer-uri: ${SUPABASE_URL}/auth/v1
           audiences:
             - ${SUPABASE_JWT_AUDIENCE:authenticated}
+          jws-algorithms:
+            - ES256
+            - RS256
   jpa:
     open-in-view: false
     hibernate:
@@ -110,6 +113,19 @@ quickbooks:
   client-secret: ${QUICKBOOKS_CLIENT_SECRET:}
   redirect-uri: ${QUICKBOOKS_REDIRECT_URI:http://localhost:7101/integrations/quickbooks/callback}
   environment: ${QUICKBOOKS_ENV:sandbox}
+
+# Anthropic / Claude — agent layer v2
+anthropic:
+  api-key: ${ANTHROPIC_API_KEY:}
+  base-url: ${ANTHROPIC_BASE_URL:https://api.anthropic.com}
+  api-version: ${ANTHROPIC_API_VERSION:2023-06-01}
+  default-model: ${ANTHROPIC_DEFAULT_MODEL:claude-sonnet-4-6}
+  planner-model: ${ANTHROPIC_PLANNER_MODEL:claude-opus-4-7}
+  fast-model: ${ANTHROPIC_FAST_MODEL:claude-haiku-4-5}
+  max-tokens: ${ANTHROPIC_MAX_TOKENS:4096}
+  max-tool-iterations: ${ANTHROPIC_MAX_TOOL_ITERATIONS:10}
+  request-timeout-seconds: ${ANTHROPIC_REQUEST_TIMEOUT:120}
+  enable-prompt-caching: ${ANTHROPIC_ENABLE_PROMPT_CACHING:true}
 
 # Stripe Billing / Checkout (SaaS)
 stripe:

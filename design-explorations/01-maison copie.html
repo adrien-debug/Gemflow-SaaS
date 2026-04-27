@@ -1,0 +1,1764 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Gemflow — Maison · Design · Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* =====================================================
+     MAISON · DESIGN · TECH  (v3)
+     Halo gold, mesh background, AI surfaces.
+     - Inter Tight (display sans)
+     - Instrument Serif italic (signatures, H1)
+     - Geist Mono (numerics)
+     ===================================================== */
+  :root {
+    --m-marine-1000: #0A1224;
+    --m-marine-900: #0E1626;
+    --m-marine-800: #131C30;
+    --m-marine-700: #1B2540;
+    --m-marine-600: #28324F;
+    --m-marine-500: #3C4866;
+
+    --m-gold-700: #8E6B43;
+    --m-gold-600: #A67D54;
+    --m-gold-500: #C39A71;
+    --m-gold-400: #D4B391;
+    --m-gold-300: #E2C7AB;
+    --m-gold-100: #F1E5D2;
+    --m-gold-line: rgba(195, 154, 113, .35);
+    --m-gold-soft: rgba(195, 154, 113, .12);
+    --m-gold-glow: rgba(195, 154, 113, .55);
+
+    --m-champ-500: #C9BFA8;
+    --m-champ-300: #DCD3BD;
+
+    --m-ivory: #F7F3EB;
+    --m-paper: #FFFCF5;
+    --m-paper-2: #FBF7EE;
+    --m-cream: #F1ECE0;
+    --m-sand-100: #ECE5D5;
+    --m-sand-150: #E0D8C5;
+    --m-sand-200: #C9C0AC;
+    --m-ink-1000: #0F0F0E;
+    --m-ink-900: #1A1A1A;
+    --m-ink-800: #2A2926;
+    --m-ink-700: #3D3A33;
+    --m-ink-500: #6B655A;
+    --m-ink-400: #8E887C;
+    --m-ink-300: #B0AA9D;
+
+    --m-success: #4F6A41;
+    --m-warning: #A6741F;
+    --m-danger: #8E2E20;
+
+    --r-xs: 2px; --r-sm: 3px; --r-md: 6px; --r-lg: 10px; --r-xl: 14px;
+
+    --sh-1: 0 1px 0 rgba(14,22,38,.04);
+    --sh-2: 0 1px 2px rgba(14,22,38,.06), 0 8px 24px -10px rgba(14,22,38,.18);
+    --sh-3: 0 28px 56px -16px rgba(14,22,38,.4), 0 4px 12px rgba(14,22,38,.08);
+    --sh-glow-gold: 0 0 0 1px var(--m-gold-line), 0 8px 28px -8px rgba(195,154,113,.45);
+
+    --ff-display: "Inter Tight", "Inter", -apple-system, sans-serif;
+    --ff-serif: "Instrument Serif", Georgia, serif;
+    --ff-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --ff-mono: "Geist Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--ff-body);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--m-ink-900);
+    background: var(--m-ivory);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "cv11", "kern";
+    font-variant-numeric: tabular-nums;
+  }
+  button { font: inherit; cursor: pointer; }
+
+  /* ===========================================================
+     LAYOUT
+     =========================================================== */
+  .app {
+    display: grid;
+    grid-template-columns: 248px 1fr 360px;
+    min-height: 100vh;
+  }
+
+  /* ===========================================================
+     SIDEBAR (Maison)
+     =========================================================== */
+  .sider {
+    background: var(--m-marine-800);
+    background-image:
+      radial-gradient(circle at 100% 0%, rgba(195,154,113,.08), transparent 40%),
+      linear-gradient(180deg, var(--m-marine-800), var(--m-marine-900));
+    color: #DCD7CB;
+    padding: 22px 0 14px;
+    position: sticky; top: 0; align-self: start;
+    height: 100vh;
+    border-right: 1px solid var(--m-marine-1000);
+    display: flex; flex-direction: column;
+  }
+  .brand {
+    padding: 0 20px 18px;
+    border-bottom: 1px solid var(--m-gold-line);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .brand-mark {
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    background: radial-gradient(circle at 30% 30%, rgba(195,154,113,.35), transparent 70%), var(--m-marine-1000);
+    border: 1px solid var(--m-gold-500);
+    border-radius: var(--r-xs);
+    color: var(--m-gold-500);
+    position: relative;
+  }
+  .brand-mark::before {
+    content: ""; position: absolute; inset: -3px;
+    background: radial-gradient(circle, var(--m-gold-glow), transparent 60%);
+    z-index: -1; opacity: .5;
+    filter: blur(6px);
+  }
+  .brand-mark svg { width: 16px; height: 16px; }
+  .brand-name {
+    font-family: var(--ff-display);
+    font-size: 19px; font-weight: 600; color: #fff;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+  .brand-name em {
+    font-family: var(--ff-serif); font-style: italic; font-weight: 400;
+    color: var(--m-gold-500);
+    letter-spacing: -0.02em;
+  }
+  .brand-tag {
+    font-family: var(--ff-mono);
+    font-size: 9px; letter-spacing: 0.2em; color: rgba(195,154,113,.65);
+    text-transform: uppercase; margin-top: 3px;
+  }
+
+  .nav { padding: 14px 12px; flex: 1; overflow-y: auto; }
+  .nav-group { margin-bottom: 18px; }
+  .nav-label {
+    font-family: var(--ff-mono);
+    font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(195,154,113,.55); padding: 4px 14px 6px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 14px; border-radius: var(--r-sm);
+    color: #C7C1B3; font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    transition: background .14s, color .14s;
+  }
+  .nav-item:hover { background: rgba(195,154,113,.07); color: #fff; }
+  .nav-item.active {
+    background: linear-gradient(90deg, rgba(195,154,113,.18), rgba(195,154,113,.02));
+    color: #fff; font-weight: 500;
+    box-shadow: inset 2px 0 0 var(--m-gold-500);
+  }
+  .nav-item .ico { width: 14px; height: 14px; opacity: .75; flex: 0 0 14px; }
+  .nav-item.active .ico { opacity: 1; color: var(--m-gold-500); }
+  .nav-item .badge {
+    margin-left: auto; font-family: var(--ff-mono); font-size: 10px;
+    color: rgba(195,154,113,.7);
+  }
+  .nav-item.active .badge { color: var(--m-gold-500); }
+
+  /* AI nav block */
+  .ai-block {
+    margin: 6px 12px 12px;
+    padding: 12px;
+    background: linear-gradient(135deg, rgba(195,154,113,.08), rgba(195,154,113,.02));
+    border: 1px solid var(--m-gold-line);
+    border-radius: var(--r-md);
+    position: relative; overflow: hidden;
+  }
+  .ai-block::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 100% 0%, rgba(195,154,113,.18), transparent 60%);
+    pointer-events: none;
+  }
+  .ai-block-head {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 6px; position: relative;
+  }
+  .ai-block-head .ai-mark {
+    width: 14px; height: 14px;
+    display: grid; place-items: center;
+    color: var(--m-gold-500);
+  }
+  .ai-block-head .ai-mark::before {
+    content: ""; position: absolute; width: 22px; height: 22px;
+    background: radial-gradient(circle, var(--m-gold-glow), transparent 60%);
+    filter: blur(8px); opacity: .6;
+  }
+  .ai-block-head .lab {
+    font-family: var(--ff-display); font-size: 11.5px; font-weight: 600;
+    color: #fff; letter-spacing: -0.02em;
+  }
+  .ai-block-head .status {
+    font-family: var(--ff-mono); font-size: 9px;
+    color: var(--m-gold-500); margin-left: auto;
+    letter-spacing: 0.1em;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .ai-block-head .status::before {
+    content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--m-gold-500);
+    box-shadow: 0 0 6px var(--m-gold-glow);
+    animation: pulse 2.4s infinite;
+  }
+  .ai-block-body {
+    font-family: var(--ff-body); font-size: 11.5px;
+    color: rgba(255,255,255,.65); line-height: 1.5;
+    letter-spacing: -0.005em;
+  }
+  .ai-block-body em { color: var(--m-gold-500); font-style: italic; font-family: var(--ff-serif); }
+
+  .sider-foot {
+    padding: 12px 18px;
+    border-top: 1px solid var(--m-gold-line);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .avatar {
+    width: 32px; height: 32px;
+    background: var(--m-marine-1000);
+    border: 1px solid var(--m-gold-500);
+    color: var(--m-gold-500);
+    display: grid; place-items: center;
+    font-family: var(--ff-display); font-weight: 600;
+    font-size: 11px; letter-spacing: -0.02em;
+    border-radius: 50%;
+  }
+  .sider-foot-name {
+    color: #fff; font-size: 12.5px; font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .sider-foot-role {
+    font-family: var(--ff-mono);
+    color: rgba(195,154,113,.7); font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===========================================================
+     MAIN  — with halo background mesh
+     =========================================================== */
+  .main {
+    background: var(--m-ivory);
+    position: relative;
+    overflow: hidden;
+  }
+  .main::before {
+    /* halo gold top-right */
+    content: ""; position: absolute;
+    top: -200px; right: -180px;
+    width: 720px; height: 720px;
+    background: radial-gradient(circle, rgba(195,154,113,.20), transparent 60%);
+    filter: blur(40px);
+    pointer-events: none; z-index: 0;
+  }
+  .main::after {
+    /* halo marine bottom-left */
+    content: ""; position: absolute;
+    bottom: -200px; left: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(19,28,48,.06), transparent 60%);
+    filter: blur(40px);
+    pointer-events: none; z-index: 0;
+  }
+  .main-inner {
+    position: relative; z-index: 1;
+    /* subtle grid overlay */
+    background-image:
+      linear-gradient(to right, rgba(14,22,38,.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(14,22,38,.03) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: -1px -1px;
+  }
+
+  /* TOP BAR with command palette + AI status */
+  .topbar {
+    height: 64px;
+    background: rgba(255,252,245,.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--m-sand-150);
+    display: flex; align-items: center; padding: 0 28px; gap: 18px;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .crumbs {
+    font-family: var(--ff-mono);
+    font-size: 11px; color: var(--m-ink-400);
+    display: flex; align-items: center; gap: 9px;
+    letter-spacing: 0.04em;
+  }
+  .crumbs strong {
+    color: var(--m-ink-1000); font-weight: 500;
+    font-family: var(--ff-display);
+    font-size: 13px; letter-spacing: -0.015em;
+  }
+  .crumbs .sep { color: var(--m-sand-200); }
+
+  .palette {
+    margin-left: auto;
+    width: 380px; height: 38px;
+    background: var(--m-paper);
+    border: 1px solid var(--m-sand-150);
+    border-radius: var(--r-md);
+    display: flex; align-items: center; padding: 0 12px; gap: 10px;
+    color: var(--m-ink-400); font-size: 13px;
+    transition: border-color .15s, box-shadow .15s;
+    position: relative;
+  }
+  .palette:hover {
+    border-color: var(--m-sand-200);
+    box-shadow: 0 0 0 4px var(--m-gold-soft);
+  }
+  .palette .ai-orb {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--m-gold-300), var(--m-gold-600));
+    box-shadow: 0 0 12px var(--m-gold-glow);
+    flex: 0 0 18px;
+    position: relative;
+  }
+  .palette .ai-orb::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), transparent 50%);
+    border-radius: 50%;
+  }
+  .palette .pq { flex: 1; letter-spacing: -0.005em; }
+  .palette .pq em { color: var(--m-marine-800); font-family: var(--ff-serif); font-style: italic; font-weight: 400; }
+  .palette .kbd {
+    font-family: var(--ff-mono); font-size: 10px;
+    color: var(--m-ink-400); border: 1px solid var(--m-sand-150);
+    padding: 1px 5px; border-radius: 3px; font-weight: 500;
+  }
+  .top-actions { display: flex; align-items: center; gap: 4px; }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: var(--r-sm);
+    border: 1px solid transparent; background: transparent;
+    display: grid; place-items: center; color: var(--m-ink-500);
+    transition: background .15s;
+    position: relative;
+  }
+  .icon-btn:hover { background: var(--m-cream); }
+  .pulse-dot {
+    position: absolute; top: 9px; right: 9px;
+    width: 6px; height: 6px; background: var(--m-gold-500); border-radius: 50%;
+    box-shadow: 0 0 0 0 var(--m-gold-glow); animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 var(--m-gold-glow); }
+    70% { box-shadow: 0 0 0 6px rgba(195,154,113,0); }
+    100% { box-shadow: 0 0 0 0 rgba(195,154,113,0); }
+  }
+
+  /* ===========================================================
+     PAGE CONTENT
+     =========================================================== */
+  .page { padding: 36px 36px 48px; max-width: 1500px; position: relative; }
+
+  /* HERO — H1 with halo */
+  .hero {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--m-sand-150);
+    position: relative;
+  }
+  .hero::before {
+    /* radial halo gold behind h1 */
+    content: ""; position: absolute;
+    top: -10px; left: -40px;
+    width: 540px; height: 280px;
+    background: radial-gradient(ellipse at 30% 40%, rgba(195,154,113,.30), transparent 65%);
+    filter: blur(32px);
+    pointer-events: none; z-index: 0;
+  }
+  .hero-row {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 32px; align-items: end;
+  }
+  .eyebrow {
+    font-family: var(--ff-mono);
+    font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--m-gold-700); font-weight: 500;
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: ""; height: 1px; width: 24px; background: var(--m-gold-500);
+  }
+  .h1 {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: 56px;
+    margin: 0 0 10px;
+    color: var(--m-ink-1000);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .h1 .signature {
+    font-family: var(--ff-serif);
+    font-style: italic; font-weight: 400;
+    color: var(--m-marine-800);
+    letter-spacing: -0.02em;
+    background: linear-gradient(180deg, var(--m-marine-800) 0%, var(--m-gold-700) 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .lede {
+    font-size: 14px; color: var(--m-ink-500); margin: 0;
+    max-width: 64ch; letter-spacing: -0.005em;
+  }
+  .head-actions { display: flex; gap: 8px; align-items: center; }
+
+  /* ===========================================================
+     KPI ROW
+     =========================================================== */
+  .kpi-row {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    margin-bottom: 24px;
+    border: 1px solid var(--m-sand-150);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--m-paper);
+    position: relative;
+  }
+  .kpi-row::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(195,154,113,.04));
+    pointer-events: none;
+  }
+  .kpi {
+    padding: 18px 20px;
+    border-right: 1px solid var(--m-sand-150);
+    position: relative;
+    transition: background .15s;
+  }
+  .kpi:last-child { border-right: none; }
+  .kpi:hover {
+    background: rgba(195,154,113,.025);
+    box-shadow: inset 0 2px 0 var(--m-gold-500);
+  }
+  .kpi-label {
+    font-family: var(--ff-mono);
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--m-ink-500); font-weight: 500;
+  }
+  .kpi-value {
+    font-family: var(--ff-display);
+    font-size: 32px; font-weight: 600;
+    color: var(--m-ink-1000); margin-top: 8px;
+    letter-spacing: -0.05em; line-height: 1;
+  }
+  .kpi-value.danger { color: var(--m-danger); }
+  .kpi-delta {
+    font-family: var(--ff-mono); font-size: 11px; margin-top: 8px;
+    color: var(--m-success); font-weight: 500;
+  }
+  .kpi-delta.down { color: var(--m-danger); }
+  .kpi-delta.muted { color: var(--m-ink-400); }
+  .kpi-spark { position: absolute; right: 18px; top: 18px; opacity: .55; }
+  .kpi-ai-tag {
+    position: absolute; right: 14px; bottom: 12px;
+    font-family: var(--ff-mono); font-size: 9px;
+    letter-spacing: 0.1em; color: var(--m-gold-700);
+    display: inline-flex; align-items: center; gap: 4px;
+    text-transform: uppercase; font-weight: 500;
+  }
+  .kpi-ai-tag::before {
+    content: ""; width: 8px; height: 8px;
+    background: radial-gradient(circle, var(--m-gold-500), transparent 60%);
+    border-radius: 50%; filter: blur(1px);
+  }
+
+  /* ===========================================================
+     AI INSIGHT BANNER (between KPI and toolbar)
+     =========================================================== */
+  .ai-insight {
+    margin-bottom: 18px;
+    padding: 14px 18px;
+    background: linear-gradient(90deg, rgba(195,154,113,.08), rgba(195,154,113,.02) 60%, transparent);
+    border: 1px solid var(--m-gold-line);
+    border-radius: var(--r-md);
+    display: flex; align-items: center; gap: 14px;
+    position: relative; overflow: hidden;
+  }
+  .ai-insight::before {
+    content: ""; position: absolute;
+    top: -30px; left: -10px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(195,154,113,.4), transparent 60%);
+    filter: blur(28px); pointer-events: none;
+  }
+  .ai-orb-lg {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--m-gold-300), var(--m-gold-600) 70%, var(--m-gold-700));
+    box-shadow: 0 0 0 1px var(--m-gold-line), 0 0 24px var(--m-gold-glow), inset 0 1px 2px rgba(255,255,255,.3);
+    position: relative; flex: 0 0 36px;
+  }
+  .ai-orb-lg::after {
+    content: ""; position: absolute; top: 6px; left: 8px;
+    width: 10px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,.55); filter: blur(1px);
+  }
+  .ai-insight-text {
+    flex: 1; font-size: 13px; color: var(--m-ink-700);
+    letter-spacing: -0.005em; position: relative;
+  }
+  .ai-insight-text strong {
+    color: var(--m-marine-800); font-weight: 600;
+    font-family: var(--ff-display); letter-spacing: -0.015em;
+  }
+  .ai-insight-text em {
+    font-family: var(--ff-serif); font-style: italic; font-weight: 400;
+    color: var(--m-marine-800); letter-spacing: -0.01em;
+  }
+  .ai-insight-actions { display: flex; gap: 6px; }
+
+  /* ===========================================================
+     TOOLBAR (segmented + filters)
+     =========================================================== */
+  .toolbar {
+    display: flex; gap: 6px; align-items: center;
+    margin-bottom: 14px;
+  }
+  .seg-group {
+    display: flex;
+    background: var(--m-paper);
+    border: 1px solid var(--m-sand-150);
+    border-radius: var(--r-md);
+    padding: 3px;
+  }
+  .seg {
+    height: 28px; padding: 0 12px;
+    font-size: 12.5px; font-weight: 500;
+    color: var(--m-ink-500);
+    background: transparent; border: none;
+    border-radius: var(--r-xs);
+    display: inline-flex; align-items: center; gap: 7px;
+    letter-spacing: -0.01em;
+    transition: background .12s, color .12s;
+  }
+  .seg:hover { color: var(--m-ink-1000); }
+  .seg.active {
+    background: var(--m-marine-1000); color: #fff;
+    box-shadow: 0 1px 2px rgba(14,22,38,.18);
+  }
+  .seg .ct {
+    font-family: var(--ff-mono); font-size: 10.5px; font-weight: 500;
+    color: var(--m-ink-400);
+  }
+  .seg.active .ct { color: var(--m-gold-500); }
+
+  .filter-tag {
+    height: 28px; padding: 0 10px;
+    background: var(--m-paper); border: 1px dashed var(--m-sand-200);
+    border-radius: var(--r-md);
+    font-size: 12px; color: var(--m-ink-700);
+    display: inline-flex; align-items: center; gap: 6px;
+    letter-spacing: -0.005em;
+  }
+  .filter-tag .x { color: var(--m-ink-400); cursor: pointer; }
+  .toolbar-spacer { flex: 1; }
+  .toolbar-meta {
+    font-family: var(--ff-mono); font-size: 10.5px; color: var(--m-ink-500);
+  }
+
+  /* ===========================================================
+     BUTTONS
+     =========================================================== */
+  .btn {
+    height: 36px; padding: 0 14px; border-radius: var(--r-md);
+    font-size: 13px; font-weight: 500; letter-spacing: -0.01em;
+    border: 1px solid transparent;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform .04s, box-shadow .15s, background .15s, border-color .15s, filter .15s;
+    font-family: var(--ff-display);
+  }
+  .btn:active { transform: translateY(0.5px); }
+  .btn-primary {
+    background: linear-gradient(180deg, var(--m-marine-800) 0%, var(--m-marine-1000) 100%);
+    color: #fff;
+    border-color: var(--m-marine-1000);
+    box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 2px 4px rgba(14,22,38,.18);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 12px 24px -8px rgba(14,22,38,.45), 0 0 0 4px var(--m-gold-soft);
+  }
+  .btn-primary .ico { color: var(--m-gold-500); }
+
+  .btn-gold {
+    background: linear-gradient(180deg, var(--m-gold-400) 0%, var(--m-gold-600) 100%);
+    color: var(--m-marine-1000);
+    border-color: var(--m-gold-700);
+    box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 1px 2px rgba(142,107,67,.25);
+  }
+  .btn-gold:hover {
+    filter: brightness(1.05);
+    box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 12px 24px -8px rgba(166,125,84,.5);
+  }
+
+  .btn-ghost {
+    background: var(--m-paper); color: var(--m-ink-900);
+    border-color: var(--m-sand-150);
+  }
+  .btn-ghost:hover { border-color: var(--m-sand-200); background: var(--m-cream); }
+
+  .btn-ai {
+    background: var(--m-marine-1000); color: var(--m-gold-500);
+    border: 1px solid var(--m-gold-line);
+    box-shadow: 0 0 0 1px var(--m-gold-line), 0 0 18px -4px var(--m-gold-glow);
+    position: relative;
+  }
+  .btn-ai .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--m-gold-500); box-shadow: 0 0 6px var(--m-gold-glow);
+  }
+  .btn-ai:hover { box-shadow: 0 0 0 1px var(--m-gold-500), 0 0 24px -4px var(--m-gold-glow); }
+
+  .btn-sm { height: 28px; padding: 0 10px; font-size: 12px; }
+  .btn-icon-only { padding: 0; width: 36px; justify-content: center; }
+  .btn .ico { width: 14px; height: 14px; }
+
+  /* ===========================================================
+     TABLE
+     =========================================================== */
+  .table-card {
+    background: var(--m-paper);
+    border: 1px solid var(--m-sand-150);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--sh-2);
+  }
+  .table { width: 100%; border-collapse: collapse; }
+  .table thead th {
+    text-align: left; padding: 11px 14px;
+    font-family: var(--ff-mono);
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--m-ink-500); font-weight: 500;
+    border-bottom: 1px solid var(--m-sand-150);
+    background: var(--m-paper-2);
+    white-space: nowrap;
+  }
+  .table tbody td {
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--m-sand-100);
+    font-size: 13px; vertical-align: middle;
+    letter-spacing: -0.005em;
+  }
+  .table tbody tr:last-child td { border-bottom: none; }
+  .table tbody tr { transition: background .12s; cursor: pointer; }
+  .table tbody tr:hover { background: var(--m-cream); }
+  .table tbody tr.selected td {
+    background: linear-gradient(90deg, rgba(195,154,113,.16), rgba(195,154,113,.04));
+  }
+  .table tbody tr.selected td:first-child {
+    box-shadow: inset 3px 0 0 var(--m-gold-500);
+  }
+
+  .num { font-family: var(--ff-mono); font-size: 12px; }
+  .ref {
+    font-family: var(--ff-mono); font-size: 11.5px; color: var(--m-ink-500);
+    font-weight: 500; letter-spacing: 0.02em;
+  }
+  .order-name {
+    font-family: var(--ff-display);
+    font-size: 14px; font-weight: 600;
+    color: var(--m-ink-1000);
+    letter-spacing: -0.02em; line-height: 1.2;
+  }
+  .order-name .signature {
+    font-family: var(--ff-serif); font-style: italic; font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .order-sub {
+    font-family: var(--ff-mono);
+    font-size: 10.5px; color: var(--m-ink-400); margin-top: 2px;
+    letter-spacing: 0.02em;
+  }
+  .order-sub .tier {
+    color: var(--m-gold-700); text-transform: uppercase; letter-spacing: 0.16em;
+    font-size: 9.5px; font-weight: 500;
+  }
+
+  /* AI hint inline (selected row) */
+  .ai-hint-row {
+    margin-top: 4px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--ff-mono); font-size: 10px;
+    color: var(--m-gold-700); letter-spacing: 0.04em;
+    background: rgba(195,154,113,.08);
+    padding: 2px 8px; border-radius: 999px;
+    border: 1px solid var(--m-gold-line);
+  }
+  .ai-hint-row::before {
+    content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--m-gold-500); box-shadow: 0 0 4px var(--m-gold-glow);
+  }
+
+  .thumb {
+    width: 40px; height: 40px; border-radius: var(--r-xs);
+    background: linear-gradient(135deg, #2A2D38, #4A4640 60%, #C39A71);
+    display: grid; place-items: center; color: rgba(255,255,255,.55);
+    font-family: var(--ff-serif); font-size: 14px;
+    border: 1px solid var(--m-sand-200);
+    position: relative;
+  }
+  .thumb.pearl { background: radial-gradient(circle at 30% 30%, #fff, #E8DDC9 60%, #B5A789); }
+  .thumb.emerald { background: radial-gradient(circle at 30% 30%, #6FBF95, #1F6B4A 70%, #0F3D2C); }
+  .thumb.diamond { background: radial-gradient(circle at 30% 30%, #fff, #DDE6F0 50%, #6F8AA8); }
+  .thumb.yellow { background: radial-gradient(circle at 30% 30%, #FFF6C4, #E8B647 60%, #8B6712); }
+  .thumb.cad { background: linear-gradient(135deg, #131C30, #28324F 60%, #C39A71); }
+  .thumb.turq { background: radial-gradient(circle at 30% 30%, #88D6D2, #2C8B96 70%, #144356); }
+  .thumb.selected-glow {
+    box-shadow: 0 0 0 1px var(--m-gold-500), 0 0 14px -4px var(--m-gold-glow);
+  }
+
+  /* Status pill */
+  .status {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 9px; border-radius: var(--r-sm);
+    font-size: 11px; font-weight: 500; white-space: nowrap;
+    letter-spacing: -0.005em;
+    border: 1px solid;
+  }
+  .status .dot { width: 5px; height: 5px; border-radius: 50%; }
+  .status-setting { background: #EDE3F1; color: #57305F; border-color: #DCC8E2; }
+  .status-setting .dot { background: #6B3D7C; }
+  .status-casting { background: #F4E9D2; color: #7A551E; border-color: #E5D2A8; }
+  .status-casting .dot { background: #B07F2A; }
+  .status-polished { background: #DDE3EC; color: #2D3F56; border-color: #C5CFDD; }
+  .status-polished .dot { background: #324863; }
+  .status-mounting { background: #E5EBDB; color: #3F5128; border-color: #CFD8B8; }
+  .status-mounting .dot { background: #4F6A41; }
+  .status-qc { background: #F1DAD3; color: #6B2719; border-color: #E0BFB4; }
+  .status-qc .dot { background: #8E2E20; }
+  .status-invoice { background: #DCDCD8; color: #383934; border-color: #C2C2BD; }
+  .status-invoice .dot { background: #6B6C68; }
+  .status-cad { background: #DCE6E5; color: #2A4644; border-color: #BFD2D0; }
+  .status-cad .dot { background: #3E7472; }
+  .status-proto { background: var(--m-gold-soft); color: var(--m-gold-700); border-color: var(--m-gold-line); }
+  .status-proto .dot { background: var(--m-gold-500); }
+
+  .prio { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; }
+  .prio .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .prio-top { color: var(--m-danger); }
+  .prio-top .dot { background: var(--m-danger); }
+  .prio-high { color: var(--m-warning); }
+  .prio-high .dot { background: var(--m-warning); }
+  .prio-norm { color: var(--m-ink-500); }
+  .prio-norm .dot { background: var(--m-ink-300); }
+  .prio-low { color: var(--m-ink-400); }
+  .prio-low .dot { background: var(--m-ink-300); opacity: .5; }
+
+  .due { font-family: var(--ff-mono); font-size: 11.5px; color: var(--m-ink-700); }
+  .due small { display: block; color: var(--m-ink-400); font-size: 10.5px; margin-top: 1px; }
+  .due-late { color: var(--m-danger); font-weight: 500; }
+  .due-late small { color: var(--m-danger); }
+  .due-soon { color: var(--m-warning); font-weight: 500; }
+  .due-soon small { color: var(--m-warning); }
+
+  .amount {
+    font-family: var(--ff-mono);
+    font-size: 13px; font-weight: 500;
+    color: var(--m-ink-1000); text-align: right;
+    letter-spacing: -0.01em;
+  }
+  .amount .cur { color: var(--m-gold-700); margin-right: 2px; font-weight: 400; }
+
+  .assignee { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; }
+  .assignee-av {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--m-marine-800); color: var(--m-gold-500);
+    display: grid; place-items: center;
+    font-family: var(--ff-mono); font-size: 9px; font-weight: 600;
+    border: 1px solid var(--m-marine-700);
+  }
+
+  .pagination {
+    display: flex; align-items: center; padding: 12px 16px;
+    border-top: 1px solid var(--m-sand-150);
+    background: var(--m-paper-2);
+    font-family: var(--ff-mono);
+    font-size: 11px; color: var(--m-ink-500);
+  }
+  .pagination .pages { margin-left: auto; display: flex; gap: 4px; }
+  .page-btn {
+    height: 28px; min-width: 28px; padding: 0 10px;
+    background: transparent; border: 1px solid transparent;
+    color: var(--m-ink-700); font-family: var(--ff-mono);
+    font-size: 11.5px; font-weight: 500;
+    border-radius: var(--r-sm);
+    transition: background .12s, border-color .12s;
+  }
+  .page-btn:hover { background: var(--m-cream); border-color: var(--m-sand-150); }
+  .page-btn.active {
+    background: var(--m-marine-1000); color: #fff; border-color: var(--m-marine-1000);
+  }
+
+  /* ===========================================================
+     ATELIER AI PANEL  (replaces detail panel)
+     =========================================================== */
+  .ai-panel {
+    background: var(--m-paper);
+    border-left: 1px solid var(--m-sand-150);
+    height: 100vh;
+    position: sticky; top: 0;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .ai-panel::before {
+    content: ""; position: absolute;
+    top: -120px; right: -100px;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(195,154,113,.18), transparent 60%);
+    filter: blur(40px);
+    pointer-events: none; z-index: 0;
+  }
+
+  .ai-head {
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid var(--m-sand-150);
+    background: linear-gradient(180deg, var(--m-paper) 0%, var(--m-paper-2) 100%);
+    position: relative; z-index: 1;
+  }
+  .ai-head-row {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ai-head .ai-orb-lg { width: 30px; height: 30px; flex: 0 0 30px; }
+  .ai-head .ai-orb-lg::after { width: 8px; height: 6px; top: 5px; left: 6px; }
+  .ai-title {
+    font-family: var(--ff-display);
+    font-size: 16px; font-weight: 600;
+    color: var(--m-ink-1000);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  .ai-title em {
+    font-family: var(--ff-serif); font-style: italic; font-weight: 400;
+    color: var(--m-marine-800); letter-spacing: -0.01em;
+  }
+  .ai-status {
+    margin-left: auto;
+    font-family: var(--ff-mono); font-size: 9.5px;
+    color: var(--m-success); letter-spacing: 0.1em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-weight: 500;
+  }
+  .ai-status::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--m-success); animation: pulse 2.4s infinite;
+    box-shadow: 0 0 6px rgba(79,106,65,.6);
+  }
+  .ai-sub {
+    font-family: var(--ff-mono); font-size: 10.5px;
+    color: var(--m-ink-400); letter-spacing: 0.04em;
+    margin-top: 6px;
+  }
+
+  /* Mini cover for selected piece */
+  .ai-cover {
+    margin: 0;
+    height: 144px;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,255,255,.5), transparent 55%),
+      linear-gradient(135deg, #131C30 0%, #1B2540 30%, #6E5536 75%, #C39A71 100%);
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--m-sand-150);
+    z-index: 1;
+  }
+  .ai-cover::after {
+    content: ""; position: absolute; left: 18px; right: 18px; bottom: 0;
+    height: 1px; background: var(--m-gold-500); opacity: .85;
+  }
+  .ai-cover-tag {
+    position: absolute; top: 14px; left: 18px;
+    background: rgba(255,255,255,.10); backdrop-filter: blur(8px);
+    border: 1px solid rgba(195,154,113,.4);
+    color: var(--m-gold-500);
+    font-family: var(--ff-mono);
+    font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; font-weight: 500;
+  }
+  .ai-cover-ref {
+    position: absolute; bottom: 14px; left: 18px;
+    font-family: var(--ff-mono); font-size: 10px;
+    color: rgba(255,255,255,.7); letter-spacing: 0.18em;
+  }
+  .ai-cover-piece {
+    position: absolute; bottom: 14px; right: 18px;
+    text-align: right;
+  }
+  .ai-cover-piece .name {
+    font-family: var(--ff-serif); font-style: italic; font-weight: 400;
+    font-size: 22px; color: #fff; letter-spacing: -0.02em; line-height: 1;
+  }
+  .ai-cover-piece .meta {
+    font-family: var(--ff-mono); font-size: 10px;
+    color: rgba(255,255,255,.7); margin-top: 4px; letter-spacing: 0.04em;
+  }
+
+  .ai-body {
+    padding: 16px 18px;
+    flex: 1; overflow-y: auto;
+    position: relative; z-index: 1;
+  }
+
+  .ai-section-title {
+    font-family: var(--ff-mono);
+    font-size: 9.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--m-gold-700); font-weight: 500;
+    margin: 4px 0 10px;
+  }
+
+  .ai-card {
+    background: var(--m-paper-2);
+    border: 1px solid var(--m-sand-150);
+    border-radius: var(--r-md);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    position: relative;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .ai-card:hover {
+    border-color: var(--m-gold-line);
+    box-shadow: 0 6px 16px -8px var(--m-gold-glow);
+  }
+  .ai-card-head {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+  }
+  .ai-card-icon {
+    width: 18px; height: 18px;
+    display: grid; place-items: center;
+    color: var(--m-gold-600);
+    background: var(--m-gold-soft);
+    border-radius: 4px;
+    flex: 0 0 18px;
+  }
+  .ai-card-icon svg { width: 11px; height: 11px; }
+  .ai-card-title {
+    font-family: var(--ff-display); font-size: 12.5px; font-weight: 600;
+    color: var(--m-ink-1000); letter-spacing: -0.015em;
+  }
+  .ai-card-conf {
+    margin-left: auto;
+    font-family: var(--ff-mono); font-size: 9.5px;
+    color: var(--m-ink-400); letter-spacing: 0.05em;
+  }
+  .ai-card-body {
+    font-size: 11.5px; color: var(--m-ink-700);
+    line-height: 1.5; letter-spacing: -0.005em;
+  }
+  .ai-card-body strong {
+    color: var(--m-marine-800); font-weight: 600;
+  }
+  .ai-card-body em {
+    font-family: var(--ff-serif); font-style: italic; font-weight: 400;
+    color: var(--m-marine-800); letter-spacing: -0.005em;
+  }
+  .ai-card-body .ref-link {
+    color: var(--m-gold-700); text-decoration: underline;
+    text-decoration-color: var(--m-gold-line);
+    text-underline-offset: 2px;
+  }
+  .ai-card-foot {
+    display: flex; gap: 6px; margin-top: 10px;
+  }
+  .mini-btn {
+    height: 24px; padding: 0 9px; font-size: 11px; font-weight: 500;
+    border-radius: var(--r-xs); border: 1px solid var(--m-sand-150);
+    background: var(--m-paper); color: var(--m-ink-700);
+    letter-spacing: -0.005em;
+    font-family: var(--ff-display);
+    transition: border-color .15s, background .15s;
+  }
+  .mini-btn:hover { border-color: var(--m-sand-200); background: var(--m-cream); }
+  .mini-btn.primary {
+    background: var(--m-marine-1000); color: var(--m-gold-500);
+    border-color: var(--m-marine-1000);
+  }
+
+  /* AI Composer (chat input) */
+  .ai-composer {
+    border-top: 1px solid var(--m-sand-150);
+    padding: 14px 16px 16px;
+    background: var(--m-paper-2);
+    position: relative; z-index: 1;
+  }
+  .ai-suggest-row {
+    display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px;
+  }
+  .ai-suggest {
+    height: 24px; padding: 0 9px;
+    font-family: var(--ff-display);
+    font-size: 11px; color: var(--m-ink-700); font-weight: 500;
+    background: var(--m-paper); border: 1px solid var(--m-sand-150);
+    border-radius: 999px;
+    letter-spacing: -0.005em;
+    display: inline-flex; align-items: center; gap: 5px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .ai-suggest:hover { border-color: var(--m-gold-line); background: var(--m-gold-soft); color: var(--m-marine-800); }
+  .ai-suggest::before {
+    content: "⤴"; color: var(--m-gold-600); font-size: 9px;
+  }
+
+  .composer-shell {
+    background: var(--m-paper);
+    border: 1px solid var(--m-sand-150);
+    border-radius: var(--r-md);
+    padding: 10px 12px;
+    transition: border-color .15s, box-shadow .15s;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .composer-shell:focus-within {
+    border-color: var(--m-gold-500);
+    box-shadow: 0 0 0 4px var(--m-gold-soft), 0 0 20px -6px var(--m-gold-glow);
+  }
+  .composer-input {
+    border: none; outline: none; background: transparent;
+    font-family: var(--ff-body); font-size: 13px; color: var(--m-ink-1000);
+    resize: none;
+    min-height: 32px;
+    width: 100%;
+    letter-spacing: -0.005em;
+  }
+  .composer-input::placeholder {
+    color: var(--m-ink-400);
+    font-family: var(--ff-body);
+    font-style: normal;
+  }
+  .composer-input::placeholder em { color: var(--m-marine-800); }
+  .composer-foot {
+    display: flex; align-items: center; gap: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--m-sand-100);
+  }
+  .composer-tool {
+    height: 22px; width: 22px; padding: 0;
+    border-radius: var(--r-xs); background: transparent;
+    border: 1px solid transparent;
+    display: grid; place-items: center;
+    color: var(--m-ink-400);
+    transition: background .12s, color .12s;
+  }
+  .composer-tool:hover { background: var(--m-cream); color: var(--m-ink-1000); }
+  .composer-foot-spacer { flex: 1; }
+  .composer-foot .send {
+    height: 26px; padding: 0 11px;
+    background: linear-gradient(180deg, var(--m-marine-800), var(--m-marine-1000));
+    color: var(--m-gold-500); border: 1px solid var(--m-marine-1000);
+    border-radius: var(--r-xs);
+    font-family: var(--ff-display); font-size: 11.5px; font-weight: 500;
+    letter-spacing: -0.01em;
+    display: inline-flex; align-items: center; gap: 6px;
+    box-shadow: 0 0 14px -4px var(--m-gold-glow);
+  }
+
+  /* ===========================================================
+     TOAST + COMMAND PALETTE OVERLAY
+     =========================================================== */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--m-marine-1000); color: #fff;
+    padding: 12px 18px; border-radius: var(--r-md);
+    box-shadow: var(--sh-3), 0 0 24px -8px var(--m-gold-glow);
+    display: flex; align-items: center; gap: 12px; font-size: 13px;
+    border: 1px solid var(--m-marine-800);
+    border-left: 2px solid var(--m-gold-500);
+    z-index: 200;
+    letter-spacing: -0.005em;
+    font-family: var(--ff-display);
+  }
+  .toast .ico-wrap {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--m-gold-soft); color: var(--m-gold-500);
+    display: grid; place-items: center;
+  }
+  .toast strong { color: var(--m-gold-500); font-weight: 600; }
+  .toast small {
+    font-family: var(--ff-mono); font-size: 11px;
+    color: rgba(255,255,255,.45); margin-left: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Command palette overlay (replaces create modal) */
+  .cmdk-overlay {
+    position: fixed; inset: 0;
+    background: rgba(10,18,36,.32); backdrop-filter: blur(6px);
+    z-index: 90;
+    display: grid; place-items: start center;
+    padding-top: 132px;
+  }
+  .cmdk {
+    width: 560px;
+    background: var(--m-paper);
+    border: 1px solid var(--m-sand-150);
+    border-radius: var(--r-lg);
+    box-shadow: var(--sh-3), 0 0 60px -12px var(--m-gold-glow);
+    overflow: hidden;
+    position: relative;
+  }
+  .cmdk::before {
+    content: ""; position: absolute;
+    top: -120px; left: -80px;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(195,154,113,.35), transparent 60%);
+    filter: blur(50px);
+    pointer-events: none;
+  }
+  .cmdk-input-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--m-sand-150);
+    position: relative;
+  }
+  .cmdk-input {
+    border: none; outline: none; background: transparent;
+    font-family: var(--ff-body);
+    font-size: 16px; color: var(--m-ink-1000);
+    flex: 1; letter-spacing: -0.01em;
+  }
+  .cmdk-input::placeholder { color: var(--m-ink-400); }
+  .cmdk-typed {
+    font-family: var(--ff-body);
+    font-size: 16px; color: var(--m-ink-1000);
+    letter-spacing: -0.01em;
+    flex: 1;
+  }
+  .cmdk-typed em {
+    font-family: var(--ff-serif); font-style: italic; font-weight: 400;
+    color: var(--m-marine-800);
+  }
+  .cmdk-typed::after {
+    content: ""; display: inline-block;
+    width: 1px; height: 18px; background: var(--m-gold-500);
+    vertical-align: middle; margin-left: 2px;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+  .cmdk-input-row .esc {
+    font-family: var(--ff-mono); font-size: 10px;
+    color: var(--m-ink-400); border: 1px solid var(--m-sand-150);
+    padding: 1px 5px; border-radius: 3px;
+  }
+  .cmdk-section {
+    padding: 8px 8px 4px;
+    position: relative;
+  }
+  .cmdk-section-title {
+    font-family: var(--ff-mono); font-size: 9.5px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--m-gold-700);
+    padding: 6px 12px 4px; font-weight: 500;
+  }
+  .cmdk-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 9px 12px; border-radius: var(--r-sm);
+    cursor: pointer;
+    transition: background .12s;
+  }
+  .cmdk-item:hover, .cmdk-item.active {
+    background: var(--m-gold-soft);
+  }
+  .cmdk-item.active {
+    box-shadow: inset 2px 0 0 var(--m-gold-500);
+  }
+  .cmdk-item-icon {
+    width: 22px; height: 22px; flex: 0 0 22px;
+    display: grid; place-items: center;
+    background: var(--m-cream); border: 1px solid var(--m-sand-150);
+    border-radius: var(--r-xs);
+    color: var(--m-marine-800);
+  }
+  .cmdk-item-icon.ai {
+    background: radial-gradient(circle at 30% 30%, var(--m-gold-300), var(--m-gold-600));
+    color: var(--m-marine-1000);
+    border: 1px solid var(--m-gold-500);
+    box-shadow: 0 0 12px -2px var(--m-gold-glow);
+  }
+  .cmdk-item-text {
+    font-size: 13px; color: var(--m-ink-1000); letter-spacing: -0.005em;
+    flex: 1;
+  }
+  .cmdk-item-text small {
+    display: block; font-family: var(--ff-mono); font-size: 10.5px;
+    color: var(--m-ink-400); margin-top: 2px;
+  }
+  .cmdk-item-shortcut {
+    font-family: var(--ff-mono); font-size: 10px;
+    color: var(--m-ink-400); border: 1px solid var(--m-sand-150);
+    padding: 1px 5px; border-radius: 3px;
+  }
+  .cmdk-foot {
+    border-top: 1px solid var(--m-sand-150);
+    padding: 8px 16px;
+    font-family: var(--ff-mono); font-size: 10px;
+    color: var(--m-ink-400);
+    display: flex; align-items: center; gap: 16px;
+    letter-spacing: 0.04em;
+  }
+  .cmdk-foot strong { color: var(--m-gold-700); font-weight: 500; }
+
+  .ico { width: 16px; height: 16px; flex: 0 0 16px; }
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ======================== SIDEBAR ======================== -->
+  <aside class="sider">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
+          <path d="M8 1.5 14.5 8 8 14.5 1.5 8z"/>
+          <path d="M8 4 11.5 8 8 12 4.5 8z" stroke-width=".9" opacity=".6"/>
+          <path d="M1.5 8h13" stroke-width=".6" opacity=".4"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">Gem<em>flow</em></div>
+        <div class="brand-tag">Atelier · Paris</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group">
+        <div class="nav-label">Atelier</div>
+        <a class="nav-item">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12 12 4l9 8M5 10v10h14V10"/></svg>
+          Tableau de bord
+        </a>
+        <a class="nav-item active">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M6 7v13h12V7M9 7V4h6v3"/></svg>
+          Commandes <span class="badge">37</span>
+        </a>
+        <a class="nav-item">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Pointage atelier
+        </a>
+        <a class="nav-item">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16v12H4z"/><path d="M4 10h16M9 14h6"/></svg>
+          Casting <span class="badge">8</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Inventaire</div>
+        <a class="nav-item">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m12 2 9 7-9 13-9-13z"/></svg>
+          Diamants <span class="badge">418</span>
+        </a>
+        <a class="nav-item">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4h12l3 5-9 11L3 9z"/></svg>
+          Pierres précieuses
+        </a>
+        <a class="nav-item">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 4v16"/></svg>
+          Métaux purs
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Clientèle</div>
+        <a class="nav-item">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+          Maisons
+        </a>
+        <a class="nav-item">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18v10H3z"/><path d="M3 11h18"/></svg>
+          Fournisseurs
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Finance</div>
+        <a class="nav-item">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v14H4z"/><path d="M8 11h8M8 15h6"/></svg>
+          Facturation
+        </a>
+      </div>
+    </nav>
+
+    <!-- AI sidebar block -->
+    <div class="ai-block">
+      <div class="ai-block-head">
+        <div class="ai-mark">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M7 1 8.6 5.4 13 7 8.6 8.6 7 13 5.4 8.6 1 7 5.4 5.4z"/></svg>
+        </div>
+        <span class="lab">Atelier AI</span>
+        <span class="status">Online</span>
+      </div>
+      <div class="ai-block-body">
+        3 patterns détectés cette semaine — opportunité de <em>groupage casting</em> sur 2 commandes Pt 950.
+      </div>
+    </div>
+
+    <div class="sider-foot">
+      <div class="avatar">SL</div>
+      <div>
+        <div class="sider-foot-name">Sophie Levi</div>
+        <div class="sider-foot-role">CHEF D'ATELIER</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======================== MAIN ======================== -->
+  <main class="main">
+    <div class="main-inner">
+    <div class="topbar">
+      <div class="crumbs">
+        <span>Atelier</span>
+        <span class="sep">/</span>
+        <strong>Commandes</strong>
+        <span class="sep">/</span>
+        <span style="color: var(--m-ink-400); font-family: var(--ff-mono); font-size: 11.5px;">toutes</span>
+      </div>
+
+      <div class="palette">
+        <div class="ai-orb"></div>
+        <div class="pq">Demander à l'<em>atelier AI</em>, ou rechercher…</div>
+        <span class="kbd">⌘ K</span>
+      </div>
+
+      <div class="top-actions">
+        <button class="icon-btn">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8a6 6 0 1 1 12 0v5l2 3H4l2-3z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          <span class="pulse-dot"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="page">
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-row">
+          <div>
+            <div class="eyebrow">Production · Semaine 17 · 27 avr 2026</div>
+            <h1 class="h1">Carnet de <span class="signature">commandes</span></h1>
+            <p class="lede">37 pièces en cours, 4 livraisons cette semaine, 2 retards critiques en sertissage. L'<em style="font-family: var(--ff-serif); font-style: italic; color: var(--m-marine-800);">atelier AI</em> a anticipé un goulet sur le casting Pt 950 le 28 avril.</p>
+          </div>
+          <div class="head-actions">
+            <button class="btn btn-ai">
+              <span class="dot"></span>
+              Insights AI <span style="font-family: var(--ff-mono); font-size: 10px; opacity: .7;">3 nouveaux</span>
+            </button>
+            <button class="btn btn-ghost">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16"/></svg>
+              Exporter
+            </button>
+            <button class="btn btn-primary">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              Nouvelle commande
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- KPI ROW -->
+      <section class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-label">En production</div>
+          <div class="kpi-value">37</div>
+          <div class="kpi-delta">+4 cette semaine</div>
+          <svg class="kpi-spark" width="48" height="22" viewBox="0 0 48 22" fill="none">
+            <polyline points="1,16 8,12 14,14 20,9 26,11 32,6 38,8 47,3" stroke="#A67D54" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Valeur du portefeuille</div>
+          <div class="kpi-value">€14,82M</div>
+          <div class="kpi-delta">+18,4% T/T</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Carats sertis · mois</div>
+          <div class="kpi-value">1 248</div>
+          <div class="kpi-delta muted">moy. 2,56 ct/pièce</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Retards</div>
+          <div class="kpi-value danger">2</div>
+          <div class="kpi-delta down">+1 vs S16</div>
+          <div class="kpi-ai-tag">AI · risque +1 d'ici 48 h</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">QC pass · 12 mois</div>
+          <div class="kpi-value">97,8%</div>
+          <div class="kpi-delta muted">objectif 96%</div>
+        </div>
+      </section>
+
+      <!-- AI INSIGHT BANNER -->
+      <div class="ai-insight">
+        <div class="ai-orb-lg"></div>
+        <div class="ai-insight-text">
+          <strong>Groupage casting détecté.</strong> Les commandes <em>Joséphine Tiare</em> (ATL-1147) et <em>Persian Lily</em> (ATL-1148) partagent Pt 950 et fenêtre de production J+5. Groupement estimé : <strong>−18 % temps four</strong>, +2 j de marge sur la livraison Chaumet.
+        </div>
+        <div class="ai-insight-actions">
+          <button class="mini-btn">Voir le plan</button>
+          <button class="mini-btn primary">Appliquer</button>
+        </div>
+      </div>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar">
+        <div class="seg-group">
+          <button class="seg active">Toutes <span class="ct">37</span></button>
+          <button class="seg">Sertissage <span class="ct">9</span></button>
+          <button class="seg">Casting <span class="ct">8</span></button>
+          <button class="seg">QC <span class="ct">5</span></button>
+          <button class="seg">À facturer <span class="ct">3</span></button>
+        </div>
+        <span class="filter-tag">Priorité ≥ haute <span class="x">×</span></span>
+        <span class="filter-tag">Échéance ≤ 30 j <span class="x">×</span></span>
+        <div class="toolbar-spacer"></div>
+        <span class="toolbar-meta">Tri · échéance ↑</span>
+        <button class="btn btn-ghost btn-sm">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+          Filtres
+        </button>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-card">
+        <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Réf.</th>
+              <th>Pièce / Maison</th>
+              <th>Statut</th>
+              <th>Métal</th>
+              <th>Pierres</th>
+              <th>Échéance</th>
+              <th>Priorité</th>
+              <th>Artisan</th>
+              <th style="text-align: right;">Valeur</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="selected">
+              <td><div class="thumb cad selected-glow">◆</div></td>
+              <td><span class="ref">ATL-1147</span></td>
+              <td>
+                <div class="order-name"><span class="signature">Joséphine</span> Tiare</div>
+                <div class="order-sub"><span class="tier">Haute Joaillerie</span> · Maison Chaumet</div>
+                <span class="ai-hint-row">AI · groupable avec ATL-1148</span>
+              </td>
+              <td><span class="status status-setting"><span class="dot"></span>En sertissage</span></td>
+              <td class="num">Pt 950</td>
+              <td class="num">487 ct · DEF/VVS</td>
+              <td><span class="due due-soon">12 mai<small>J-15</small></span></td>
+              <td><span class="prio prio-top"><span class="dot"></span>Top</span></td>
+              <td><span class="assignee"><span class="assignee-av">SL</span>S. Levi</span></td>
+              <td class="amount"><span class="cur">€</span>1 240 800</td>
+              <td><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--m-ink-300);"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></td>
+            </tr>
+            <tr>
+              <td><div class="thumb emerald">○</div></td>
+              <td><span class="ref">ATL-1148</span></td>
+              <td>
+                <div class="order-name"><span class="signature">Persian Lily</span> — Brooch</div>
+                <div class="order-sub"><span class="tier">Collector</span> · Al Thani Collection</div>
+              </td>
+              <td><span class="status status-casting"><span class="dot"></span>Au casting</span></td>
+              <td class="num">Au 18kY</td>
+              <td class="num">12,4 ct emerald</td>
+              <td><span class="due">22 mai<small>J-25</small></span></td>
+              <td><span class="prio prio-high"><span class="dot"></span>Haute</span></td>
+              <td><span class="assignee"><span class="assignee-av">MB</span>M. Bouchard</span></td>
+              <td class="amount"><span class="cur">€</span>482 100</td>
+              <td><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--m-ink-300);"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></td>
+            </tr>
+            <tr>
+              <td><div class="thumb diamond">◇</div></td>
+              <td><span class="ref">ATL-1149</span></td>
+              <td>
+                <div class="order-name">Cushion Solitaire 8.02 ct</div>
+                <div class="order-sub"><span class="tier">VIP — Privé</span> · Mr. R.</div>
+              </td>
+              <td><span class="status status-polished"><span class="dot"></span>Poli</span></td>
+              <td class="num">Pt 950</td>
+              <td class="num">8.02 ct · D/IF</td>
+              <td><span class="due due-soon">8 mai<small>J-11</small></span></td>
+              <td><span class="prio prio-top"><span class="dot"></span>Top</span></td>
+              <td><span class="assignee"><span class="assignee-av">AC</span>A. Costa</span></td>
+              <td class="amount"><span class="cur">€</span>2 950 000</td>
+              <td><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--m-ink-300);"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></td>
+            </tr>
+            <tr>
+              <td><div class="thumb">▭</div></td>
+              <td><span class="ref">ATL-1150</span></td>
+              <td>
+                <div class="order-name">Cuff Bracelet — <span class="signature">Bauhaus</span></div>
+                <div class="order-sub"><span class="tier">Privé</span> · Hearst Family</div>
+              </td>
+              <td><span class="status status-mounting"><span class="dot"></span>Au montage</span></td>
+              <td class="num">Au 18kW</td>
+              <td class="num">24 × 0,30 G/VS</td>
+              <td><span class="due">1 juin<small>J-35</small></span></td>
+              <td><span class="prio prio-norm"><span class="dot"></span>Normale</span></td>
+              <td><span class="assignee"><span class="assignee-av">ED</span>E. Dubois</span></td>
+              <td class="amount"><span class="cur">€</span>188 400</td>
+              <td><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--m-ink-300);"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></td>
+            </tr>
+            <tr>
+              <td><div class="thumb pearl">○</div></td>
+              <td><span class="ref">ATL-1151</span></td>
+              <td>
+                <div class="order-name"><span class="signature">Sautoir</span> Pearl 1924</div>
+                <div class="order-sub"><span class="tier">Restauration</span> · Rothschild Estate</div>
+              </td>
+              <td><span class="status status-qc"><span class="dot"></span>QC montage</span></td>
+              <td class="num">Pt 950 + Au 18k</td>
+              <td class="num">92 perles South Sea</td>
+              <td><span class="due">30 mai<small>J-33</small></span></td>
+              <td><span class="prio prio-high"><span class="dot"></span>Haute</span></td>
+              <td><span class="assignee"><span class="assignee-av">JM</span>J. Marot</span></td>
+              <td class="amount"><span class="cur">€</span>312 750</td>
+              <td><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--m-ink-300);"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></td>
+            </tr>
+            <tr>
+              <td><div class="thumb diamond">◇</div></td>
+              <td><span class="ref">ATL-1152</span></td>
+              <td>
+                <div class="order-name">Eternity Band 4.10 ct</div>
+                <div class="order-sub"><span class="tier">Stock boutique</span> · Place Vendôme</div>
+              </td>
+              <td><span class="status status-invoice"><span class="dot"></span>À facturer</span></td>
+              <td class="num">Au 18kY</td>
+              <td class="num">4,10 ct E/VVS rd</td>
+              <td><span class="due due-late">29 avr<small>J-2 ⚠</small></span></td>
+              <td><span class="prio prio-norm"><span class="dot"></span>Normale</span></td>
+              <td><span class="assignee"><span class="assignee-av">CV</span>C. Vinh</span></td>
+              <td class="amount"><span class="cur">€</span>58 200</td>
+              <td><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--m-ink-300);"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></td>
+            </tr>
+            <tr>
+              <td><div class="thumb yellow">◇</div></td>
+              <td><span class="ref">ATL-1154</span></td>
+              <td>
+                <div class="order-name">Yellow Cushion 12.81 ct</div>
+                <div class="order-sub"><span class="tier">Auction</span> · Christie's Genève</div>
+              </td>
+              <td><span class="status status-proto"><span class="dot"></span>Prototypage</span></td>
+              <td class="num">Pt 950</td>
+              <td class="num">12.81 ct · FVY/VVS</td>
+              <td><span class="due due-late">5 mai<small>J-8 ⚠</small></span></td>
+              <td><span class="prio prio-top"><span class="dot"></span>Top</span></td>
+              <td><span class="assignee"><span class="assignee-av">AC</span>A. Costa</span></td>
+              <td class="amount"><span class="cur">€</span>4 120 000</td>
+              <td><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--m-ink-300);"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <span>1 — 7 sur 37</span>
+          <div class="pages">
+            <button class="page-btn">‹</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </main>
+
+  <!-- ======================== ATELIER AI PANEL ======================== -->
+  <aside class="ai-panel">
+    <div class="ai-head">
+      <div class="ai-head-row">
+        <div class="ai-orb-lg"></div>
+        <div>
+          <div class="ai-title">Atelier <em>AI</em></div>
+        </div>
+        <span class="ai-status">Online</span>
+      </div>
+      <div class="ai-sub">Contexte · ATL-1147 · 5 sources analysées · 1,2 s</div>
+    </div>
+
+    <div class="ai-cover">
+      <span class="ai-cover-tag">Pt 950 · platine</span>
+      <span class="ai-cover-ref">ATL — 1147</span>
+      <div class="ai-cover-piece">
+        <div class="name">Joséphine Tiare</div>
+        <div class="meta">487 ct · 84,2 g · 12 mai</div>
+      </div>
+    </div>
+
+    <div class="ai-body">
+      <div class="ai-section-title">Insights — 3 actionnables</div>
+
+      <!-- Insight 1 — Casting batch -->
+      <div class="ai-card">
+        <div class="ai-card-head">
+          <div class="ai-card-icon">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 4h8v6H3zM3 8h8M5 4V2h4v2"/></svg>
+          </div>
+          <div class="ai-card-title">Groupage casting Pt 950</div>
+          <div class="ai-card-conf">conf. 92%</div>
+        </div>
+        <div class="ai-card-body">
+          ATL-1147 et <strong>ATL-1148</strong> partagent métal et fenêtre. Groupage prévu le <em>5 mai</em> — gain estimé <strong>−18% temps four</strong>, libère 1,2 j sur Chaumet.
+        </div>
+        <div class="ai-card-foot">
+          <button class="mini-btn">Détails</button>
+          <button class="mini-btn primary">Appliquer →</button>
+        </div>
+      </div>
+
+      <!-- Insight 2 — Stock check -->
+      <div class="ai-card">
+        <div class="ai-card-head">
+          <div class="ai-card-icon">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 4h10v8H2zM2 7h10M5 1v3M9 1v3"/></svg>
+          </div>
+          <div class="ai-card-title">Stock diamants 0,5 ct</div>
+          <div class="ai-card-conf">conf. 87%</div>
+        </div>
+        <div class="ai-card-body">
+          Sertissage prévu nécessite 12 × 0,5 ct DEF/VVS. Stock actuel : <strong>9 pierres</strong>. Suggestion : commander 6 pièces auprès de <span class="ref-link">Maison Heller (Antwerp)</span>, lead-time 4 j.
+        </div>
+        <div class="ai-card-foot">
+          <button class="mini-btn">Voir stock</button>
+          <button class="mini-btn primary">Préparer commande</button>
+        </div>
+      </div>
+
+      <!-- Insight 3 — Client preference -->
+      <div class="ai-card">
+        <div class="ai-card-head">
+          <div class="ai-card-icon">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="5" r="2.5"/><path d="M2 12c0-2.5 2.5-4 5-4s5 1.5 5 4"/></svg>
+          </div>
+          <div class="ai-card-title">Préférence Maison Chaumet</div>
+          <div class="ai-card-conf">conf. 78%</div>
+        </div>
+        <div class="ai-card-body">
+          Sur les <strong>11 dernières livraisons</strong>, Chaumet a demandé une livraison anticipée à 4 reprises. <em>Suggérer une livraison J-2</em> avec présentation au showroom Vendôme.
+        </div>
+        <div class="ai-card-foot">
+          <button class="mini-btn">Historique</button>
+          <button class="mini-btn primary">Proposer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI COMPOSER -->
+    <div class="ai-composer">
+      <div class="ai-suggest-row">
+        <button class="ai-suggest">Estimer gain casting groupé</button>
+        <button class="ai-suggest">Stock diamants 0.5 ct</button>
+        <button class="ai-suggest">Préparer livraison Chaumet</button>
+      </div>
+      <div class="composer-shell">
+        <div class="composer-input" contenteditable="false" style="color: var(--m-ink-400);">Demander à l'atelier AI…</div>
+        <div class="composer-foot">
+          <button class="composer-tool" title="Joindre">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 4 4 9a3 3 0 1 0 4.2 4.2L13 8.5a4 4 0 1 0-5.6-5.6L4 6.4"/></svg>
+          </button>
+          <button class="composer-tool" title="Contexte">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3h10v10H3z"/><path d="M3 7h10M7 3v10"/></svg>
+          </button>
+          <span class="composer-foot-spacer"></span>
+          <span style="font-family: var(--ff-mono); font-size: 9.5px; color: var(--m-ink-400); letter-spacing: 0.04em;">GPT-4 · vision · workshop tools</span>
+          <button class="send">
+            Envoyer
+            <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast">
+  <div class="ico-wrap">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>
+  </div>
+  <div>
+    <div><strong>ATL-1147</strong> — sertissage validé · groupage AI <em style="font-family: var(--ff-serif); font-style: italic; color: var(--m-gold-500);">accepté</em></div>
+    <small>il y a 4 secondes · S. Levi</small>
+  </div>
+</div>
+
+<!-- COMMAND PALETTE OVERLAY -->
+<div class="cmdk-overlay">
+  <div class="cmdk">
+    <div class="cmdk-input-row">
+      <div class="ai-orb-lg" style="width: 22px; height: 22px;"></div>
+      <div class="cmdk-typed">grouper la <em>Joséphine</em> avec la</div>
+      <span class="esc">esc</span>
+    </div>
+
+    <div class="cmdk-section">
+      <div class="cmdk-section-title">Suggestion AI</div>
+      <div class="cmdk-item active">
+        <div class="cmdk-item-icon ai">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 1 8.6 5.4 13 7 8.6 8.6 7 13 5.4 8.6 1 7 5.4 5.4z"/></svg>
+        </div>
+        <div class="cmdk-item-text">
+          Grouper ATL-1147 + ATL-1148 dans le batch casting du 5 mai
+          <small>Gain estimé · −18% temps four · libère 1,2 j sur Chaumet</small>
+        </div>
+        <span class="cmdk-item-shortcut">↵</span>
+      </div>
+    </div>
+
+    <div class="cmdk-section">
+      <div class="cmdk-section-title">Commandes</div>
+      <div class="cmdk-item">
+        <div class="cmdk-item-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 5h10v9H3zM3 8h10M5 5V3h6v2"/></svg>
+        </div>
+        <div class="cmdk-item-text">Ouvrir ATL-1148 · Persian Lily Brooch
+          <small>Al Thani Collection · 482 100 €</small>
+        </div>
+        <span class="cmdk-item-shortcut">⌘ O</span>
+      </div>
+      <div class="cmdk-item">
+        <div class="cmdk-item-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 3v10M3 8h10"/></svg>
+        </div>
+        <div class="cmdk-item-text">Créer une nouvelle commande
+          <small>Fiche atelier · attribution CAD automatique</small>
+        </div>
+        <span class="cmdk-item-shortcut">⌘ N</span>
+      </div>
+    </div>
+
+    <div class="cmdk-foot">
+      <span><strong>↑↓</strong> naviguer</span>
+      <span><strong>↵</strong> exécuter</span>
+      <span><strong>⌘ K</strong> AI</span>
+      <span style="margin-left: auto; font-family: var(--ff-mono);">atelier-ai · v0.4.2</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

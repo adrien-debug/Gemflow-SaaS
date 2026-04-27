@@ -90,4 +90,5 @@
     <include file="083_ACCOUNTING_INTEGRATION.xml" relativeToChangelogFile="true"/>
     <include file="084_PERMISSION.xml" relativeToChangelogFile="true"/>
     <include file="085_BILLING_SUBSCRIPTION.xml" relativeToChangelogFile="true"/>
+    <include file="086_AGENT_INVOCATION.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
