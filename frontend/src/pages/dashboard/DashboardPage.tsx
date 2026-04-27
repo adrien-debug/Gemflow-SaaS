@@ -26,10 +26,15 @@ const DashboardPage: FC = () => {
           <div className="dashboard-page__main">
             <VerdictHero ordersInProgress={inProgress} alerts={alerts} ordersByStatus={ordersByStatus} />
 
-            <div className="dashboard-page__decisions">
-              <DecisionMetalCard />
-              <DecisionWorkshopCard ordersByStatus={ordersByStatus} />
-              <DecisionRelationsCard alerts={alerts} />
+            <div className="dashboard-page__decisions-section">
+              <div className="dashboard-page__decisions-header">
+                <h2 className="dashboard-page__decisions-title">Décisions du jour</h2>
+              </div>
+              <div className="dashboard-page__decisions">
+                <DecisionMetalCard />
+                <DecisionWorkshopCard ordersByStatus={ordersByStatus} />
+                <DecisionRelationsCard alerts={alerts} />
+              </div>
             </div>
 
             <div className="dashboard-page__footer">
