@@ -1,39 +1,7 @@
 .gf-briefing {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-
-  &__head {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  &__eyebrow {
-    font-family: var(--ff-mono, "Geist Mono", monospace);
-    font-size: 9.5px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--m-gold-700, #8E6B43);
-    font-weight: 500;
-  }
-
-  &__title {
-    font-family: var(--ff-display, "Inter Tight", sans-serif);
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    color: var(--m-ink-1000, #0F0F0E);
-    margin: 0;
-    line-height: 1.15;
-
-    em {
-      font-family: var(--ff-serif, "Instrument Serif", Georgia, serif);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--m-gold-600, #A67D54);
-    }
-  }
+  gap: 14px;
 
   &__intro {
     display: flex;
@@ -87,6 +55,26 @@
     }
   }
 
+  &__relaunch {
+    font-family: var(--ff-mono, "Geist Mono", monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 2px;
+    border: 1px solid var(--m-gold-line, rgba(195, 154, 113, 0.35));
+    background: transparent;
+    color: var(--m-gold-700, #8E6B43);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: var(--m-gold-soft, rgba(195, 154, 113, 0.12));
+      color: var(--m-gold-600, #A67D54);
+    }
+  }
+
   &__loading {
     display: inline-flex;
     align-items: center;
@@ -116,7 +104,7 @@
   }
 
   &__response-scroll {
-    max-height: 480px;
+    max-height: 520px;
     overflow-y: auto;
     padding-right: 4px;
 

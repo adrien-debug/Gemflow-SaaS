@@ -7,7 +7,6 @@ import { PriorityChart } from "@features/dashboard/priority-chart";
 import { MorningBriefing } from "@features/dashboard/morning-briefing";
 import {
   MaisonAiBanner,
-  MaisonAiPanel,
   MaisonKpiStrip,
   MaisonPageHeader,
   type MaisonKpi,
@@ -48,48 +47,36 @@ const DashboardPage: FC = () => {
     <CommonLayout>
       <div className="dashboard-page">
         <div className="dashboard-page__inner">
-          <MaisonPageHeader
-            eyebrow="Atelier Intelligence · v5.0 · Place Vendôme"
-            title="Carnet"
-            emphasized="d'Atelier"
-            coordinates={{ lat: "48.8675", lon: "2.3287" }}
-          />
-
-          <MaisonKpiStrip items={kpis} />
-
-          {overdue === 0 ? (
-            <MaisonAiBanner
-              title="Atelier fluide"
-              body={
-                <>
-                  Aucun retard significatif. Profite de la fenêtre pour interroger l'agent sur les{" "}
-                  <em>opportunités de pricing</em>.
-                </>
-              }
+          <header className="dashboard-page__hero">
+            <MaisonPageHeader
+              eyebrow="Atelier Intelligence · v5.0 · Place Vendôme"
+              title="Carnet"
+              emphasized="d'Atelier"
+              coordinates={{ lat: "48.8675", lon: "2.3287" }}
             />
-          ) : null}
-
-          <div className="dashboard-page__grid">
-            <div className="dashboard-page__main">
-              <section className="dashboard-page__section">
-                <AlertsBoard alerts={stats?.alerts} loading={isLoading} />
-              </section>
-
-              <section className="dashboard-page__section dashboard-page__section--split">
-                <StatusDistributionChart ordersByStatus={stats?.ordersByStatus} loading={isLoading} />
-                <PriorityChart ordersByPriority={stats?.ordersByPriority} loading={isLoading} />
-              </section>
-            </div>
-
-            <aside className="dashboard-page__aside">
-              <MaisonAiPanel
-                title="Briefing"
-                emphasized="d'Atelier"
-                subtitle="Agent v2 · Sonnet 4.6"
-                body={<MorningBriefing />}
+            <MaisonKpiStrip items={kpis} />
+            {overdue === 0 ? (
+              <MaisonAiBanner
+                title="Atelier fluide"
+                body={
+                  <>
+                    Aucun retard significatif. Profite de la fenêtre pour interroger l'agent sur les{" "}
+                    <em>opportunités de pricing</em>.
+                  </>
+                }
               />
-            </aside>
-          </div>
+            ) : null}
+          </header>
+
+          <section className="dashboard-page__row dashboard-page__row--ops" aria-label="Pulse opérationnel">
+            <AlertsBoard alerts={stats?.alerts} loading={isLoading} />
+            <MorningBriefing />
+          </section>
+
+          <section className="dashboard-page__row dashboard-page__row--analytics" aria-label="Analyse pipeline">
+            <StatusDistributionChart ordersByStatus={stats?.ordersByStatus} loading={isLoading} />
+            <PriorityChart ordersByPriority={stats?.ordersByPriority} loading={isLoading} />
+          </section>
         </div>
       </div>
     </CommonLayout>
