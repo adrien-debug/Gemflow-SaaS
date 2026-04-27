@@ -1,67 +1,52 @@
 .dashboard-page {
   background: var(--m-ivory);
   min-height: 100%;
-  padding: 56px 48px;
+  padding: 56px 56px 56px;
   position: relative;
   overflow: hidden;
 
   &::before {
     content: "";
     position: absolute;
-    top: -120px;
-    right: -120px;
-    width: 640px;
-    height: 640px;
+    top: -160px;
+    right: -160px;
+    width: 720px;
+    height: 720px;
     background: radial-gradient(
       circle,
-      rgba(195, 154, 113, 0.08),
+      rgba(195, 154, 113, 0.1),
       transparent 60%
     );
-    filter: blur(40px);
+    filter: blur(60px);
     pointer-events: none;
     z-index: 0;
   }
 
-  &__inner {
-    max-width: 1440px;
-    margin: 0 auto;
+  &__grid {
     position: relative;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  &__hero {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  &__row {
+    max-width: 1640px;
+    margin: 0 auto;
     display: grid;
-    gap: 24px;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 40px;
     align-items: start;
+  }
 
-    &--ops {
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    }
-
-    &--analytics {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    }
+  &__main {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
   }
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1280px) {
   .dashboard-page {
     padding: 40px 32px;
 
-    &__row {
-      &--ops,
-      &--analytics {
-        grid-template-columns: 1fr;
-      }
+    &__grid {
+      grid-template-columns: 1fr;
     }
   }
 }

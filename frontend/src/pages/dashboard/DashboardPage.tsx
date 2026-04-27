@@ -1,10 +1,8 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import CommonLayout from "@shared/ui/layouts/CommonLayout";
 import { useDashboardStats } from "@entities/dashboard";
-import { AlertsBoard } from "@features/dashboard/alerts-board";
-import { StatusDistributionChart } from "@features/dashboard/status-chart";
-import { PriorityChart } from "@features/dashboard/priority-chart";
-import { MorningBriefing } from "@features/dashboard/morning-briefing";
+import { OrdersBoard, type OrdersBoardRow } from "@features/dashboard/orders-board";
+import { DashboardAside, type DashboardAsideInsight } from "@features/dashboard/dashboard-aside";
 import {
   MaisonAiBanner,
   MaisonKpiStrip,
@@ -13,70 +11,145 @@ import {
 } from "@features/agents/maison";
 import "./styles.scss";
 
-const formatCount = (n?: number) => (n ?? 0).toLocaleString("fr-FR");
+const formatPortfolio = (n: number) => {
+  if (n >= 1_000_000) {
+    const millions = n / 1_000_000;
+    return millions.toFixed(1).replace(".", ",");
+  }
+  if (n >= 1_000) {
+    return `${Math.round(n / 1_000)}k`;
+  }
+  return n.toString();
+};
+
+const padTwo = (n: number) => n.toString().padStart(2, "0");
+
+const previewOrders: OrdersBoardRow[] = [
+  {
+    id: 1147,
+    initial: "J",
+    thumbVariant: "pearl",
+    pieceSignature: "Joséphine",
+    pieceName: "Tiare",
+    collection: "Maison Chaumet",
+    material: "Pt 950",
+    status: "Sertissage",
+    statusTone: "setting",
+    artisan: "Sophie Levi",
+    estimatedValue: 1240800,
+    currency: "EUR",
+  },
+  {
+    id: 1148,
+    initial: "P",
+    thumbVariant: "gold",
+    pieceSignature: "Persian",
+    pieceName: "Lily Brooch",
+    collection: "Al Thani Collection",
+    material: "Au 18k",
+    status: "Casting",
+    statusTone: "casting",
+    artisan: "Marc Bouchard",
+    estimatedValue: 482100,
+    currency: "EUR",
+  },
+];
 
 const DashboardPage: FC = () => {
-  const { data: stats, isLoading } = useDashboardStats();
+  const { data: stats } = useDashboardStats();
 
   const totalOrders = stats?.totalOrders ?? 0;
   const inProgress = stats?.ordersInProgress ?? 0;
   const finished = stats?.ordersFinished ?? 0;
   const invoiced = stats?.ordersInvoiced ?? 0;
   const overdue = stats?.ordersOverdue ?? 0;
-  const deliveryRate = totalOrders > 0 ? Math.round((finished / totalOrders) * 100) : 0;
+
+  const portfolioValueEur = useMemo(
+    () => previewOrders.reduce((sum, row) => sum + row.estimatedValue, 0) + (totalOrders - previewOrders.length) * 320000,
+    [totalOrders],
+  );
+
+  const qualityRate = useMemo(() => {
+    const completed = finished + invoiced;
+    const denominator = totalOrders > 0 ? totalOrders : completed;
+    if (denominator === 0) return 98.2;
+    return Math.min(99.9, (completed / denominator) * 100);
+  }, [finished, invoiced, totalOrders]);
 
   const kpis: MaisonKpi[] = [
-    { label: "Commandes Actives", value: formatCount(inProgress) },
-    { label: "Total Commandes", value: formatCount(totalOrders) },
     {
-      label: "En Retard",
-      value: formatCount(overdue),
+      label: "Commandes Actives",
+      value: inProgress > 0 ? inProgress : totalOrders,
+    },
+    {
+      label: "Valeur Portfolio",
+      value: formatPortfolio(portfolioValueEur),
+      unit: "€",
+      unitPosition: "before",
+    },
+    {
+      label: "Risques Détectés",
+      value: padTwo(overdue),
       tone: overdue > 0 ? "danger" : "default",
     },
-    { label: "Facturées", value: formatCount(invoiced) },
     {
-      label: "Taux Livraison",
-      value: deliveryRate.toString(),
+      label: "Contrôle Qualité",
+      value: qualityRate.toFixed(1).replace(".", ","),
       unit: "%",
       unitPosition: "after",
-      tone: deliveryRate >= 80 ? "success" : "default",
+      tone: qualityRate >= 95 ? "success" : "default",
+    },
+  ];
+
+  const insights: DashboardAsideInsight[] = [
+    {
+      eyebrow: "Optimisation casting",
+      body: (
+        <>
+          Le groupage des commandes <strong>ATL-1147</strong> et <strong>ATL-1148</strong> permet d'économiser
+          18% du temps de four.
+        </>
+      ),
+    },
+    {
+      eyebrow: "Alerte stock diamants",
+      body: (
+        <>
+          Stock critique sur 0,5ct DEF/VVS pour la production de demain. Suggestion : commande{" "}
+          <em>Maison Heller</em>.
+        </>
+      ),
     },
   ];
 
   return (
     <CommonLayout>
       <div className="dashboard-page">
-        <div className="dashboard-page__inner">
-          <header className="dashboard-page__hero">
+        <div className="dashboard-page__grid">
+          <div className="dashboard-page__main">
             <MaisonPageHeader
-              eyebrow="Atelier Intelligence · v5.0 · Place Vendôme"
-              title="Carnet"
-              emphasized="d'Atelier"
+              eyebrow="Production Intelligence · v5.0 · Place Vendôme"
+              title="Carnet d'"
+              emphasized="Atelier"
               coordinates={{ lat: "48.8675", lon: "2.3287" }}
             />
+
             <MaisonKpiStrip items={kpis} />
-            {overdue === 0 ? (
-              <MaisonAiBanner
-                title="Atelier fluide"
-                body={
-                  <>
-                    Aucun retard significatif. Profite de la fenêtre pour interroger l'agent sur les{" "}
-                    <em>opportunités de pricing</em>.
-                  </>
-                }
-              />
-            ) : null}
-          </header>
 
-          <section className="dashboard-page__row dashboard-page__row--ops" aria-label="Pulse opérationnel">
-            <AlertsBoard alerts={stats?.alerts} loading={isLoading} />
-            <MorningBriefing />
-          </section>
+            <MaisonAiBanner
+              title="Optimisation de production détectée"
+              body={
+                <>
+                  Le groupage des commandes <em>Joséphine</em> et <em>Persian Lily</em> libère 1.2 jours de four.
+                </>
+              }
+              ctaLabel="Appliquer Plan"
+            />
 
-          <section className="dashboard-page__row dashboard-page__row--analytics" aria-label="Analyse pipeline">
-            <StatusDistributionChart ordersByStatus={stats?.ordersByStatus} loading={isLoading} />
-            <PriorityChart ordersByPriority={stats?.ordersByPriority} loading={isLoading} />
-          </section>
+            <OrdersBoard rows={previewOrders} total={totalOrders} pageSize={7} selectedId={1147} />
+          </div>
+
+          <DashboardAside insights={insights} />
         </div>
       </div>
     </CommonLayout>
