@@ -1,7 +1,6 @@
 import { FC } from "react";
-import Card from "antd/es/card";
-import Progress from "antd/es/progress";
 import { StatusCount } from "@entities/dashboard";
+import { MaisonCard } from "@features/agents/maison";
 import "./styles.scss";
 
 interface Props {
@@ -9,70 +8,48 @@ interface Props {
   loading?: boolean;
 }
 
-// Palette or/gris uniquement — dégradés de la brand color #C39A71
-const STATUS_COLORS: Record<string, string> = {
-  IN_CAD: "#C39A71",
-  PROTOTYPING: "#B8905F",
-  AT_THE_CASTING: "#A67D54",
-  RECEIVED_FROM_CASTING: "#D4AC84",
-  IN_MOUNTING: "#0C1220",
-  MOUNTING_COMPLETED: "#1A2640",
-  IN_SETTING: "#9C7B5A",
-  SETTING_COMPLETED: "#755C44",
-  POLISHED: "#C39A71",
-  QUALITY_CONTROL: "#4E3E2D",
-  QC_PASSED: "#A67D54",
-  READY_FOR_INVOICE: "#D4AC84",
-  INVOICED: "#9C7B5A",
-  FINISHED: "#0C1220",
-  REJECTED: "#4E3E2D",
-  RECYCLED: "#755C44",
-};
-
-const getStatusColor = (status: string): string => {
-  return STATUS_COLORS[status] || "#C39A71";
-};
+// Palette Maison : alternance or / marine selon l'index, pas de mapping rigide.
+const STATUS_PALETTE = ["#C39A71", "#131C30", "#A67D54", "#28324F", "#D4B391", "#3C4866"];
 
 const StatusDistributionChart: FC<Props> = ({ ordersByStatus = [], loading }) => {
   const total = ordersByStatus.reduce((sum, item) => sum + item.count, 0);
 
   return (
-    <Card 
-      title="Répartition par statut" 
-      className="status-distribution-card"
+    <MaisonCard
+      eyebrow="Pipeline atelier"
+      title="Répartition par"
+      emphasized="statut"
+      density="tight"
       loading={loading}
     >
-      <div className="status-list">
-        {ordersByStatus.length > 0 ? (
-          ordersByStatus.map((item) => {
-            const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
-            const color = getStatusColor(item.status);
-            
+      {ordersByStatus.length > 0 ? (
+        <div className="gf-status-list">
+          {ordersByStatus.map((item, idx) => {
+            const pct = total > 0 ? Math.round((item.count / total) * 100) : 0;
+            const color = STATUS_PALETTE[idx % STATUS_PALETTE.length];
             return (
-              <div key={item.status} className="status-item">
-                <div className="status-header">
-                  <span className="status-label" style={{ color }}>
-                    {item.statusLabel}
-                  </span>
-                  <span className="status-count">
-                    {item.count} ({percentage}%)
+              <div key={item.status} className="gf-status-row">
+                <div className="gf-status-row__head">
+                  <span className="gf-status-row__label">{item.statusLabel}</span>
+                  <span className="gf-status-row__count">
+                    {item.count}
+                    <span className="gf-status-row__pct">{pct}%</span>
                   </span>
                 </div>
-                <Progress
-                  percent={percentage}
-                  showInfo={false}
-                  strokeColor={color}
-                  trailColor="#F6F0EA"
-                  size="small"
-                />
+                <div className="gf-status-row__track" aria-hidden>
+                  <div
+                    className="gf-status-row__fill"
+                    style={{ width: `${pct}%`, background: color }}
+                  />
+                </div>
               </div>
             );
-          })
-        ) : (
-          <div className="no-data">Aucune commande</div>
-        )}
-      </div>
-    </Card>
+          })}
+        </div>
+      ) : (
+        <div className="gf-status-empty">Aucune commande</div>
+      )}
+    </MaisonCard>
   );
 };
 

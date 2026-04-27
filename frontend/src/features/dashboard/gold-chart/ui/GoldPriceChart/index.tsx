@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef } from "react";
-import Card from "antd/es/card";
+import { MaisonCard } from "@features/agents/maison";
 import "./styles.scss";
 
 declare global {
@@ -40,7 +40,6 @@ const GoldPriceChart: FC = () => {
 
     const initWidget = () => {
       if (containerRef.current && window.TradingView) {
-        // Clear previous widget
         const container = document.getElementById(containerId);
         if (container) {
           container.innerHTML = "";
@@ -54,7 +53,7 @@ const GoldPriceChart: FC = () => {
           theme: "light",
           style: "1",
           locale: "fr",
-          toolbar_bg: "#ffffff",
+          toolbar_bg: "#FFFCF5",
           enable_publishing: false,
           hide_top_toolbar: true,
           hide_legend: true,
@@ -65,19 +64,15 @@ const GoldPriceChart: FC = () => {
           hide_volume: true,
           studies: [],
           overrides: {
-            // Candles UP = Gold
             "mainSeriesProperties.candleStyle.upColor": "#C39A71",
             "mainSeriesProperties.candleStyle.borderUpColor": "#C39A71",
             "mainSeriesProperties.candleStyle.wickUpColor": "#C39A71",
-            // Candles DOWN = Black
-            "mainSeriesProperties.candleStyle.downColor": "#1a1a1a",
-            "mainSeriesProperties.candleStyle.borderDownColor": "#222222",
-            "mainSeriesProperties.candleStyle.wickDownColor": "#222222",
-            // White background
-            "paneProperties.background": "#ffffff",
-            "paneProperties.vertGridProperties.color": "#f0f0f0",
-            "paneProperties.horzGridProperties.color": "#f0f0f0",
-            // Hide volume
+            "mainSeriesProperties.candleStyle.downColor": "#131C30",
+            "mainSeriesProperties.candleStyle.borderDownColor": "#0A1224",
+            "mainSeriesProperties.candleStyle.wickDownColor": "#0A1224",
+            "paneProperties.background": "#FFFCF5",
+            "paneProperties.vertGridProperties.color": "#ECE5D5",
+            "paneProperties.horzGridProperties.color": "#ECE5D5",
             "volumePaneSize": "tiny",
           },
         });
@@ -98,7 +93,6 @@ const GoldPriceChart: FC = () => {
     }
 
     return () => {
-      // Cleanup on unmount
       const container = document.getElementById(containerId);
       if (container) {
         container.innerHTML = "";
@@ -107,15 +101,17 @@ const GoldPriceChart: FC = () => {
   }, []);
 
   return (
-    <Card 
-      title="Cours de l'Or (XAU/USD)" 
-      className="gold-price-chart-card"
-      extra={<span className="chart-live-badge">Live</span>}
+    <MaisonCard
+      eyebrow="XAU/USD · TradingView"
+      title="Cours de l'"
+      emphasized="Or"
+      density="flush"
+      actions={<span className="gf-maison-card-badge">Live</span>}
     >
       <div className="gold-price-chart-container">
         <div id="tradingview_gold_chart" ref={containerRef} className="tradingview-widget" />
       </div>
-    </Card>
+    </MaisonCard>
   );
 };
 

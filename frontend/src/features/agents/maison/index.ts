@@ -8,3 +8,4 @@ export { default as MaisonAiBanner } from "./components/MaisonAiBanner";
 export { default as MaisonInsightCard } from "./components/MaisonInsightCard";
 export { default as MaisonComposer } from "./components/MaisonComposer";
 export { default as MaisonAiPanel } from "./components/MaisonAiPanel";
+export { default as MaisonCard } from "./components/MaisonCard";

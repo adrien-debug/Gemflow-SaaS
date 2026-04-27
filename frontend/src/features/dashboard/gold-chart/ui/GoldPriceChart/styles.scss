@@ -1,75 +1,9 @@
-$gold: #C39A71;
-$gold-light: #D4AC84;
-$sider-bg: #0C1220;
-
-.gold-price-chart-card {
-  border-radius: 12px;
-  height: 100%;
-  border: 1px solid #EDECE9;
-  overflow: hidden;
-  transition: all 0.25s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-
-  &:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    border-color: rgba($gold, 0.2);
-  }
-
-  .ant-card-head {
-    background: $sider-bg;
-    border-bottom: 1px solid rgba($gold, 0.15);
-    border-radius: 12px 12px 0 0;
-    padding: 14px 18px;
-    min-height: auto;
-  }
-
-  .ant-card-head-title {
-    font-weight: 600;
-    font-size: 14px;
-    color: $gold;
-    letter-spacing: 0.3px;
-  }
-
-  .ant-card-body {
-    padding: 0;
-    background: #fff;
-  }
-
-  .chart-live-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 10px;
-    background: rgba($gold, 0.1);
-    border: 1px solid rgba($gold, 0.2);
-    color: $gold-light;
-    border-radius: 20px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-
-    &::before {
-      content: "";
-      width: 5px;
-      height: 5px;
-      background: $gold;
-      border-radius: 50%;
-      margin-right: 5px;
-      animation: pulse 1.5s infinite;
-    }
-  }
-
-  .gold-price-chart-container {
-    height: 320px;
-  }
-
-  .tradingview-widget {
-    height: 100%;
-    width: 100%;
-  }
+.gold-price-chart-container {
+  height: 320px;
+  background: var(--m-paper, #FFFCF5);
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+.tradingview-widget {
+  height: 100%;
+  width: 100%;
 }

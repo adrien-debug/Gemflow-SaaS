@@ -1,14 +1,7 @@
 import { FC } from "react";
-import Card from "antd/es/card";
-import List from "antd/es/list";
 import { Link } from "react-router";
-import {
-  WarningOutlined,
-  ClockCircleOutlined,
-  FireOutlined,
-  RobotOutlined,
-} from "@ant-design/icons";
 import { OrderAlert } from "@entities/dashboard";
+import { MaisonCard } from "@features/agents/maison";
 import "./styles.scss";
 
 interface Props {
@@ -16,105 +9,76 @@ interface Props {
   loading?: boolean;
 }
 
-const GOLD = "#C39A71";
-const GOLD_DARK = "#A67D54";
-const SIDER_BG = "#0C1220";
+type AlertTone = "danger" | "warning" | "info";
 
-const getAlertConfig = (alertType: string) => {
-  switch (alertType) {
-    case "OVERDUE":
-      return {
-        icon: <WarningOutlined />,
-        label: "En retard",
-        bg: "rgba(195, 154, 113, 0.12)",
-        color: GOLD_DARK,
-      };
-    case "AT_RISK":
-      return {
-        icon: <ClockCircleOutlined />,
-        label: "À risque",
-        bg: "rgba(12, 18, 32, 0.06)",
-        color: SIDER_BG,
-      };
-    case "HIGH_PRIORITY":
-      return {
-        icon: <FireOutlined />,
-        label: "Priorité haute",
-        bg: "rgba(195, 154, 113, 0.18)",
-        color: GOLD_DARK,
-      };
-    default:
-      return {
-        icon: <ClockCircleOutlined />,
-        label: alertType,
-        bg: "rgba(0, 0, 0, 0.04)",
-        color: "rgba(0, 0, 0, 0.55)",
-      };
-  }
+const TONE_BY_TYPE: Record<string, AlertTone> = {
+  OVERDUE: "danger",
+  AT_RISK: "warning",
+  HIGH_PRIORITY: "warning",
 };
+
+const LABEL_BY_TYPE: Record<string, string> = {
+  OVERDUE: "En retard",
+  AT_RISK: "À risque",
+  HIGH_PRIORITY: "Priorité haute",
+};
+
+const getTone = (alertType: string): AlertTone => TONE_BY_TYPE[alertType] ?? "info";
+const getLabel = (alertType: string): string => LABEL_BY_TYPE[alertType] ?? alertType;
 
 const AlertsList: FC<Props> = ({ alerts = [], loading }) => {
   const hasAlerts = alerts.length > 0;
+  const count = alerts.length;
 
   return (
-    <Card
-      title={
-        <span className="alerts-title">
-          <RobotOutlined style={{ marginRight: 8 }} />
-          Prédictions & Alertes
-        </span>
-      }
-      className="alerts-card"
+    <MaisonCard
+      eyebrow="Atelier IA"
+      title="Prédictions"
+      emphasized="& Alertes"
+      density="tight"
       loading={loading}
+      actions={
+        hasAlerts ? (
+          <span className="gf-alerts-counter" data-tone="danger">
+            {count.toString().padStart(2, "0")}
+          </span>
+        ) : (
+          <span className="gf-alerts-counter" data-tone="quiet">
+            00
+          </span>
+        )
+      }
     >
       {hasAlerts ? (
-        <List
-          dataSource={alerts}
-          renderItem={(alert) => {
-            const config = getAlertConfig(alert.alertType);
+        <ul className="gf-alerts-list">
+          {alerts.map((alert) => {
+            const tone = getTone(alert.alertType);
             return (
-              <List.Item className="alert-item">
-                <div className="alert-content">
-                  <span
-                    className="alert-tag"
-                    style={{ background: config.bg, color: config.color }}
-                  >
-                    {config.icon}
-                    <span style={{ marginLeft: 4 }}>{config.label}</span>
-                  </span>
-                  <Link to={`/orders/${alert.orderId}`} className="alert-order-name">
-                    {alert.orderName}
-                  </Link>
-                  <span className="alert-message">{alert.message}</span>
+              <li key={`${alert.orderId}-${alert.alertType}`} className="gf-alerts-row" data-tone={tone}>
+                <div className="gf-alerts-row__rule" aria-hidden />
+                <div className="gf-alerts-row__body">
+                  <div className="gf-alerts-row__head">
+                    <span className="gf-alerts-row__tag">{getLabel(alert.alertType)}</span>
+                    <Link to={`/orders/${alert.orderId}`} className="gf-alerts-row__order">
+                      {alert.orderName}
+                    </Link>
+                  </div>
+                  <p className="gf-alerts-row__msg">{alert.message}</p>
                 </div>
-              </List.Item>
+              </li>
             );
-          }}
-        />
+          })}
+        </ul>
       ) : (
-        <div className="no-alerts">
-          <CheckCircleIcon />
-          <p>Aucune alerte - Tout est sous contrôle !</p>
+        <div className="gf-alerts-empty">
+          <p className="gf-alerts-empty__title">Tableau dégagé</p>
+          <p className="gf-alerts-empty__body">
+            Aucune alerte critique pour la fenêtre courante.
+          </p>
         </div>
       )}
-    </Card>
+    </MaisonCard>
   );
 };
-
-const CheckCircleIcon = () => (
-  <svg
-    width="48"
-    height="48"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke={GOLD}
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-    <polyline points="22,4 12,14.01 9,11.01" />
-  </svg>
-);
 
 export default AlertsList;

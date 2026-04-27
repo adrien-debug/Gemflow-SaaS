@@ -1,76 +1,141 @@
-$gold: #C39A71;
-$gold-line: rgba(195, 154, 113, 0.35);
-$sider-bg: #131C30;
+.gf-alerts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
 
-.alerts-card {
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  height: 100%;
-  border: 1px solid $gold-line;
+.gf-alerts-row {
+  display: grid;
+  grid-template-columns: 3px 1fr;
+  gap: 14px;
+  padding: 14px 4px;
+  border-bottom: 0.5px solid rgba(10, 12, 16, 0.06);
 
-  .ant-card-head {
-    background: $sider-bg;
-    border-bottom: 1px solid $gold-line;
-    border-radius: 12px 12px 0 0;
+  &:last-child {
+    border-bottom: none;
   }
 
-  .alerts-title {
-    font-weight: 600;
+  &__rule {
+    width: 3px;
+    border-radius: 2px;
+    align-self: stretch;
+  }
+
+  &[data-tone="danger"] &__rule {
+    background: var(--m-danger, #8E2E20);
+  }
+  &[data-tone="warning"] &__rule {
+    background: var(--m-warning, #A6741F);
+  }
+  &[data-tone="info"] &__rule {
+    background: var(--m-info, #324863);
+  }
+
+  &__body {
     display: flex;
-    align-items: center;
-    color: white;
-
-    .anticon {
-      color: $gold;
-    }
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
   }
 
-  .alert-item {
-    padding: 12px 0;
-    border-bottom: 1px solid #f0f0f0;
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  .alert-content {
+  &__head {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 12px;
     flex-wrap: wrap;
   }
 
-  .alert-order-name {
+  &__tag {
+    font-family: var(--ff-mono, "Geist Mono", monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     font-weight: 500;
-    color: $gold;
-    
+  }
+
+  &[data-tone="danger"] &__tag {
+    color: var(--m-danger, #8E2E20);
+  }
+  &[data-tone="warning"] &__tag {
+    color: var(--m-warning, #A6741F);
+  }
+  &[data-tone="info"] &__tag {
+    color: var(--m-info, #324863);
+  }
+
+  &__order {
+    font-family: var(--ff-display, "Inter Tight", sans-serif);
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--m-ink-1000, #0F0F0E);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+
     &:hover {
-      text-decoration: underline;
-      color: darken($gold, 10%);
+      border-bottom-color: var(--m-gold-line, rgba(195, 154, 113, 0.35));
     }
   }
 
-  .alert-message {
-    color: rgba(0, 0, 0, 0.65);
-    font-size: 13px;
+  &__msg {
+    margin: 0;
+    font-family: var(--ff-body, "Inter", sans-serif);
+    font-size: 12.5px;
+    color: var(--m-ink-700, #3D3A33);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+  }
+}
+
+.gf-alerts-empty {
+  padding: 24px 4px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__title {
+    margin: 0;
+    font-family: var(--ff-mono, "Geist Mono", monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--m-success, #4F6A41);
+    font-weight: 500;
   }
 
-  .no-alerts {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
+  &__body {
+    margin: 0;
+    font-family: var(--ff-serif, "Instrument Serif", Georgia, serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--m-ink-500, #6B655A);
+    letter-spacing: -0.005em;
+    line-height: 1.5;
+  }
+}
 
-    svg {
-      stroke: $gold;
-    }
+.gf-alerts-counter {
+  font-family: var(--ff-mono, "Geist Mono", monospace);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 2px;
+  border: 1px solid;
+  font-variant-numeric: tabular-nums;
 
-    p {
-      margin-top: 16px;
-      font-size: 16px;
-      color: rgba(0, 0, 0, 0.65);
-    }
+  &[data-tone="danger"] {
+    color: var(--m-danger, #8E2E20);
+    border-color: rgba(142, 46, 32, 0.3);
+    background: var(--m-danger-soft, #F1DAD3);
+  }
+
+  &[data-tone="quiet"] {
+    color: var(--m-ink-400, #8E887C);
+    border-color: rgba(10, 12, 16, 0.1);
+    background: var(--m-paper-2, #FBF7EE);
   }
 }
