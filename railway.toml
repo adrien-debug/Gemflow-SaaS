@@ -1,8 +1,8 @@
 [project]
-id = "3526c289-1293-4d84-9022-7b8d0258f597"
+id = "3c25e942-e8fc-45b6-b591-e77d8df26390"
 
 [service]
-id = "fd9d2ada-f167-4451-9577-7ca99aeb2a39"
+id = "025d9bc4-cb26-4e0b-8103-a3e7813fff25"
 
 [environment]
 name = "production"

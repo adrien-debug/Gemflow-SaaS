@@ -1,6 +1,5 @@
 package io.hearstcorporation.atelier.config.security;
 
-import io.hearstcorporation.atelier.config.keycloak.property.KeycloakProperties;
 import io.hearstcorporation.atelier.controller.administration.ClientController;
 import io.hearstcorporation.atelier.controller.administration.SupplierController;
 import io.hearstcorporation.atelier.controller.dev.DevController;
@@ -55,9 +54,8 @@ public class SecurityConfig {
     private final static String SWAGGER_UI = "/swagger-ui" + ALL_REGEX;
 
     @Bean
-    public AuthUserJwtTokenConverter authenticationConverter(AuthUserService authUserService,
-                                                             KeycloakProperties keycloakProperties) {
-        return new AuthUserJwtTokenConverter(authUserService, keycloakProperties);
+    public AuthUserJwtTokenConverter authenticationConverter(AuthUserService authUserService) {
+        return new AuthUserJwtTokenConverter(authUserService);
     }
 
     @Bean
@@ -65,8 +63,7 @@ public class SecurityConfig {
                                                                  AuthUserJwtTokenConverter authenticationConverter,
                                                                  CorsConfigurationSource corsConfigurationSource,
                                                                  DelegatedAccessDeniedHandler delegatedAccessDeniedHandler) throws Exception {
-        // ✅ Authentication enabled via Keycloak OAuth2/OIDC
-        log.info("✅ Authentication ENABLED - JWT validation via Keycloak at issuer URI");
+        log.info("Authentication ENABLED - JWT validation via Supabase Auth (JWKS)");
         
         http.oauth2ResourceServer(resourceServer ->
                 resourceServer.jwt(jwtDecoder -> jwtDecoder.jwtAuthenticationConverter(authenticationConverter)));

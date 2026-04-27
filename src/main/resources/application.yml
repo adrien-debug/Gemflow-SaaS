@@ -14,7 +14,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${APP_JWT_ISSUER_URI:https://placeholder-keycloak.com/realms/atelier}
+          jwk-set-uri: ${SUPABASE_URL}/auth/v1/.well-known/jwks.json
+          issuer-uri: ${SUPABASE_URL}/auth/v1
+          audiences:
+            - ${SUPABASE_JWT_AUDIENCE:authenticated}
   jpa:
     open-in-view: false
     hibernate:
@@ -51,14 +54,13 @@ email:
     sender: ${APP_EMAIL_SENDER:noreply@gemsflow.com}
 
 organization:
-  name: ${APP_KEYCLOAK_ORGANIZATION:Gemsflow}
+  name: ${APP_ORGANIZATION_NAME:Gemsflow}
 
-keycloak:
-  url: ${APP_KEYCLOAK_URL:https://placeholder-keycloak.com}
-  realm: ${APP_KEYCLOAK_REALM:atelier}
-  organization: ${APP_KEYCLOAK_ORGANIZATION:Gemsflow}
-  client-id: ${APP_KEYCLOAK_CLIENT_ID:atelier-client}
-  client-secret: ${APP_KEYCLOAK_CLIENT_SECRET:}
+supabase:
+  url: ${SUPABASE_URL}
+  service-role-key: ${SUPABASE_SERVICE_ROLE_KEY}
+  anon-key: ${SUPABASE_ANON_KEY}
+  jwt-audience: ${SUPABASE_JWT_AUDIENCE:authenticated}
 
 cors:
   # Comma-separated list supported via APP_CORS_ALLOWED_ORIGINS.

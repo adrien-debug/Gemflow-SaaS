@@ -11,8 +11,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          # Désactivé en mode dev
-          issuer-uri: ${APP_JWT_ISSUER_URI:}
+          # Profil dev : pas de validation JWT (issuer-uri vide → security désactivée)
+          issuer-uri: ${SUPABASE_URL:}/auth/v1
   jpa:
     open-in-view: false
     hibernate:
@@ -42,14 +42,13 @@ email:
   enable: ${APP_EMAIL_ENABLE:false}
 
 organization:
-  name: ${APP_KEYCLOAK_ORGANIZATION:atelier}
+  name: ${APP_ORGANIZATION_NAME:atelier}
 
-keycloak:
-  url: ${APP_KEYCLOAK_URL:http://localhost:8081}
-  realm: ${APP_KEYCLOAK_REALM:master}
-  organization: ${APP_KEYCLOAK_ORGANIZATION:atelier}
-  client-id: ${APP_KEYCLOAK_CLIENT_ID:atelier-client}
-  client-secret: ${APP_KEYCLOAK_CLIENT_SECRET:}
+supabase:
+  url: ${SUPABASE_URL:https://placeholder.supabase.co}
+  service-role-key: ${SUPABASE_SERVICE_ROLE_KEY:dev-service-role-key}
+  anon-key: ${SUPABASE_ANON_KEY:dev-anon-key}
+  jwt-audience: ${SUPABASE_JWT_AUDIENCE:authenticated}
 
 cors:
   allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:7101,http://localhost:3000,http://localhost:5173}

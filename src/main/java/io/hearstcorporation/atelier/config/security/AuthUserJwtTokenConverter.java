@@ -1,13 +1,9 @@
 package io.hearstcorporation.atelier.config.security;
 
-import io.hearstcorporation.atelier.config.keycloak.property.KeycloakProperties;
 import io.hearstcorporation.atelier.security.model.AuthUser;
 import io.hearstcorporation.atelier.security.service.AuthUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.ListUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.AccessDeniedException;
@@ -20,24 +16,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthUserJwtTokenConverter implements Converter<Jwt, AuthUserJwtToken> {
 
-    private static final String ORGANIZATION_CLAIM = "organization";
-
     private final AuthUserService authUserService;
-    private final KeycloakProperties keycloakProperties;
 
     @Override
     public final AuthUserJwtToken convert(@NonNull Jwt jwt) {
-        String oidValue = jwt.getSubject();
-        UUID oid = UUID.fromString(oidValue);
+        UUID oid;
+        try {
+            oid = UUID.fromString(jwt.getSubject());
+        } catch (IllegalArgumentException e) {
+            log.error("Jwt token subject is not a valid UUID: {}", jwt.getSubject());
+            throw new AccessDeniedException("Invalid token subject");
+        }
         AuthUser authUser = authUserService.findByOid(oid);
         String role = authUser.role().code();
-        List<String> organizations = ListUtils.emptyIfNull(jwt.getClaimAsStringList(ORGANIZATION_CLAIM));
-        // In dev/compat mode, allow tokens without organization claim.
-        if (CollectionUtils.isNotEmpty(organizations)
-                && !organizations.contains(keycloakProperties.getOrganization())) {
-            log.error("Jwt token has unsupported organizations {}", StringUtils.join(organizations, ","));
-            throw new AccessDeniedException("Jwt token has unsupported organizations");
-        }
         return new AuthUserJwtToken(authUser, jwt, AuthorityUtils.toRoleGrantedAuthorities(List.of(role)));
     }
 }

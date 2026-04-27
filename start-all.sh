@@ -9,10 +9,6 @@ export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
 export DATABASE_NAME=atelier
 export DATABASE_USERNAME=postgres
 export DATABASE_PASSWORD=postgres
-export KEYCLOAK_ADMIN_USERNAME=admin
-export KEYCLOAK_ADMIN_PASSWORD=admin
-export KEYCLOAK_HOSTNAME=localhost
-export KEYCLOAK_HOSTNAME_ADMIN=localhost
 
 echo "🔍 Vérification de Docker..."
 

@@ -11,7 +11,7 @@ public enum ErrorCode {
     NOT_FOUND("No data found."),
     ALREADY_EXISTS("Data already exists."),
     CANNOT_DELETE("Data cannot be deleted."),
-    KEYCLOAK_ERROR("The action cannot be performed at the moment. Please try again later."),
+    IDENTITY_PROVIDER_ERROR("The action cannot be performed at the moment. Please try again later."),
     EMAIL_ERROR("The action cannot be performed at the moment. Please try again later."),
     TOKEN_EXPIRED("Sorry, this link expired. Please ask platform admin to resend it."),
     UNAUTHORIZED("User is not logged in."),

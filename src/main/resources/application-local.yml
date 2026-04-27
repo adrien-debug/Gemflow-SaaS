@@ -11,7 +11,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${APP_JWT_ISSUER_URI:http://localhost:8081/realms/master}
+          jwk-set-uri: ${SUPABASE_URL}/auth/v1/.well-known/jwks.json
+          issuer-uri: ${SUPABASE_URL}/auth/v1
+          audiences:
+            - ${SUPABASE_JWT_AUDIENCE:authenticated}
   jpa:
     open-in-view: false
     hibernate:
@@ -48,14 +51,13 @@ email:
     sender: ${APP_EMAIL_SENDER:noreply@atelier.local}
 
 organization:
-  name: ${APP_KEYCLOAK_ORGANIZATION:atelier}
+  name: ${APP_ORGANIZATION_NAME:atelier}
 
-keycloak:
-  url: ${APP_KEYCLOAK_URL:http://localhost:8081}
-  realm: ${APP_KEYCLOAK_REALM:master}
-  organization: ${APP_KEYCLOAK_ORGANIZATION:atelier}
-  client-id: ${APP_KEYCLOAK_CLIENT_ID:atelier-client}
-  client-secret: ${APP_KEYCLOAK_CLIENT_SECRET:}
+supabase:
+  url: ${SUPABASE_URL}
+  service-role-key: ${SUPABASE_SERVICE_ROLE_KEY}
+  anon-key: ${SUPABASE_ANON_KEY}
+  jwt-audience: ${SUPABASE_JWT_AUDIENCE:authenticated}
 
 cors:
   allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:7101,http://localhost:3000,http://localhost:5173}
@@ -84,8 +86,8 @@ file:
 
 # QuickBooks Integration
 quickbooks:
-  client-id: ${QUICKBOOKS_CLIENT_ID:ABfDxzQ1jwvKUva1mMgPSsX0Xi01Jqkr5UAdWsX6SYpvqRu7tb}
-  client-secret: ${QUICKBOOKS_CLIENT_SECRET:j4iWmw6k0hnQVjNg9ztZkRs5FrB2qTenI02tW3Vp}
+  client-id: ${QUICKBOOKS_CLIENT_ID:}
+  client-secret: ${QUICKBOOKS_CLIENT_SECRET:}
   redirect-uri: ${QUICKBOOKS_REDIRECT_URI:http://localhost:7001/api/v1/integrations/quickbooks/callback}
   environment: ${QUICKBOOKS_ENV:sandbox}
 

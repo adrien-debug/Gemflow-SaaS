@@ -1,11 +1,11 @@
-package io.hearstcorporation.atelier.service.keycloak;
+package io.hearstcorporation.atelier.service.identity;
 
 import io.hearstcorporation.atelier.dto.model.user.UserCreateDto;
 import io.hearstcorporation.atelier.dto.model.user.UserUpdateDto;
 
 import java.util.UUID;
 
-public interface KeycloakService {
+public interface IdentityProviderService {
 
     UUID createUser(UserCreateDto userCreateDto);
 

@@ -13,7 +13,7 @@ import io.hearstcorporation.atelier.exception.FileUploadException;
 import io.hearstcorporation.atelier.exception.IllegalStateException;
 import io.hearstcorporation.atelier.exception.IncorrectPasswordException;
 import io.hearstcorporation.atelier.exception.InvalidDataException;
-import io.hearstcorporation.atelier.exception.KeycloakException;
+import io.hearstcorporation.atelier.exception.IdentityProviderException;
 import io.hearstcorporation.atelier.exception.NotFoundException;
 import io.hearstcorporation.atelier.exception.ServiceException;
 import io.hearstcorporation.atelier.exception.TokenExpiredException;
@@ -180,9 +180,9 @@ public class ExceptionControllerAdvice {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(KeycloakException.class)
-    public ErrorDescription handleKeycloakException(final KeycloakException ex) {
-        log.error("Keycloak exception", ex);
+    @ExceptionHandler(IdentityProviderException.class)
+    public ErrorDescription handleIdentityProviderException(final IdentityProviderException ex) {
+        log.error("Identity provider exception", ex);
         return generateErrorDescription(ex);
     }
 

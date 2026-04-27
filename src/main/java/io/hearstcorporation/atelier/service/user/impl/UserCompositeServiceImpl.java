@@ -13,7 +13,7 @@ import io.hearstcorporation.atelier.model.user.TokenType;
 import io.hearstcorporation.atelier.model.user.User;
 import io.hearstcorporation.atelier.service.email.EmailService;
 import io.hearstcorporation.atelier.service.frontend.FrontendService;
-import io.hearstcorporation.atelier.service.keycloak.KeycloakService;
+import io.hearstcorporation.atelier.service.identity.IdentityProviderService;
 import io.hearstcorporation.atelier.service.user.TokenService;
 import io.hearstcorporation.atelier.service.user.UserCompositeService;
 import io.hearstcorporation.atelier.service.user.UserService;
@@ -30,7 +30,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserCompositeServiceImpl implements UserCompositeService {
 
-    private final KeycloakService keycloakService;
+    private final IdentityProviderService identityProviderService;
     private final UserService userService;
     private final TokenService tokenService;
     private final FrontendService frontendService;
@@ -40,13 +40,13 @@ public class UserCompositeServiceImpl implements UserCompositeService {
     @Transactional
     public UserDto createUser(UserCreateDto userCreateDto) {
         userService.userNotExistsOrThrow(userCreateDto);
-        UUID oid = keycloakService.createUser(userCreateDto);
+        UUID oid = identityProviderService.createUser(userCreateDto);
         User user;
         try {
             user = userService.createUser(userCreateDto, oid);
         } catch (Exception e) {
             log.error("Error creating user: {}", e.getMessage(), e);
-            keycloakService.deleteUser(oid);
+            identityProviderService.deleteUser(oid);
             throw e;
         }
         TokenDto token = tokenService.createTokenDto(user, TokenType.RESTORE_PASSWORD);
@@ -60,7 +60,7 @@ public class UserCompositeServiceImpl implements UserCompositeService {
     public UserDto updateUser(Long userId, UserUpdateDto userUpdateDto) {
         User user = userService.getUser(userId);
         userService.updateUser(user, userUpdateDto);
-        keycloakService.updateUser(user.getOid(), userUpdateDto);
+        identityProviderService.updateUser(user.getOid(), userUpdateDto);
         return userService.getUserDto(user.getId());
     }
 
@@ -69,7 +69,7 @@ public class UserCompositeServiceImpl implements UserCompositeService {
     public UserDto activateUser(Long userId, boolean active) {
         User user = userService.getUser(userId);
         userService.activateUser(user, active);
-        keycloakService.activateUser(user.getOid(), active);
+        identityProviderService.activateUser(user.getOid(), active);
         return userService.getUserDto(user.getId());
     }
 
@@ -78,7 +78,7 @@ public class UserCompositeServiceImpl implements UserCompositeService {
     public void deleteUser(Long userId) {
         User user = userService.getUser(userId);
         userService.deleteUser(user);
-        keycloakService.deleteUser(user.getOid());
+        identityProviderService.deleteUser(user.getOid());
     }
 
     @Override
@@ -102,7 +102,7 @@ public class UserCompositeServiceImpl implements UserCompositeService {
     public void resetPassword(ResetPasswordDto resetPasswordDto) {
         Token token = tokenService.getToken(resetPasswordDto.getTokenValue(), TokenType.RESTORE_PASSWORD);
         User user = token.getUser();
-        keycloakService.changePassword(user.getOid(), resetPasswordDto.getNewPassword());
+        identityProviderService.changePassword(user.getOid(), resetPasswordDto.getNewPassword());
         tokenService.deleteToken(token);
     }
 
@@ -110,9 +110,9 @@ public class UserCompositeServiceImpl implements UserCompositeService {
     @Transactional
     public void updateCurrentUserPassword(ChangePasswordDto changePasswordDto) {
         User user = userService.getCurrentUser();
-        if (!keycloakService.isCurrentPasswordValid(user.getOid(), changePasswordDto.getCurrentPassword())) {
+        if (!identityProviderService.isCurrentPasswordValid(user.getOid(), changePasswordDto.getCurrentPassword())) {
             throw new IncorrectPasswordException();
         }
-        keycloakService.changePassword(user.getOid(), changePasswordDto.getNewPassword());
+        identityProviderService.changePassword(user.getOid(), changePasswordDto.getNewPassword());
     }
 }
