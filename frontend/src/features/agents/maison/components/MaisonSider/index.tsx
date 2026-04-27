@@ -8,6 +8,7 @@ interface MaisonSiderProps {
   bottomItems?: MenuItem[];
   collapsed: boolean;
   onToggle: () => void;
+  hideToggle?: boolean;
   brandTitle?: string;
   brandEmphasized?: string;
   brandSubtitle?: string;
@@ -25,6 +26,7 @@ const MaisonSider: FC<MaisonSiderProps> = ({
   bottomItems,
   collapsed,
   onToggle,
+  hideToggle = false,
   brandTitle = "Gem",
   brandEmphasized = "flow",
   brandSubtitle = "Atelier Intelligence",
@@ -87,13 +89,15 @@ const MaisonSider: FC<MaisonSiderProps> = ({
           )}
         </div>
         {!collapsed ? <div className="gf-maison-sider__brand-sub">{brandSubtitle}</div> : null}
-        <button
-          type="button"
-          className="gf-maison-sider__toggle"
-          onClick={onToggle}
-          aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
-          aria-expanded={!collapsed}
-        />
+        {!hideToggle ? (
+          <button
+            type="button"
+            className="gf-maison-sider__toggle"
+            onClick={onToggle}
+            aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
+            aria-expanded={!collapsed}
+          />
+        ) : null}
       </div>
 
       <nav className="gf-maison-sider__nav">
