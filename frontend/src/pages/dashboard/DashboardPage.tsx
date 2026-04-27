@@ -5,7 +5,6 @@ import { AlertsBoard } from "@features/dashboard/alerts-board";
 import { StatusDistributionChart } from "@features/dashboard/status-chart";
 import { PriorityChart } from "@features/dashboard/priority-chart";
 import { MorningBriefing } from "@features/dashboard/morning-briefing";
-import { MetalPricesWidget } from "@features/ai-agent/metal-prices-widget/MetalPricesWidget";
 import {
   MaisonAiBanner,
   MaisonAiPanel,
@@ -58,18 +57,7 @@ const DashboardPage: FC = () => {
 
           <MaisonKpiStrip items={kpis} />
 
-          {overdue > 0 ? (
-            <MaisonAiBanner
-              title="Attention aux délais"
-              body={
-                <>
-                  <strong>{formatCount(overdue)}</strong> commande
-                  {overdue > 1 ? "s" : ""} en retard. Demande à l'agent un <em>point client par client</em> avant la
-                  prochaine revue.
-                </>
-              }
-            />
-          ) : (
+          {overdue === 0 ? (
             <MaisonAiBanner
               title="Atelier fluide"
               body={
@@ -79,7 +67,7 @@ const DashboardPage: FC = () => {
                 </>
               }
             />
-          )}
+          ) : null}
 
           <div className="dashboard-page__grid">
             <div className="dashboard-page__main">
@@ -100,10 +88,6 @@ const DashboardPage: FC = () => {
                 subtitle="Agent v2 · Sonnet 4.6"
                 body={<MorningBriefing />}
               />
-
-              <div className="dashboard-page__metals">
-                <MetalPricesWidget />
-              </div>
             </aside>
           </div>
         </div>
