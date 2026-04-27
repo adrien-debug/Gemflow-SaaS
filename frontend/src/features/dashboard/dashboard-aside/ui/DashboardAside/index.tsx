@@ -25,27 +25,24 @@ const DashboardAside: FC<DashboardAsideProps> = ({ insights }) => {
   return (
     <aside className="gf-dashboard-aside">
       <div className="gf-dashboard-aside__cover">
-        <span className="gf-dashboard-aside__orb" aria-hidden />
         <h2 className="gf-dashboard-aside__title">
           Atelier <em>AI</em>
         </h2>
-        <span className="gf-dashboard-aside__status">
-          <span className="gf-dashboard-aside__status-dot" aria-hidden />
-          Neural Engine Active
-        </span>
       </div>
 
-      <div className="gf-dashboard-aside__body">
-        <p className="gf-dashboard-aside__section-title">Insights actionnables</p>
-        <div className="gf-dashboard-aside__insights">
-          {insights.map((insight, idx) => (
-            <article key={idx} className="gf-dashboard-aside__insight">
-              <p className="gf-dashboard-aside__insight-eyebrow">{insight.eyebrow}</p>
-              <div className="gf-dashboard-aside__insight-body">{insight.body}</div>
-            </article>
-          ))}
+      {insights.length > 0 && (
+        <div className="gf-dashboard-aside__body">
+          <p className="gf-dashboard-aside__section-title">Insights actionnables</p>
+          <div className="gf-dashboard-aside__insights">
+            {insights.map((insight, idx) => (
+              <article key={idx} className="gf-dashboard-aside__insight">
+                <p className="gf-dashboard-aside__insight-eyebrow">{insight.eyebrow}</p>
+                <div className="gf-dashboard-aside__insight-body">{insight.body}</div>
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="gf-dashboard-aside__composer">
         <MaisonComposer
@@ -53,7 +50,7 @@ const DashboardAside: FC<DashboardAsideProps> = ({ insights }) => {
           onChange={setDraft}
           onSubmit={handleSubmit}
           placeholder="Demander une analyse contextuelle…"
-          modelLabel="GPT-4O · Workshop"
+          modelLabel="Atelier · Claude"
           ctaLabel="Envoyer"
         />
       </div>

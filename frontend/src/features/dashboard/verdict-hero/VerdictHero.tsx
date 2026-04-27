@@ -3,37 +3,29 @@ import "./verdict-hero.scss";
 
 interface VerdictHeroProps {
   ordersInProgress: number;
-  alerts: Array<{ orderId: number; orderName: string; alertType: string; daysOverdue?: number }>;
-  ordersByStatus?: Record<string, number>;
+  overdueCount: number;
+  atRiskCount: number;
 }
 
-const VerdictHero: FC<VerdictHeroProps> = ({ ordersInProgress, alerts }) => {
-  const alertList = alerts.slice(0, 3);
-  const criticalCount = alertList.filter((a) => a.alertType === "OVERDUE").length;
-
-  const lines: string[] = [];
-
-  if (criticalCount > 0) {
-    const pieceNames = alertList.filter((a) => a.alertType === "OVERDUE").map((a) => a.orderName);
-    lines.push(`${criticalCount} pièce${criticalCount > 1 ? "s" : ""} en retard : ${pieceNames.join(", ")}.`);
+const VerdictHero: FC<VerdictHeroProps> = ({ ordersInProgress, overdueCount, atRiskCount }) => {
+  if (overdueCount === 0 && atRiskCount === 0) {
+    return (
+      <div className="gf-verdict-hero">
+        <p className="gf-verdict-hero__text">
+          L'atelier tient ses calendriers. {ordersInProgress} commandes actives, zéro risque immédiat.
+        </p>
+      </div>
+    );
   }
 
-  if (alertList.some((a) => a.alertType === "AT_RISK")) {
-    lines.push("Deux commandes approchent de la deadline critique.");
-  }
-
-  if (ordersInProgress > 0) {
-    lines.push(`${ordersInProgress} commandes actives dans l'atelier.`);
-  }
-
-  const verdict =
-    lines.length > 0
-      ? lines.join(" ")
-      : `L'atelier tient ses calendriers. ${ordersInProgress} commandes en cours, zéro risque immédiat.`;
+  const parts: string[] = [];
+  if (overdueCount > 0) parts.push(`${overdueCount} pièce${overdueCount > 1 ? "s" : ""} en retard`);
+  if (atRiskCount > 0) parts.push(`${atRiskCount} à risque`);
+  parts.push(`${ordersInProgress} actives`);
 
   return (
     <div className="gf-verdict-hero">
-      <p className="gf-verdict-hero__text">{verdict}</p>
+      <p className="gf-verdict-hero__text">{parts.join(". ")}.</p>
     </div>
   );
 };

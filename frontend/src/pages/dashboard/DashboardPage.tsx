@@ -11,6 +11,8 @@ const DashboardPage: FC = () => {
 
   const inProgress = stats?.ordersInProgress ?? 0;
   const alerts = stats?.alerts ?? [];
+  const overdueCount = alerts.filter((a) => a.alertType === "OVERDUE").length;
+  const atRiskCount = alerts.filter((a) => a.alertType === "AT_RISK").length;
   const ordersByStatus = stats?.ordersByStatus?.reduce(
     (acc, { status, count }) => {
       acc[status] = count;
@@ -24,7 +26,7 @@ const DashboardPage: FC = () => {
       <div className="dashboard-page">
         <div className="dashboard-page__grid">
           <div className="dashboard-page__main">
-            <VerdictHero ordersInProgress={inProgress} alerts={alerts} ordersByStatus={ordersByStatus} />
+            <VerdictHero ordersInProgress={inProgress} overdueCount={overdueCount} atRiskCount={atRiskCount} />
 
             <div className="dashboard-page__decisions-section">
               <div className="dashboard-page__decisions-header">
