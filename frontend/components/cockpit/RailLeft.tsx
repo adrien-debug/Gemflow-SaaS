@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import { HearstLogo } from "./HearstLogo";
-import { AccentSelector } from "./AccentSelector";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 
@@ -349,9 +348,8 @@ export function RailLeft() {
         {TOP_NAV.map((entry) => renderEntry(entry))}
       </div>
 
-      <AccentSelector />
 
-      <div className="ct-spacer" />
+<div className="ct-spacer" />
 
       <div className="ct-rail-actions">
         {BOTTOM_NAV.map((entry) => renderEntry(entry))}

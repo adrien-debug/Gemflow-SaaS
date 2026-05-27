@@ -12,6 +12,7 @@ import type {
   LabourTracker,
   DashboardStats,
 } from "./types";
+import { supabaseBrowser } from "./supabase/client";
 
 // ─── Error type ───────────────────────────────────────────────────────────────
 
@@ -24,14 +25,24 @@ export class ApiError extends Error {
   }
 }
 
+// ─── Auth header helper ───────────────────────────────────────────────────────
+
+async function getAuthHeaders(): Promise<Record<string, string>> {
+  const { data } = await supabaseBrowser.auth.getSession();
+  const token = data.session?.access_token;
+  if (!token) return {};
+  return { Authorization: `Bearer ${token}` };
+}
+
 // ─── Internal helpers ─────────────────────────────────────────────────────────
 
 const BASE_URL = "/api/backend/v1";
 
 async function get<TRes>(path: string): Promise<TRes> {
+  const authHeaders = await getAuthHeaders();
   const res = await fetch(`${BASE_URL}${path}`, {
     method: "GET",
-    headers: { accept: "application/json" },
+    headers: { accept: "application/json", ...authHeaders },
     cache: "no-store",
   });
   if (!res.ok) {
@@ -42,11 +53,13 @@ async function get<TRes>(path: string): Promise<TRes> {
 }
 
 async function post<TReq, TRes>(path: string, body: TReq): Promise<TRes> {
+  const authHeaders = await getAuthHeaders();
   const res = await fetch(`${BASE_URL}${path}`, {
     method: "POST",
     headers: {
       accept: "application/json",
       "content-type": "application/json",
+      ...authHeaders,
     },
     body: JSON.stringify(body),
     cache: "no-store",
