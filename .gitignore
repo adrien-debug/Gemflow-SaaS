@@ -68,3 +68,6 @@ hs_err_pid*
 
 .railway-env-gemsflow
 .secrets/
+
+# Claude Code workspace
+.claude/

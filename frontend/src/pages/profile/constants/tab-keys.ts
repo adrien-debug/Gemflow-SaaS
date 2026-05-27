@@ -1,4 +1,0 @@
-export enum TabKeys {
-  PERSONAL_DETAILS = "PERSONAL_DETAILS",
-  SECURITY = "SECURITY",
-}

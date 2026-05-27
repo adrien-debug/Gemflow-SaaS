@@ -1,5 +1,0 @@
-export enum TabKeys {
-  USERS_AND_ROLES = "USERS_AND_ROLES",
-  CLIENTS = "CLIENTS",
-  SUPPLIERS = "SUPPLIERS",
-}

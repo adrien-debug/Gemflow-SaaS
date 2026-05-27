@@ -1,1 +1,0 @@
-export const SUPPLY_TYPES_QUERY_KEY = "SUPPLY_TYPES";
