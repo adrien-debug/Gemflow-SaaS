@@ -31,6 +31,29 @@
       --ct-border: rgba(255,255,255,0.10);
       --ct-border-strong: rgba(255,255,255,0.16);
 
+      /* Status tokens */
+      --ct-status-success: #10b981;
+      --ct-status-success-bg: rgba(16, 185, 129, 0.18);
+      --ct-status-warning: #f59e0b;
+      --ct-status-warning-bg: rgba(245, 158, 11, 0.18);
+      --ct-status-danger: #ef4444;
+      --ct-status-danger-bg: rgba(239, 68, 68, 0.18);
+      --ct-status-info: #06b6d4;
+      --ct-status-info-bg: rgba(6, 182, 212, 0.18);
+
+      /* Text aliases */
+      --ct-text: var(--ct-text-primary);
+      --ct-text-on-accent: #ffffff;
+      --ct-text-disabled: rgba(245, 245, 245, 0.32);
+
+      /* Legacy aliases (code historique — ne pas multiplier) */
+      --ct-muted: var(--ct-text-muted);
+      --ct-muted-bg: var(--ct-surface-2);
+      --ct-error: var(--ct-status-danger);
+      --ct-color-error: var(--ct-status-danger);
+      --ct-success: var(--ct-status-success);
+      --ct-success-bg: var(--ct-status-success-bg);
+
       --ct-shadow-depth:
         inset 0 1px 0 rgba(255,255,255,0.18),
         inset 0 -1px 0 rgba(0,0,0,0.45),
