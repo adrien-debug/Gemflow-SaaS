@@ -1,1 +1,0 @@
-export const USER_ROLES_QUERY_KEY = "USER_ROLES_QUERY";
