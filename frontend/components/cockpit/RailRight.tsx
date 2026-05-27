@@ -1,18 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChatKimi } from "./ChatKimi";
 
 const STORAGE_KEY = "cockpit:rail-right-open";
 
-export function RailRight() {
-  const [open, setOpen] = useState(true);
-  const [chatKey, setChatKey] = useState(0);
+function readOpen(): boolean {
+  if (typeof window === "undefined") return true;
+  const saved = localStorage.getItem(STORAGE_KEY);
+  return saved !== null ? saved === "1" : true;
+}
 
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved !== null) setOpen(saved === "1");
-  }, []);
+export function RailRight() {
+  const [open, setOpen] = useState<boolean>(readOpen);
+  const [chatKey, setChatKey] = useState(0);
 
   function toggle() {
     setOpen((v) => {

@@ -12,14 +12,17 @@ const ACCENTS = [
 
 const STORAGE_KEY = "cockpit:accent";
 
+function readSaved(): string {
+  if (typeof window === "undefined") return "default";
+  return localStorage.getItem(STORAGE_KEY) ?? "default";
+}
+
 export function AccentSelector() {
-  const [active, setActive] = useState<string>("default");
+  const [active, setActive] = useState<string>(readSaved);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY) ?? "default";
-    setActive(saved);
-    document.documentElement.setAttribute("data-product", saved);
-  }, []);
+    document.documentElement.setAttribute("data-product", active);
+  }, [active]);
 
   function pick(id: string) {
     setActive(id);

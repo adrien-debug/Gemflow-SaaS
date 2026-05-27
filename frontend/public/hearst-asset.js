@@ -343,7 +343,7 @@
       const initSrc = asset.render && asset.render.canvas && asset.render.canvas.init;
       if (initSrc && typeof initSrc === 'string') {
         try {
-          // eslint-disable-next-line no-new-func
+           
           var fn = new Function('container', 'params', initSrc + ';\ninit(container, params);');
           fn(container, params);
         } catch (e) {
@@ -400,7 +400,7 @@
             return h;
           };
           const wrappedCAF = (h) => global.cancelAnimationFrame(h);
-          // eslint-disable-next-line no-new-func
+           
           const fn = new Function('canvas', 'params', 'requestAnimationFrame', 'cancelAnimationFrame',
             initSrc + ';\ninit(canvas, params);');
           fn(canvas, params, wrappedRAF, wrappedCAF);

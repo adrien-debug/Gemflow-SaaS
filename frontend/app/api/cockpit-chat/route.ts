@@ -46,7 +46,21 @@ function makeThinkFilter() {
   };
 }
 
+function allowOrigin(req: Request): { ok: boolean; reason?: string } {
+  if (process.env.NODE_ENV !== "production") return { ok: true };
+  const origin = req.headers.get("origin");
+  if (!origin) return { ok: false, reason: "missing_origin" };
+  const allowed = process.env.NEXT_PUBLIC_APP_URL;
+  if (allowed && origin === allowed) return { ok: true };
+  return { ok: false, reason: "forbidden_origin" };
+}
+
 export async function POST(req: Request) {
+  const gate = allowOrigin(req);
+  if (!gate.ok) {
+    return NextResponse.json({ error: gate.reason }, { status: 403 });
+  }
+
   let body: { messages?: Msg[] };
   try {
     body = await req.json();

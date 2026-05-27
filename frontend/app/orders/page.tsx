@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eyebrow, Title, Sub, Card } from "@/components/cockpit/primitives";
 import { api } from "@/lib/api";
 import type { OrderListItem, OrderStatus, Priority, SearchResponse } from "@/lib/types";
@@ -65,7 +66,11 @@ const fmtDate = (iso: string) => {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export default function OrdersPage() {
+function OrdersContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const showNewPanel = searchParams.get("new") === "1";
+
   const [result, setResult] = useState<SearchResponse<OrderListItem> | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState<string>("");
@@ -133,6 +138,43 @@ export default function OrdersPage() {
       <Eyebrow>Atelier · Commandes</Eyebrow>
       <Title>Orders</Title>
       <Sub>{result !== null ? `${count} commande${count !== 1 ? "s" : ""} vivantes côté backend` : "Chargement des commandes…"}</Sub>
+
+      {/* New order panel */}
+      {showNewPanel && (
+        <div
+          style={{
+            marginBottom: "var(--ct-space-4)",
+            padding: "var(--ct-space-4)",
+            background: "var(--ct-surface-2)",
+            border: "1px solid var(--ct-border-soft)",
+            borderRadius: "var(--ct-radius)",
+            color: "var(--ct-text-body)",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "var(--ct-space-2)" }}>
+            <strong style={{ fontSize: 15 }}>Nouvelle commande</strong>
+            <button
+              onClick={() => router.replace("/orders")}
+              style={{
+                padding: "4px 14px",
+                background: "var(--ct-accent)",
+                color: "var(--ct-text-on-accent, #fff)",
+                border: "none",
+                borderRadius: "var(--ct-radius)",
+                fontSize: 13,
+                cursor: "pointer",
+              }}
+            >
+              Fermer
+            </button>
+          </div>
+          <p style={{ margin: 0, fontSize: 14 }}>
+            Formulaire de création à câbler sur{" "}
+            <code style={{ fontFamily: "var(--mono, monospace)" }}>POST /api/v1/orders</code>{" "}
+            (OrderCompositeService.createOrder).
+          </p>
+        </div>
+      )}
 
       {/* Search bar */}
       <div style={{ marginBottom: 16, marginTop: 8 }}>
@@ -291,5 +333,13 @@ export default function OrdersPage() {
         </Card>
       )}
     </>
+  );
+}
+
+export default function OrdersPage() {
+  return (
+    <Suspense fallback={null}>
+      <OrdersContent />
+    </Suspense>
   );
 }

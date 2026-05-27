@@ -148,14 +148,14 @@ export default function MetalsPage() {
     <>
       <Eyebrow>Inventaire · Métaux</Eyebrow>
       <Title>Metals</Title>
-      <Sub>Stock live</Sub>
+      <Sub>Stock des alliages métalliques · live backend</Sub>
 
       {/* KPI strip */}
       <KpiGrid>
         <KpiCard
           label="Total"
           value={totalElements.toLocaleString("fr-FR")}
-          hint="alliages"
+          hint="alliages métalliques"
         />
         <KpiCard
           label="Poids total"
