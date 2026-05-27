@@ -1,6 +1,7 @@
 import { FC, ReactNode, useState } from "react";
 import { useNavigate } from "react-router";
 import { MaisonComposer } from "@features/agents/maison";
+import AtelierLogo3D from "../AtelierLogo3D";
 import "./styles.scss";
 
 export interface DashboardAsideInsight {
@@ -25,7 +26,7 @@ const DashboardAside: FC<DashboardAsideProps> = ({ insights }) => {
   return (
     <aside className="gf-dashboard-aside">
       <div className="gf-dashboard-aside__cover">
-        <span className="gf-dashboard-aside__cover-icon" aria-hidden>AI</span>
+        <AtelierLogo3D size={96} />
         <h2 className="gf-dashboard-aside__title">Atelier <em>AI</em></h2>
         <span className="gf-dashboard-aside__status">
           <span className="gf-dashboard-aside__status-dot" aria-hidden />
@@ -56,6 +57,10 @@ const DashboardAside: FC<DashboardAsideProps> = ({ insights }) => {
           modelLabel="Atelier · Claude"
           ctaLabel="Envoyer"
         />
+      </div>
+
+      <div className="gf-dashboard-aside__footer">
+        <span className="gf-dashboard-aside__footer-label">Atelier · Intelligence</span>
       </div>
     </aside>
   );

@@ -12,75 +12,220 @@ body,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Arial, sans-serif !important;
+  background: #fff !important;
+  color: #000 !important;
 }
 
-.hover.ant-select:hover {
-  .ant-select-selection-item {
-    color: var(--ant-select-hover-border-color);
-  }
+/* ============================================================
+   NAKED MODE — page blanche Arial, zero décoration globale
+   Force Arial/blanc/noir et neutralise Ant Design + custom CSS
+   ============================================================ */
 
-  .ant-select-arrow {
-    svg {
-      fill: var(--ant-select-hover-border-color);
-    }
-  }
+html,
+html *,
+html *::before,
+html *::after,
+html *::placeholder,
+html *::selection,
+html *::first-letter,
+html *::first-line {
+  font-family: Arial, sans-serif !important;
+  font-feature-settings: normal !important;
+  font-variant: normal !important;
+  color: #000 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: #000 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+  font-weight: normal !important;
+  letter-spacing: normal !important;
 }
 
-.ant-tabs .ant-tabs-tab.ant-tabs-tab-focus .ant-tabs-tab-btn {
-  outline: none;
+/* Sélecteurs natifs spécifiques (placeholder + input/textarea) */
+input, textarea, select, button, optgroup, option,
+input::placeholder, textarea::placeholder {
+  font-family: Arial, sans-serif !important;
 }
 
-.ant-breadcrumb {
-  font-weight: 600;
-  font-size: 16px;
-  margin: 20px 0;
+/* Cibles fréquentes qui définissent une font à part : code, kbd, pre, mono */
+code, kbd, samp, pre, tt, var, .ant-typography code, .ant-typography pre {
+  font-family: Arial, sans-serif !important;
 }
 
-.ant-radio-group {
-  font-weight: 600;
-  font-size: 16px;
-
-  &.ant-radio-group-solid {
-    .ant-radio-button-wrapper {
-      padding: 12px 0;
-      height: auto;
-
-      &.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-        border: 1px solid var(--ant-radio-button-solid-checked-color);
-      }
-    }
-  }
+/* SVG text nodes */
+svg text, svg tspan {
+  font-family: Arial, sans-serif !important;
 }
 
-.borderless-select.ant-select {
-  .ant-select-selection-item {
-    white-space: normal;
-    line-height: 20px;
-  }
-
-  .ant-select-selector, .ant-select-arrow {
-    padding-left: 0;
-    color: var(--ant-color-primary);
-  }
+/* Override de tout style="" inline qui définirait une autre police */
+html [style] {
+  font-family: Arial, sans-serif !important;
 }
 
-.ant-modal-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .ant-modal {
-    top: unset;
-    transform: unset;
-    padding: unset;
-  }
+/* Badges Ant (chiffres dans menus / pastilles) — font numérique custom à tuer */
+.ant-badge,
+.ant-badge *,
+.ant-badge-count,
+.ant-badge-count *,
+.ant-badge-count-sm,
+.ant-scroll-number,
+.ant-scroll-number *,
+.ant-scroll-number-only,
+.ant-scroll-number-only > p,
+.ant-scroll-number-only-unit,
+.ant-statistic,
+.ant-statistic *,
+.ant-statistic-content,
+.ant-statistic-content-value,
+.ant-statistic-content-value-int,
+.ant-statistic-content-value-decimal {
+  font-family: Arial, sans-serif !important;
+  font-variant-numeric: normal !important;
+  font-feature-settings: normal !important;
 }
 
-.ant-input-number-affix-wrapper {
-  .ant-input-number-prefix, .ant-input-number-suffix {
-    color: var(--ant-color-text-disabled);
-  }
+/* Toute la grappe : kill tabular-nums et features OpenType partout */
+html * {
+  font-variant-numeric: normal !important;
+  font-feature-settings: normal !important;
+}
+
+/* fond blanc strict sur les conteneurs racine */
+html,
+body,
+#root,
+.ant-layout,
+.ant-layout-content,
+.ant-layout-header,
+.ant-layout-sider,
+.ant-layout-sider-children,
+main,
+section,
+header,
+footer,
+aside,
+nav {
+  background: #fff !important;
+}
+
+/* Titres */
+h1, h2, h3, h4, h5, h6,
+.ant-typography h1, .ant-typography h2, .ant-typography h3,
+.ant-typography-title {
+  font-weight: bold !important;
+  margin: 12px 0 8px !important;
+}
+h1 { font-size: 24px !important; }
+h2 { font-size: 20px !important; }
+h3 { font-size: 18px !important; }
+h4, h5, h6 { font-size: 16px !important; }
+
+/* Liens */
+a, a:visited, a:hover, a:active {
+  color: #000 !important;
+  text-decoration: underline !important;
+}
+
+/* Inputs / boutons : bordure noire fine pour rester utilisables */
+input,
+textarea,
+select,
+button,
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-input-number,
+.ant-input-number-affix-wrapper,
+.ant-select-selector,
+.ant-picker,
+.ant-btn,
+.ant-checkbox-inner,
+.ant-radio-inner,
+.ant-switch,
+.ant-tag {
+  border: 1px solid #000 !important;
+  background: #fff !important;
+  color: #000 !important;
+  padding: 4px 8px !important;
+  min-height: auto !important;
+  height: auto !important;
+}
+
+button,
+.ant-btn {
+  cursor: pointer;
+  padding: 4px 10px !important;
+}
+
+/* Listes / tables */
+ul, ol {
+  margin: 4px 0 !important;
+  padding-left: 24px !important;
+}
+li {
+  margin: 2px 0 !important;
+}
+table,
+.ant-table,
+.ant-table-container {
+  border-collapse: collapse !important;
+  width: 100%;
+}
+th, td,
+.ant-table-cell {
+  border: 1px solid #000 !important;
+  padding: 4px 8px !important;
+  text-align: left !important;
+}
+
+/* Menu / Sider Ant : nu, texte Arial noir */
+.ant-menu,
+.ant-menu-item,
+.ant-menu-submenu,
+.ant-menu-submenu-title,
+.ant-menu-item-selected,
+.ant-menu-item-active {
+  border: 0 !important;
+  background: #fff !important;
+  color: #000 !important;
+}
+.ant-menu-item-selected {
+  text-decoration: underline !important;
+}
+
+/* Icônes Ant : on les neutralise (texte autour suffit) */
+.anticon svg {
+  fill: #000 !important;
+  color: #000 !important;
+}
+
+/* Modals / drawers : fond blanc, bordure noire */
+.ant-modal-content,
+.ant-drawer-content,
+.ant-dropdown-menu,
+.ant-popover-inner,
+.ant-tooltip-inner {
+  background: #fff !important;
+  border: 1px solid #000 !important;
+}
+.ant-modal-mask,
+.ant-drawer-mask {
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Images / médias : neutralisés pour rester sobres */
+img, video, canvas {
+  filter: none !important;
+}
+
+/* Désactive animations et transitions, page brute */
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
 }

@@ -1,8 +1,9 @@
 import "@shared/ui/layouts/DashboardLayout/styles.scss";
-import { FC, PropsWithChildren, useEffect, useState } from "react";
+import { FC, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { MenuItem } from "@shared/ui/layouts/DashboardLayout/models/menu-item.model.ts";
 import { MaisonSider } from "@features/agents/maison";
+import { UserContext } from "@shared/providers/UserProvider.tsx";
 
 interface Props extends PropsWithChildren {
   topItems?: MenuItem[];
@@ -12,6 +13,7 @@ interface Props extends PropsWithChildren {
 const DashboardLayout: FC<Props> = ({ children, topItems, bottomItems }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     setDrawerOpen(false);
@@ -47,6 +49,7 @@ const DashboardLayout: FC<Props> = ({ children, topItems, bottomItems }) => {
         collapsed={false}
         onToggle={() => {}}
         hideToggle
+        user={user}
       />
       <main className="dashboard-content">{children}</main>
     </div>

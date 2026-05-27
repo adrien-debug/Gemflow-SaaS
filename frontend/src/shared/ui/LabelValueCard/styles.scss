@@ -1,6 +1,6 @@
 .label-value-card {
   padding: 12px 20px;
-  border-radius: 12px;
+  border-radius: var(--r-lg);
   border: 1px solid var(--ant-color-primary-bg-hover);
 
   .label {

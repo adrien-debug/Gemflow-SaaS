@@ -1,61 +1,37 @@
 .gf-dashboard-aside {
-  background: var(--m-paper, #FFFCF5);
+  background: var(--m-paper);
   border: 0.5px solid rgba(10, 12, 16, 0.08);
-  border-radius: 4px;
+  border-radius: var(--r-sm);
   box-shadow: var(--sh-2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  position: sticky;
-  top: 24px;
-  height: calc(100dvh - 48px);
+  align-self: stretch;
+  min-height: 100%;
 }
 
-/* ── Cover ── */
+/* ── Cover (aligné au sider) ── */
 .gf-dashboard-aside__cover {
-  padding: 36px 28px 32px;
+  padding: 32px 28px 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 16px;
-  border-bottom: 0.5px solid rgba(10, 12, 16, 0.06);
-  background: linear-gradient(160deg, var(--m-marine-900, #0E1626) 0%, var(--m-marine-800, #131C30) 100%);
+  gap: 14px;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.04);
+  background: var(--m-marine-deep);
+  background-image: radial-gradient(
+    circle at 100% 0%,
+    var(--m-gold-soft),
+    transparent 50%
+  );
   position: relative;
   overflow: hidden;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(195, 154, 113, 0.14), transparent 70%);
-    pointer-events: none;
-  }
-}
-
-.gf-dashboard-aside__cover-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(195, 154, 113, 0.2), rgba(195, 154, 113, 0.06));
-  border: 0.5px solid rgba(195, 154, 113, 0.35);
-  display: grid;
-  place-items: center;
-  color: var(--m-gold-400, #D4B391);
-  font-family: var(--ff-serif);
-  font-style: italic;
-  font-size: 20px;
-  line-height: 1;
-  box-shadow: 0 8px 24px rgba(195, 154, 113, 0.15);
 }
 
 .gf-dashboard-aside__title {
   margin: 0;
-  font-family: var(--ff-display, "Inter Tight", sans-serif);
+  font-family: var(--ff-display);
   font-size: 22px;
   font-weight: 600;
   letter-spacing: -0.04em;
@@ -63,10 +39,10 @@
   line-height: 1;
 
   em {
-    font-family: var(--ff-serif, "Instrument Serif", Georgia, serif);
+    font-family: var(--ff-serif);
     font-style: italic;
     font-weight: 400;
-    color: var(--m-gold-400, #D4B391);
+    color: var(--m-gold-400);
   }
 }
 
@@ -74,11 +50,11 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-family: var(--ff-mono, "Geist Mono", monospace);
+  font-family: var(--ff-mono);
   font-size: 9px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: rgba(195, 154, 113, 0.7);
+  color: var(--m-gold-300);
   font-weight: 500;
 }
 
@@ -86,8 +62,8 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--m-gold-500, #C39A71);
-  box-shadow: 0 0 6px rgba(195, 154, 113, 0.6);
+  background: var(--m-gold-500);
+  box-shadow: 0 0 6px var(--m-gold-glow);
   animation: gf-aside-pulse 3s ease-in-out infinite;
 }
 
@@ -101,17 +77,17 @@
   &::-webkit-scrollbar { width: 2px; }
   &::-webkit-scrollbar-track { background: transparent; }
   &::-webkit-scrollbar-thumb {
-    background: rgba(195, 154, 113, 0.25);
-    border-radius: 4px;
+    background: var(--m-gold-line-soft);
+    border-radius: var(--r-sm);
   }
 }
 
 .gf-dashboard-aside__section-title {
-  font-family: var(--ff-mono, "Geist Mono", monospace);
+  font-family: var(--ff-mono);
   font-size: 9px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--m-ink-500, #6B655A);
+  color: var(--m-ink-500);
   font-weight: 500;
   margin: 0 0 14px;
 }
@@ -124,50 +100,71 @@
 
 .gf-dashboard-aside__insight {
   padding: 14px 16px;
-  border-left: 2px solid var(--m-gold-500, #C39A71);
-  background: var(--m-paper-pure, #FDFDFB);
-  border-radius: 0 2px 2px 0;
+  border-left: 2px solid var(--m-gold-500);
+  background: var(--m-paper-pure);
+  border-radius: 0 var(--r-xs) var(--r-xs) 0;
   border-top: 0.5px solid rgba(10, 12, 16, 0.04);
   border-right: 0.5px solid rgba(10, 12, 16, 0.04);
   border-bottom: 0.5px solid rgba(10, 12, 16, 0.04);
-  transition: transform 0.2s var(--m-ease-fold, cubic-bezier(0.22, 1, 0.36, 1));
+  transition: transform 0.2s var(--m-ease-fold);
 
   &:hover { transform: translateX(2px); }
 }
 
 .gf-dashboard-aside__insight-eyebrow {
-  font-family: var(--ff-mono, "Geist Mono", monospace);
+  font-family: var(--ff-mono);
   font-size: 9px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--m-gold-700, #8E6B43);
+  color: var(--m-gold-700);
   font-weight: 500;
   margin: 0 0 8px;
 }
 
 .gf-dashboard-aside__insight-body {
-  font-family: var(--ff-body, "Inter", sans-serif);
+  font-family: var(--ff-body);
   font-size: 13px;
   line-height: 1.55;
-  color: var(--m-ink-900, #1A1A1A);
+  color: var(--m-ink-900);
   letter-spacing: -0.005em;
 
-  strong { font-weight: 600; color: var(--m-ink-1000, #0F0F0E); }
+  strong { font-weight: 600; color: var(--m-ink-1000); }
 
   em {
-    font-family: var(--ff-serif, "Instrument Serif", Georgia, serif);
+    font-family: var(--ff-serif);
     font-style: italic;
     font-weight: 400;
-    color: var(--m-marine-800, #131C30);
+    color: var(--m-marine-800);
   }
 }
 
 /* ── Composer ── */
 .gf-dashboard-aside__composer {
   border-top: 0.5px solid rgba(10, 12, 16, 0.06);
-  background: var(--m-paper-2, #FBF7EE);
+  background: var(--m-paper-2);
   padding: 16px;
   flex-shrink: 0;
+  margin-top: auto;
+}
+
+/* ── Footer noir (symétrie avec footer main) ── */
+.gf-dashboard-aside__footer {
+  flex-shrink: 0;
+  padding: 14px 20px;
+  background: var(--m-marine-deep);
+  border-top: 0.5px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gf-dashboard-aside__footer-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--m-gold-300);
 }
 
 /* ── Animation ── */
@@ -179,7 +176,6 @@
 /* ── Responsive ── */
 @media (max-width: 1199px) {
   .gf-dashboard-aside {
-    position: static;
-    height: auto;
+    min-height: auto;
   }
 }

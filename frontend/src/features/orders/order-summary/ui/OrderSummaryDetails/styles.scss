@@ -18,8 +18,8 @@
     height: 15px;
     padding: 7px;
     margin-right: 4px;
-    border: 2px solid whitesmoke;
-    border-radius: 6px;
+    border: 2px solid var(--m-sand-100);
+    border-radius: var(--r-md);
 
     &:hover {
       border-color: rgba(117, 92, 68, 0.5);
@@ -27,7 +27,7 @@
 
     .plus-card-icon, .minus-card-icon {
       position: absolute;
-      transition: all 0.3s ease;
+      transition: all 0.3s var(--m-ease-fold);
     }
   }
 
@@ -44,7 +44,7 @@
 
   table {
     border: 1px solid var(--ant-color-primary-border);
-    border-radius: 8px;
+    border-radius: var(--r-lg);
     overflow: hidden;
 
     .no-border-row {

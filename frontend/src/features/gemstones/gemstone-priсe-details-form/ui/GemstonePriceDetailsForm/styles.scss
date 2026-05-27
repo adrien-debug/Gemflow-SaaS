@@ -3,10 +3,10 @@
     width: 80px;
   }
   .ant-input-prefix {
-    color: lightgray !important;
+    color: var(--m-ink-300) !important;
   }
   .ant-form-item-label > label::after {
-    content: ''; 
+    content: '';
   }
   .inner-price {
     text-align: right;

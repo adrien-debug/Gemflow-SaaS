@@ -2,7 +2,7 @@
   background: var(--m-paper-pure);
   border: 0.5px solid rgba(10, 12, 16, 0.05);
   border-left: 2px solid var(--m-gold-500);
-  border-radius: 2px;
+  border-radius: var(--r-xs);
   padding: 20px;
   margin-bottom: 16px;
   transition: transform 0.2s, box-shadow 0.2s;

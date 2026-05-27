@@ -1,7 +1,7 @@
 .technical-sheet-card {
   width: 578px;
   height: calc(578px * 1.4142);
-  border-radius: 12px;
+  border-radius: var(--r-xl);
   border: 1px solid var(--ant-color-primary-bg-hover);
 
   .image-container img {

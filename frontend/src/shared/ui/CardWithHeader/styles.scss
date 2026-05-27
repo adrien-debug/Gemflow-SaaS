@@ -1,7 +1,7 @@
 .card-with-header {
   width: 100%;
   border: 1px solid var(--ant-color-primary-border);
-  border-radius: 12px;
+  border-radius: var(--r-lg);
 
   .ant-card-body {
     padding: 24px 24px 0;

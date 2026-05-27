@@ -1,6 +1,8 @@
 import { FC, ReactNode, useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 import { MenuItem } from "@shared/ui/layouts/DashboardLayout/models/menu-item.model.ts";
+import { Nullable } from "@shared/types/nullable.type.ts";
+import { User } from "@entities/user/models/user.model.ts";
 import "./styles.scss";
 
 interface MaisonSiderProps {
@@ -12,6 +14,7 @@ interface MaisonSiderProps {
   brandTitle?: string;
   brandEmphasized?: string;
   brandSubtitle?: string;
+  user?: Nullable<User>;
 }
 
 const isMenuItemArray = (children: unknown): children is MenuItem[] =>
@@ -30,11 +33,22 @@ const MaisonSider: FC<MaisonSiderProps> = ({
   brandTitle = "Gem",
   brandEmphasized = "flow",
   brandSubtitle = "Atelier Intelligence",
+  user,
 }) => {
   const location = useLocation();
   const selectedKey = useMemo(() => location.pathname.split("/").slice(0, 2).join("/"), [location.pathname]);
 
-  const renderItem = (item: MenuItem, depth = 0): ReactNode => {
+  const initials = useMemo(() => {
+    if (!user) return "";
+    const f = (user.firstName ?? "").trim().charAt(0);
+    const l = (user.lastName ?? "").trim().charAt(0);
+    const fallback = (user.fullName ?? user.email ?? "").trim().charAt(0);
+    return (f + l || fallback).toUpperCase();
+  }, [user]);
+
+  const avatarUrl = user?.photos?.[0]?.file?.downloadUrl;
+
+  const renderItem = (item: MenuItem, depth = 0, index?: number): ReactNode => {
     const key = String(item.key);
     const itemAny = item as MenuItem & {
       icon?: ReactNode;
@@ -52,15 +66,22 @@ const MaisonSider: FC<MaisonSiderProps> = ({
           collapsed={collapsed}
           selectedKey={selectedKey}
           renderItem={renderItem}
+          index={index}
         />
       );
     }
 
     const isActive = selectedKey === key || location.pathname === key;
+    const showNumber = depth === 0 && typeof index === "number";
 
     return (
       <div key={key} className={`gf-maison-sider__link${isActive ? " is-active" : ""}${depth > 0 ? " is-child" : ""}`}>
-        {itemAny.icon ? (
+        {showNumber ? (
+          <span className="gf-maison-sider__number" aria-hidden>
+            <span className="gf-maison-sider__number-mark" />
+            <span className="gf-maison-sider__number-value">{String(index + 1).padStart(2, "0")}</span>
+          </span>
+        ) : itemAny.icon ? (
           <span className="gf-maison-sider__icon" aria-hidden>
             {itemAny.icon}
           </span>
@@ -102,14 +123,29 @@ const MaisonSider: FC<MaisonSiderProps> = ({
 
       <nav className="gf-maison-sider__nav">
         {topItems?.length ? (
-          <div className="gf-maison-sider__group">{topItems.map((item) => renderItem(item))}</div>
+          <div className="gf-maison-sider__group">
+            {topItems.map((item, idx) => renderItem(item, 0, idx))}
+          </div>
         ) : null}
         {bottomItems?.length ? (
           <div className="gf-maison-sider__group gf-maison-sider__group--bottom">
-            {bottomItems.map((item) => renderItem(item))}
+            {bottomItems.map((item, idx) => renderItem(item, 0, (topItems?.length ?? 0) + idx))}
           </div>
         ) : null}
       </nav>
+
+      {user ? (
+        <Link to="/profile" className="gf-maison-sider__profile" aria-label="Profil utilisateur">
+          <span className="gf-maison-sider__profile-avatar" aria-hidden>
+            {avatarUrl ? <img src={avatarUrl} alt="" /> : <span className="gf-maison-sider__profile-initials">{initials}</span>}
+            <span className="gf-maison-sider__profile-dot" />
+          </span>
+          <span className="gf-maison-sider__profile-meta">
+            <span className="gf-maison-sider__profile-name">{user.fullName || `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim()}</span>
+            <span className="gf-maison-sider__profile-role">{user.role?.name ?? user.role?.code ?? ""}</span>
+          </span>
+        </Link>
+      ) : null}
     </aside>
   );
 };
@@ -120,10 +156,11 @@ interface MaisonSiderGroupProps {
   depth: number;
   collapsed: boolean;
   selectedKey: string;
-  renderItem: (item: MenuItem, depth?: number) => ReactNode;
+  renderItem: (item: MenuItem, depth?: number, index?: number) => ReactNode;
+  index?: number;
 }
 
-const MaisonSiderGroup: FC<MaisonSiderGroupProps> = ({ item, itemKey, depth, collapsed, selectedKey, renderItem }) => {
+const MaisonSiderGroup: FC<MaisonSiderGroupProps> = ({ item, itemKey, depth, collapsed, selectedKey, renderItem, index }) => {
   const children = (item.children ?? []) as MenuItem[];
   const containsActive = children.some((c) => String(c.key) === selectedKey);
   const [open, setOpen] = useState<boolean>(containsActive);
@@ -131,6 +168,7 @@ const MaisonSiderGroup: FC<MaisonSiderGroupProps> = ({ item, itemKey, depth, col
     if (containsActive) setOpen(true);
   }, [containsActive]);
   const isOpen = collapsed ? false : open;
+  const showNumber = depth === 0 && typeof index === "number";
 
   return (
     <div
@@ -141,7 +179,12 @@ const MaisonSiderGroup: FC<MaisonSiderGroupProps> = ({ item, itemKey, depth, col
         className="gf-maison-sider__link gf-maison-sider__group-toggle"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={isOpen}>
-        {item.icon ? (
+        {showNumber ? (
+          <span className="gf-maison-sider__number" aria-hidden>
+            <span className="gf-maison-sider__number-mark" />
+            <span className="gf-maison-sider__number-value">{String((index ?? 0) + 1).padStart(2, "0")}</span>
+          </span>
+        ) : item.icon ? (
           <span className="gf-maison-sider__icon" aria-hidden>
             {item.icon}
           </span>

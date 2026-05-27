@@ -1,5 +1,5 @@
 .image {
-  border-radius: 6px;
+  border-radius: var(--r-md);
   border: 1px solid var(--ant-color-border);
   overflow: hidden;
   flex-shrink: 0;

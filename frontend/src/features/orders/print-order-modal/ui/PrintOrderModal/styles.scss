@@ -2,7 +2,7 @@
   overflow: hidden;
   position: relative;
   border: 1px solid var(--ant-color-primary-bg-hover);
-  border-radius: 12px;
+  border-radius: var(--r-xl);
   padding: 16px 19px;
   width: 420px;
   height: 672px;
@@ -24,7 +24,7 @@
   * {
     margin: 0;
     padding: 0;
-    font-family: sans-serif !important;
+    font-family: var(--ff-body) !important;
     font-weight: 700 !important;
   }
 

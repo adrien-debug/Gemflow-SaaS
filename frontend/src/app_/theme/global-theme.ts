@@ -1,4 +1,4 @@
-import { brandingColorPalette, brandingTokens } from "@shared/constants/branding.ts";
+import { brandingColorPalette, brandingFonts, brandingRadii, brandingTokens } from "@shared/constants/branding.ts";
 import { ThemeConfig } from "antd/es/config-provider/context";
 
 export const globalTheme: ThemeConfig = {
@@ -22,9 +22,23 @@ export const globalTheme: ThemeConfig = {
     controlItemBgActive: brandingTokens.controlItemBgActive,
     controlItemBgActiveHover: brandingTokens.controlItemBgActiveHover,
 
+    colorTextBase: brandingTokens.textDefaultColor,
+    colorText: brandingTokens.textDefaultColor,
+    colorTextSecondary: brandingTokens.textSecondaryColor,
+    colorTextTertiary: brandingTokens.textColorGray,
+    colorTextDisabled: brandingTokens.textDisabledColor,
+
     colorLink: brandingColorPalette.brand6,
     colorLinkHover: brandingColorPalette.brand8,
     colorLinkActive: brandingColorPalette.brand7,
+
+    fontFamily: brandingFonts.fontFamily,
+    fontFamilyCode: brandingFonts.fontFamilyCode,
+
+    borderRadius: brandingRadii.md,
+    borderRadiusXS: brandingRadii.xs,
+    borderRadiusSM: brandingRadii.sm,
+    borderRadiusLG: brandingRadii.lg,
   },
   cssVar: true,
   hashed: false,
@@ -53,15 +67,15 @@ export const globalTheme: ThemeConfig = {
     },
     Button: {
       borderRadius: brandingTokens.borderRadiusDefault,
-      borderRadiusLG: brandingTokens.borderRadiusDefault,
-      borderRadiusSM: brandingTokens.borderRadiusDefault,
+      borderRadiusLG: brandingRadii.lg,
+      borderRadiusSM: brandingRadii.sm,
     },
     Table: {
       headerBg: brandingColorPalette.brand1,
     },
     Modal: {
-      borderRadiusLG: 16,
-      borderRadiusSM: 16,
+      borderRadiusLG: brandingRadii.lg,
+      borderRadiusSM: brandingRadii.sm,
     },
     Breadcrumb: {
       linkColor: brandingTokens.textDefaultColor,

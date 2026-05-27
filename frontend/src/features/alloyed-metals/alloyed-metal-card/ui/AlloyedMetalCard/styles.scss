@@ -1,35 +1,36 @@
 .alloyed-metal-card {
   .ant-card-extra {
     svg {
-      color: var(--ant-color-text-heading);
+      color: var(--m-ink-900);
     }
 
     &:hover {
       svg {
-        color: var(--ant-color-primary);
+        color: var(--m-gold-600);
       }
     }
   }
 
   &:hover {
     .ant-card-head-title {
-      span{
-        color: var(--ant-color-primary);}
+      span {
+        color: var(--m-gold-600);
+      }
     }
   }
 
   .content-title {
     font-size: 14px;
-    color: var(--ant-color-text-description);
+    color: var(--m-ink-500);
   }
 
   .content-text {
     font-size: 16px;
     font-weight: 600;
-    color: var(--ant-color-text-heading);
+    color: var(--m-ink-900);
 
     &-primary {
-      color: var(--ant-color-primary);
+      color: var(--m-gold-600);
       font-size: 20px;
     }
   }

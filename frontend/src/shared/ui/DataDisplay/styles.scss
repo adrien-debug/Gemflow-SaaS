@@ -5,7 +5,7 @@
     color: var(--ant-color-text-description);
 
     @media print {
-      color: #0a0a0a;
+      color: var(--m-ink-1000);
       font-size: 16px !important;
     }
   }

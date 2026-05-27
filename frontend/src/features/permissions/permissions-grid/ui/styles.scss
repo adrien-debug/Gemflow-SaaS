@@ -1,14 +1,14 @@
 .permissions-grid {
   .permission-category-card {
     .ant-card-head {
-      background: #fafafa;
-      border-bottom: 1px solid #f0f0f0;
+      background: var(--m-paper-2);
+      border-bottom: 1px solid var(--m-sand-150);
     }
 
     .ant-card-head-title {
       font-weight: 600;
       font-size: 16px;
-      color: rgba(0, 0, 0, 0.88);
+      color: var(--m-ink-900);
     }
 
     .ant-table-cell {
